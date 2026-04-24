@@ -12,9 +12,6 @@
   align-items: center;
   justify-content: center;
   -webkit-tap-highlight-color: transparent;
-  touch-action: none; /* منع تمرير الصفحة عند التفاعل باللمس */
-  user-select: none;
-  -webkit-user-select: none;
 }
 
 /* --- Emphasize 3D look for wheel frame --- */

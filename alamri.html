@@ -1,0 +1,2714 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROBOT HOUSE COMPANY - تصميم مستقبلي متطور</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --dark: #0f0f1e;
+            --darker: #0a0a14;
+            --light: #f8f9fa;
+            --gray: #b8b8b8;
+            --shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --card-scale-mobile: 0.95;
+            --arrow-scale-mobile: 0.85;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #070718; /* neutral page background so visuals are constrained to container */
+            color: var(--light);
+            min-height: 100vh;
+            padding: 0.5rem; /* reduced padding to fit content */
+            direction: rtl;
+            overflow-x: hidden;
+            overflow-y: hidden; /* prevent vertical scrolling for single-screen experience */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background 0.8s ease, color 0.8s ease;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 860px; /* tightened to reduce layout footprint and allow full view */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; /* make container the positioning context for particles/stars */
+            background: linear-gradient(135deg, #070718 0%, var(--dark) 100%); /* main window gradient */
+            border-radius: 12px;
+            padding: 0.4rem; /* slightly reduced padding to fit single-screen */
+            box-shadow: var(--shadow);
+            overflow: visible;
+            margin-bottom: 0.2rem; /* reduce extra spacing */
+            transform: scale(0.98); /* subtle shrink so everything fits without scrolling */
+        }
+
+        /* Header Styles */
+        .dashboard-header {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-radius: 18px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+            width: 100%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.06);
+            backdrop-filter: blur(14px) saturate(130%);
+            -webkit-backdrop-filter: blur(14px) saturate(130%);
+            transition: var(--transition);
+        }
+
+        .header-lang {
+            position: fixed;
+            top: 10px;
+            right: 12px;
+            left: auto;
+            z-index: 9999;
+            /* fixed so it never moves while scrolling */
+            pointer-events: auto;
+        }
+
+        [dir="ltr"] .header-lang { right: auto; left: 12px; }
+
+        .lang-btn-icon {
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.03);
+            color: var(--light);
+            border: 1px solid rgba(255,255,255,0.06);
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0;
+            transition: transform 180ms ease, box-shadow 220ms ease, background 220ms ease;
+            box-shadow: 0 4px 10px rgba(67,97,238,0.06), inset 0 1px 0 rgba(255,255,255,0.02);
+        }
+
+        .lang-btn-icon:active { transform: scale(0.96); }
+        .lang-btn-icon:hover {
+            background: linear-gradient(90deg, rgba(67,97,238,0.12), rgba(247,37,133,0.08));
+            box-shadow: 0 8px 24px rgba(67,97,238,0.18), 0 0 18px rgba(247,37,133,0.06);
+            color: white;
+        }
+
+        .header-theme {
+            position: fixed;
+            top: 10px;
+            left: 12px;
+            z-index: 9999;
+            pointer-events: auto;
+        }
+
+        .theme-btn-header {
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.03);
+            color: var(--light);
+            border: 1px solid rgba(255,255,255,0.06);
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0;
+            transition: transform 180ms ease, box-shadow 220ms ease, background 220ms ease;
+            box-shadow: 0 4px 10px rgba(67,97,238,0.06), inset 0 1px 0 rgba(255,255,255,0.02);
+        }
+
+        .theme-btn-header:active { transform: scale(0.96); }
+        .theme-btn-header:hover {
+            background: linear-gradient(90deg, rgba(67,97,238,0.12), rgba(247,37,133,0.08));
+            box-shadow: 0 8px 24px rgba(67,97,238,0.18), 0 0 18px rgba(247,37,133,0.06);
+            color: white;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+            /* logo now sits in-flow inside header-info and is centered above weather widget */
+            position: relative;
+            left: auto;
+            transform: none;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .company-logo {
+            width: 56px;
+            height: 56px;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+        }
+
+        .company-title {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04rem;
+            background: linear-gradient(45deg, var(--light), var(--gray));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0;
+        }
+
+        .header-info {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .visitors-stats {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            background: rgba(15, 15, 30, 0.7);
+            padding: 0.8rem 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(67, 97, 238, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .weather-time-widget {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(15, 15, 30, 0.7);
+            padding: 0.8rem 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(67, 97, 238, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .visitors-stats::before, .weather-time-widget::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(67, 97, 238, 0.1), transparent);
+            transform: translateX(-100%);
+        }
+
+        .visitors-stats:hover::before, .weather-time-widget:hover::before {
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
+
+        .visitors-count, .today-count, .live-count {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .visitors-count span, .today-count span, .live-count span {
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--success), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .weather-icon {
+            font-size: 1.5rem;
+            color: var(--success);
+        }
+
+        .weather-content h3 {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0.3rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            padding: 1rem; /* reduced padding to save vertical space */
+            border-radius: 16px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255,255,255,0.06);
+            backdrop-filter: blur(10px) saturate(110%);
+            -webkit-backdrop-filter: blur(10px) saturate(110%);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            width: 100%;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--success), var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 5px rgba(76, 201, 240, 0.5); }
+            100% { text-shadow: 0 0 20px rgba(247, 37, 133, 0.8), 0 0 30px rgba(67, 97, 238, 0.6); }
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Add Review Form */
+        #add-review-form {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        #add-review-form input, #add-review-form select {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.02);
+            color: var(--light);
+            transition: var(--transition);
+        }
+
+        #add-review-form input:focus, #add-review-form select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+        }
+
+        #add-review-name {
+            flex: 0 0 110px;
+        }
+
+        #add-review-text {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        #add-review-stars {
+            flex: 0 0 90px;
+        }
+
+        #add-review-likes {
+            width: 70px;
+        }
+
+        #add-review-btn {
+            width: auto;
+            padding: 8px 10px;
+            border-radius: 10px;
+        }
+
+        .reviews-container {
+            position: relative;
+            overflow-x: hidden;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 1200px;
+            -webkit-overflow-scrolling: touch;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .reviews-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .reviews-grid-wrapper {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            gap: 10px;
+            padding: 12px;
+            align-items: stretch;
+            width: max-content;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            /* ensure the visible sequence is centered inside the container */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .review-card {
+            flex: 0 0 auto;
+            min-width: 220px;
+            max-width: 300px;
+            box-shadow: var(--shadow);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .review-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .review-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-left: 0.8rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: avatarPulse 4s infinite ease-in-out;
+        }
+
+        @keyframes avatarPulse {
+            /* disabled heavy pulsing to reduce CPU use */
+            0%, 100% { transform: scale(1); }
+        }
+
+        .review-avatar::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: conic-gradient(from 0deg, transparent, rgba(67, 97, 238, 0.8), transparent);
+            border-radius: 50%;
+            animation: rotate 6s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            background: linear-gradient(45deg, #fff, var(--gray));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .rating {
+            color: #ffc107;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 4px;
+        }
+
+        .rating i {
+            filter: drop-shadow(0 0 3px rgba(255, 193, 7, 0.5));
+            animation: starTwinkle 3s infinite;
+            animation-delay: calc(var(--star-index, 0) * 0.3s);
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .review-text {
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+            color: #e0e0e0;
+            position: relative;
+            padding-bottom: 1rem;
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+
+        .review-text::after {
+            content: '"';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            font-size: 2.5rem;
+            color: rgba(255, 255, 255, 0.05);
+            font-family: Georgia, serif;
+        }
+
+        .review-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        /* Enhanced Like Button */
+        .review-likes {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 18px;
+            background: rgba(247, 37, 133, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .review-likes::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+        }
+
+        .review-likes:hover::before {
+            animation: shimmer 1.5s infinite;
+        }
+
+        .review-likes:hover {
+            background: rgba(247, 37, 133, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .review-likes.liked {
+            color: var(--accent);
+            animation: pulse 0.5s;
+        }
+
+        .review-likes i {
+            margin-left: 5px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .review-likes span {
+            font-size: 0.9rem;
+        }
+
+        .review-share-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-glow-on-click {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            transition: var(--transition);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+
+        .btn-glow-on-click::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .btn-glow-on-click:hover::before {
+            opacity: 1;
+        }
+
+        .btn-glow-on-click:hover {
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Enhanced Navigation Controls - NEW VERTICAL ARROWS */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1.5rem;
+            gap: 1rem;
+        }
+
+        /* New Vertical Arrow Design - Futuristic */
+        .arrow-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .arrow-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(180deg, rgba(67,97,238,0.12), rgba(247,37,133,0.06));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 160ms ease, box-shadow 220ms ease;
+            font-size: 1.2rem;
+            color: var(--light);
+            border: 1px solid rgba(255,255,255,0.04);
+            position: relative;
+            overflow: visible;
+            box-shadow: 0 8px 28px rgba(67,97,238,0.12), 0 0 26px rgba(247,37,133,0.08);
+        }
+
+        .arrow-btn::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 14px;
+            background: conic-gradient(from 180deg, rgba(67,97,238,0.18), rgba(247,37,133,0.12));
+            filter: blur(14px);
+            opacity: 0;
+            transition: opacity 140ms ease, transform 200ms ease;
+            z-index: -1;
+        }
+
+        .arrow-btn:hover::before { opacity: 1; transform: translateY(-2px); }
+        .arrow-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 30px rgba(67,97,238,0.14), 0 6px 18px rgba(247,37,133,0.06); }
+
+        /* directional glow accent for icons */
+        .arrow-btn i { transition: color 160ms ease, text-shadow 160ms ease; text-shadow: 0 0 6px rgba(67,97,238,0.25); }
+        .arrow-btn:hover i { color: var(--primary); text-shadow: 0 0 16px rgba(67,97,238,0.45), 0 0 8px rgba(247,37,133,0.18); }
+
+        .dots-container {
+            display: flex;
+            gap: 8px;
+            margin: 0 1rem;
+        }
+
+        .dots-container button {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .dots-container button::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .dots-container button.active {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .dots-container button.active::before {
+            opacity: 1;
+            animation: dotPulse 2s infinite;
+        }
+
+        @keyframes dotPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.5; }
+        }
+
+        /* Stats Widgets */
+        .stats-widgets {
+            display: flex;
+            gap: 0.6rem;
+            width: 100%;
+            max-width: 1000px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            padding: 0.2rem 0.4rem;
+        }
+
+        .stat-widget {
+            padding: 0.6rem 0.9rem;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(8px) saturate(105%);
+            -webkit-backdrop-filter: blur(8px) saturate(105%);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            text-align: left;
+            gap: 0.8rem;
+            min-width: 110px;
+            max-width: 220px;
+            transition: var(--transition);
+        }
+
+        .stat-widget:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            margin-bottom: 0;
+            position: relative;
+            flex: 0 0 44px;
+        }
+
+        .stat-icon::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--primary), var(--accent), var(--success), var(--primary));
+            animation: rotate 8s linear infinite;
+            z-index: -1;
+        }
+
+        .stat-icon i {
+            background: white;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            z-index: 1;
+        }
+
+        .widget-1 .stat-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .widget-2 .stat-icon {
+            background: linear-gradient(135deg, var(--accent), #d0007a);
+        }
+
+        .widget-3 .stat-icon {
+            background: linear-gradient(135deg, var(--success), #00a8e8);
+        }
+
+        .widget-4 .stat-icon {
+            background: linear-gradient(135deg, #ff9a3c, #ff6b6b);
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1;
+            background: linear-gradient(45deg, var(--light), var(--gray));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        /* Weather and Time Widget */
+        .weather-time-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .time-display {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .date-display {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .location-display {
+            font-size: 0.85rem;
+            color: var(--success);
+        }
+
+        .weather-display {
+            font-size: 0.85rem;
+            color: var(--accent);
+        }
+
+        /* Enhanced Holographic Stars */
+        .holographic-stars {
+            position: absolute; /* confined to the .container */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            border-radius: inherit;
+            overflow: hidden;
+        }
+
+        .hologram-star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: transparent;
+            border-radius: 50%;
+            box-shadow:
+                0 0 10px 2px rgba(76, 201, 240, 0.8),
+                0 0 20px 4px rgba(247, 37, 133, 0.6),
+                0 0 30px 6px rgba(67, 97, 238, 0.4);
+            animation: hologramFloat 8s infinite linear;
+            opacity: 0;
+        }
+
+        .hologram-star:nth-child(3n) {
+            box-shadow:
+                0 0 15px 3px rgba(0, 255, 234, 0.8),
+                0 0 25px 5px rgba(255, 0, 255, 0.6),
+                0 0 35px 7px rgba(255, 255, 0, 0.4);
+        }
+
+        .hologram-star:nth-child(3n+1) {
+            box-shadow:
+                0 0 12px 2px rgba(255, 0, 255, 0.8),
+                0 0 22px 4px rgba(0, 255, 255, 0.6),
+                0 0 32px 6px rgba(255, 255, 0, 0.4);
+        }
+
+        @keyframes hologramFloat {
+            0% {
+                transform: translateY(100vh) scale(0.5) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1.5) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* lightweight marquee used for continuous reviews scrolling (CSS-driven for low CPU) */
+        @keyframes marqueeScroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); } /* move half (we duplicate content so -50% loops) */
+        }
+
+        /* Ensure continuous scroll never pauses (stay in same visual position, seamless loop) */
+        .reviews-grid-wrapper {
+            animation-play-state: running !important; /* prevent accidental pause on hover */
+            will-change: transform;
+        }
+        /* Also ensure hover doesn't interrupt animation on mobile/desktop */
+        .reviews-grid-wrapper:hover,
+        .reviews-grid-wrapper:active,
+        .reviews-grid-wrapper:focus {
+            animation-play-state: running !important;
+            pointer-events: auto;
+        }
+
+        /* Auto-like animation */
+        .auto-like {
+            position: absolute;
+            font-size: 1.2rem;
+            color: var(--accent);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 100;
+            animation: autoLikeAnimation 3s ease-out forwards;
+            text-shadow: 0 0 10px rgba(247, 37, 133, 0.8);
+        }
+
+        @keyframes autoLikeAnimation {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-80px) scale(1.8) rotate(20deg);
+            }
+        }
+
+        /* Particle effects */
+        .particles {
+            position: absolute; /* confined to the .container */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            border-radius: inherit;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: transparent;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(76, 201, 240, 0.8);
+            animation: floatParticle 15s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Welcome Toast */
+        #welcome-toast {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background: #0077b6;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+            display: none;
+            z-index: 9999;
+            font-weight: 600;
+            font-size: 0.9rem;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Zoom In/Out effect for cards */
+        .zoom-in {
+            animation: zoomIn 0.5s forwards;
+        }
+
+        .zoom-out {
+            animation: zoomOut 0.5s forwards;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes zoomOut {
+            from { transform: scale(1.2); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        /* Template-style inner windows */
+        .dashboard-header, .reviews-section {
+            max-width: 920px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: var(--shadow);
+            border-radius: 14px;
+            padding: 12px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .reviews-container {
+            max-width: 880px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 12px;
+        }
+
+        .stats-widgets {
+            max-width: 920px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Ensure inner cards adapt inside the template window */
+        @media (min-width: 921px) {
+            .container {
+                max-width: 1000px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* reduce inner padding so panels fit nicely on small viewports */
+            .dashboard-header, .reviews-section {
+                padding: 10px;
+                border-radius: 12px;
+            }
+            .reviews-container { max-width: 100%; }
+            .stats-widgets { max-width: 100%; }
+        }
+
+        /* Theme System */
+        body[data-theme="dark"] {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --dark: #0f0f1e;
+            --darker: #0a0a14;
+            --light: #f8f9fa;
+            --gray: #b8b8b8;
+            background: linear-gradient(135deg, #070718 0%, var(--dark) 100%);
+        }
+
+        /* Turquoise ↔ Purple ↔ Black ↔ Gold theme (richer contrast + gold accents) */
+        body[data-theme="turq-purple-gold"] {
+            --primary: #00d4c8;   /* turquoise */
+            --secondary: #6a00ff; /* deep purple */
+            --accent: #d4af37;    /* gold accent */
+            --success: #00ffa3;   /* mint success */
+            --dark: #05040a;      /* near-black base to make chrome/gold pop */
+            --darker: #000000;
+            --light: #f4f6f8;     /* light text when needed */
+            --gray: #9aa0a6;
+            background: linear-gradient(135deg, rgba(0,212,200,0.04) 0%, rgba(106,0,255,0.04) 50%, rgba(0,0,0,0.6) 100%);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(212,175,55,0.03);
+        }
+
+        /* Hologram chrome: cool blue chrome with green highlights */
+        body[data-theme="hologram-chrome"] {
+            --primary: #00b3ff;   /* chrome-blue */
+            --secondary: #00ff99; /* chrome-green highlight */
+            --accent: #7fe7ff;    /* soft cyan accent */
+            --success: #00ffb3;
+            --dark: #001219;      /* deep blue-black base */
+            --darker: #000a0f;
+            --light: #e6fbff;
+            --gray: #a8cbd3;
+            background: radial-gradient(circle at 20% 20%, rgba(0,179,255,0.06), transparent 15%),
+                        radial-gradient(circle at 80% 80%, rgba(0,255,153,0.04), transparent 18%),
+                        linear-gradient(135deg, #000812 0%, #001219 60%, #02121a 100%);
+            /* subtle chrome sheen overlay */
+        }
+
+        body[data-theme="hologram"] {
+            --primary: #00ffea;
+            --secondary: #ff00ff;
+            --accent: #ffff00;
+            --success: #00ff9d;
+            --dark: #000000;
+            --darker: #0a0a0a;
+            --light: #ffffff;
+            --gray: #b8b8b8;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+        }
+
+        body[data-theme="neon"] {
+            --primary: #ff00ff;
+            --secondary: #00ffff;
+            --accent: #ffff00;
+            --success: #00ff00;
+            --dark: #0a0a0a;
+            --darker: #000000;
+            --light: #ffffff;
+            --gray: #b8b8b8;
+            background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%);
+        }
+
+        /* mono kept as an alternate turquoise/purple */
+        body[data-theme="mono"] {
+            --primary: #00d4c8;
+            --secondary: #6a00ff;
+            --accent: #9b5cff;
+            --success: #00ffa3;
+            --dark: #f7fbfb;
+            --darker: #eef6f8;
+            --light: #051123;
+            --gray: #6c757d;
+            background: linear-gradient(135deg, rgba(0,212,200,0.06) 0%, rgba(106,0,255,0.04) 100%);
+        }
+
+        body[data-theme="solarized"] {
+            --primary: #268bd2;
+            --secondary: #2aa198;
+            --accent: #cb4b16;
+            --success: #859900;
+            --dark: #002b36;
+            --darker: #073642;
+            --light: #fdf6e3;
+            --gray: #839496;
+            background: linear-gradient(135deg, #002b36 0%, #073642 100%);
+        }
+
+        /* small helper visuals for hologram-chrome */
+        body[data-theme="hologram-chrome"] .company-logo {
+            box-shadow: 0 8px 24px rgba(0,179,255,0.14), 0 0 40px rgba(0,255,153,0.06);
+            border: 1px solid rgba(127,231,255,0.08);
+            background: linear-gradient(90deg, rgba(127,231,255,0.04), rgba(0,255,153,0.03));
+        }
+
+        body[data-theme="turq-purple-gold"] .review-likes {
+            background: linear-gradient(90deg, rgba(212,175,55,0.08), rgba(106,0,255,0.03));
+            border: 1px solid rgba(212,175,55,0.12);
+        }
+
+        /* theme glow adjustments for new themes */
+        body[data-theme="turq-purple-gold"] .theme-glow {
+            opacity: 0.09;
+            background: radial-gradient(circle at 20% 20%, rgba(0,212,200,0.12), transparent 20%),
+                        radial-gradient(circle at 80% 80%, rgba(212,175,55,0.10), transparent 30%);
+        }
+        body[data-theme="hologram-chrome"] .theme-glow {
+            opacity: 0.12;
+            background: radial-gradient(circle at 30% 30%, rgba(0,179,255,0.18), transparent 40%),
+                        radial-gradient(circle at 70% 70%, rgba(0,255,153,0.14), transparent 40%);
+        }
+
+        /* Theme Switcher Button */
+        .theme-switcher {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            z-index: 1000;
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: var(--transition);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1) rotate(30deg);
+        }
+
+        /* Responsive Design - Enhanced for Mobile */
+        @media (max-width: 1200px) {
+            .stats-widgets {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            .reviews-grid-wrapper {
+                gap: 10px;
+                padding: 10px;
+            }
+            .review-card {
+                min-width: 200px;
+                max-width: 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 0.8rem;
+            }
+            .header-info {
+                flex-direction: column;
+                width: 100%;
+                gap: 1rem;
+            }
+            .visitors-stats, .weather-time-widget {
+                width: 100%;
+                justify-content: center;
+                padding: 0.7rem 1rem;
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            .reviews-section {
+                padding: 1.5rem;
+            }
+            .reviews-grid-wrapper {
+                gap: 10px;
+                padding: 10px;
+            }
+            .review-card {
+                min-width: 90%;
+                max-width: 90%;
+                padding: 1rem;
+                transform: scale(var(--card-scale-mobile));
+            }
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            .section-header p {
+                font-size: 1rem;
+            }
+            .controls {
+                gap: 0.8rem;
+                margin-top: 1.2rem;
+            }
+            .arrow-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+                transform: scale(var(--arrow-scale-mobile));
+            }
+            .dots-container {
+                gap: 6px;
+            }
+            .dots-container button {
+                width: 8px;
+                height: 8px;
+            }
+            #add-review-form {
+                flex-direction: column;
+                gap: 10px;
+            }
+            #add-review-form input, #add-review-form select {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                padding: 0.5rem;
+            }
+            .reviews-section, .dashboard-header {
+                padding: 0.8rem;
+                border-radius: 10px;
+            }
+            .reviews-grid-wrapper {
+                gap: 8px;
+                padding: 8px;
+            }
+            .review-card {
+                min-width: 100%;
+                max-width: 100%;
+                padding: 0.8rem;
+                transform: scale(var(--card-scale-mobile));
+            }
+            .review-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+                margin-left: 0.6rem;
+            }
+            .reviewer-name {
+                font-size: 1rem;
+            }
+            .rating {
+                font-size: 0.8rem;
+            }
+            .review-text {
+                font-size: 0.85rem;
+                margin-bottom: 1rem;
+            }
+            .review-likes {
+                padding: 4px 8px;
+                font-size: 0.8rem;
+            }
+            .btn-glow-on-click {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
+            }
+            .section-header h2 {
+                font-size: 1.5rem;
+            }
+            .section-header p {
+                font-size: 0.9rem;
+            }
+            .stats-widgets {
+                gap: 0.8rem;
+            }
+            .stat-widget {
+                padding: 0.8rem;
+            }
+            .stat-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.4rem;
+            }
+            .stat-value {
+                font-size: 1.5rem;
+            }
+            .stat-label {
+                font-size: 0.8rem;
+            }
+            .visitors-stats, .weather-time-widget {
+                padding: 0.6rem 0.8rem;
+            }
+            .visitors-count, .today-count, .live-count {
+                font-size: 0.8rem;
+            }
+            .visitors-count span, .today-count span, .live-count span {
+                font-size: 1rem;
+            }
+            .weather-icon {
+                font-size: 1.2rem;
+            }
+            .weather-content h3 {
+                font-size: 0.8rem;
+            }
+            .time-display {
+                font-size: 0.9rem;
+            }
+            .date-display, .location-display, .weather-display {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .reviews-grid-wrapper {
+                gap: 6px;
+                padding: 6px;
+            }
+            .review-card {
+                min-width: 100%;
+                max-width: 100%;
+                transform: scale(var(--card-scale-mobile));
+            }
+            .logo h1 {
+                font-size: 0.9rem;
+            }
+            .section-header h2 {
+                font-size: 1.3rem;
+            }
+            .section-header p {
+                font-size: 0.85rem;
+            }
+            .review-avatar {
+                width: 36px;
+                height: 36px;
+                font-size: 0.9rem;
+            }
+            .reviewer-name {
+                font-size: 0.9rem;
+            }
+            .rating {
+                font-size: 0.75rem;
+            }
+            .review-text {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Review card connection status badge */
+        .review-status {
+            margin-inline-start: auto;
+            padding: 4px 8px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #0f0f1e;
+            transform: translateY(-2px);
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.06);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.22);
+            min-width: 68px;
+            text-align: center;
+        }
+        .review-status.online {
+            background: linear-gradient(90deg, rgba(76,201,240,0.9), rgba(67,97,238,0.9));
+            color: #fff;
+            border-color: rgba(76,201,240,0.2);
+            text-shadow: 0 2px 8px rgba(76,201,240,0.25);
+        }
+        .review-status.offline {
+            background: linear-gradient(90deg, rgba(150,150,150,0.12), rgba(120,120,120,0.08));
+            color: var(--gray);
+            border-color: rgba(255,255,255,0.02);
+        }
+
+        /* slight tweak for like widget to feel more widget-like */
+        .review-likes {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: linear-gradient(90deg, rgba(247,37,133,0.12), rgba(67,97,238,0.04));
+            position: relative;
+            overflow: hidden;
+            gap: 8px;
+        }
+
+        /* Enhanced Theme Transitions */
+        .theme-transition {
+            transition: background-color 0.8s ease, color 0.8s ease, border-color 0.8s ease, box-shadow 0.8s ease;
+        }
+
+        /* Dynamic Theme Effects */
+        .theme-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -2;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        body[data-theme="hologram"] .theme-glow {
+            opacity: 0.1;
+            background: radial-gradient(circle at 30% 30%, rgba(0, 255, 234, 0.3), transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.3), transparent 50%);
+        }
+
+        body[data-theme="neon"] .theme-glow {
+            opacity: 0.15;
+            background: radial-gradient(circle at 20% 20%, rgba(255, 0, 255, 0.4), transparent 40%),
+                        radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.4), transparent 40%);
+        }
+
+        body[data-theme="solarized"] .theme-glow {
+            opacity: 0.1;
+            background: radial-gradient(circle at 50% 50%, rgba(38, 139, 210, 0.2), transparent 60%);
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <div class="theme-glow"></div>
+    
+    <!-- theme switcher moved into the header -->
+    <div class="container">
+        <div class="dashboard-header">
+            <div class="header-lang">
+                <button class="lang-btn-icon" aria-label="Toggle language" title="Toggle language">
+                    <i class="fas fa-language"></i>
+                </button>
+            </div>
+            <div class="header-theme">
+                <button class="lang-btn-icon theme-btn-header" id="theme-toggle" title="تغيير الثيم" aria-label="تغيير الثيم">
+                    <i class="fas fa-palette"></i>
+                </button>
+            </div>
+            <div class="header-info">
+                <div class="logo">
+                    <div class="logo-stack">
+                        <img src="https://robothousefzllc.com/Technologies.gif" alt="ROBOT HOUSE COMPANY Logo" class="company-logo" />
+                        <h1 class="company-title">ROBOT HOUSE COMPANY</h1>
+                    </div>
+                </div>
+                <div class="visitors-stats">
+                    <div class="visitors-count"><span id="visitors-count-label">عدد الزوار:</span> <span id="visitors-count">5,463</span></div>
+                    <div class="today-count"><span id="today-count-label">زيارات اليوم:</span> <span id="today-count">0</span></div>
+                    <div class="live-count"><span id="live-count-label">زوار الآن:</span> <span id="live-count">1</span></div>
+                </div>
+                <div class="weather-time-widget">
+                    <div class="weather-icon">
+                        <i class="fas fa-cloud-sun"></i>
+                    </div>
+                    <div class="weather-content">
+                        <h3>الطقس والوقت</h3>
+                        <div class="weather-time-details">
+                            <div class="time-display" id="current-time">--:--:--</div>
+                            <div class="date-display" id="current-date">--/--/----</div>
+                            <div class="location-display" id="current-location">جاري التعرف على الموقع...</div>
+                            <div class="weather-display" id="current-weather">جاري جلب بيانات الطقس...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="reviews-section">
+                <div class="section-header">
+                    <h2 id="reviews-title">آراء عملائنا</h2>
+                    <p id="reviews-subtitle">اكتشف ما يقوله عملاؤنا عن تجربتهم مع خدماتنا</p>
+                </div>
+               
+                <!-- Form to add new reviews -->
+                <form id="add-review-form" aria-label="إضافة رأي">
+                    <input id="add-review-name" placeholder="الاسم" aria-label="add-review-name" required />
+                    <input id="add-review-text" placeholder="أضف رأيك..." aria-label="add-review-text" required />
+                    <select id="add-review-stars" aria-label="add-review-stars" title="add-review-stars">
+                        <option value="5">★★★★★</option>
+                        <option value="4">★★★★</option>
+                        <option value="3">★★★</option>
+                        <option value="2">★★</option>
+                        <option value="1">★</option>
+                    </select>
+                    <input id="add-review-likes" type="number" min="0" value="0" aria-label="add-review-likes" title="add-review-likes" />
+                    <button type="submit" id="add-review-btn" class="lang-btn-icon" title="أضف">أضف</button>
+                </form>
+               
+                <div class="reviews-container">
+                    <div class="reviews-grid-wrapper" id="reviews-grid-wrapper">
+                        <!-- سيتم تعبئة البطاقات بواسطة JavaScript -->
+                    </div>
+                </div>
+                <div class="controls">
+                    <div class="arrow-vertical" id="reviews-prev-arrow">
+                        <div class="arrow-btn">
+                            <i class="fas fa-chevron-up"></i>
+                        </div>
+                        <div class="arrow-btn">
+                            <i class="fas fa-chevron-up"></i>
+                        </div>
+                    </div>
+                    <div class="dots-container" id="reviews-dots">
+                        <!-- سيتم تعبئة النقاط بواسطة JavaScript -->
+                    </div>
+                    <div class="arrow-vertical" id="reviews-next-arrow">
+                        <div class="arrow-btn">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="arrow-btn">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="stats-widgets">
+                <div class="stat-widget widget-1">
+                    <div class="stat-icon">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <div class="stat-value" id="satisfaction-rate">98%</div>
+                    <div class="stat-label" id="satisfaction-label">معدل الرضا</div>
+                </div>
+                <div class="stat-widget widget-2">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-clock"></i>
+                    </div>
+                    <div class="stat-value" id="active-users">2.4K</div>
+                    <div class="stat-label" id="active-users-label">مستخدم نشط</div>
+                </div>
+                <div class="stat-widget widget-3">
+                    <div class="stat-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="stat-value" id="growth-rate">+24%</div>
+                    <div class="stat-label" id="growth-label">معدل النمو</div>
+                </div>
+                <div class="stat-widget widget-4">
+                    <div class="stat-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="stat-value" id="global-reach">64</div>
+                    <div class="stat-label" id="global-label">دولة حول العالم</div>
+                </div>
+            </div>
+        </div>
+        <div class="particles" id="particles"></div>
+        <div class="holographic-stars" id="holographic-stars"></div>
+    </div>
+    <div id="welcome-toast">أهلاً بك زائر الموقع</div>
+   
+    <script>
+        // نظام الذاكرة الداخلية
+        class ReviewManager {
+            constructor() {
+                this.storageKey = 'robotHouseReviews';
+                this.autoAddInterval = null;
+                this.init();
+            }
+
+            init() {
+                this.reviews = this.loadFromStorage();
+                this.startAutoAdd();
+            }
+
+            loadFromStorage() {
+                const stored = localStorage.getItem(this.storageKey);
+                if (stored) {
+                    return JSON.parse(stored);
+                } else {
+                    return this.getDefaultReviews();
+                }
+            }
+
+            saveToStorage() {
+                localStorage.setItem(this.storageKey, JSON.stringify(this.reviews));
+            }
+
+            getDefaultReviews() {
+                return [
+                    {
+                        name: "أحمد محمد",
+                        avatar: "أ",
+                        stars: 5,
+                        text: "خدمة رائعة وسريعة! أنصح الجميع بالتعامل معهم.",
+                        likes: 24,
+                        date: "2024-01-15"
+                    },
+                    {
+                        name: "سارة الخالد",
+                        avatar: "س",
+                        stars: 4,
+                        text: "تجربة ممتازة، فريق العمل محترف جداً ويقدم خدمة متميزة.",
+                        likes: 18,
+                        date: "2024-01-10"
+                    },
+                    {
+                        name: "خالد العلي",
+                        avatar: "خ",
+                        stars: 5,
+                        text: "ما شاء الله، عمل رائع وتنفيذ دقيق للتفاصيل.",
+                        likes: 32,
+                        date: "2024-01-08"
+                    },
+                    {
+                        name: "فاطمة ناصر",
+                        avatar: "ف",
+                        stars: 5,
+                        text: "أعجبتني الخدمة كثيراً، وسأعود بالتأكيد.",
+                        likes: 15,
+                        date: "2024-01-05"
+                    },
+                    {
+                        name: "محمد السعد",
+                        avatar: "م",
+                        stars: 4,
+                        text: "تجربة جيدة بشكل عام، أنصح بالتعامل معهم.",
+                        likes: 21,
+                        date: "2024-01-03"
+                    },
+                    {
+                        name: "نورة القحطاني",
+                        avatar: "ن",
+                        stars: 5,
+                        text: "شكراً جزيلاً على الخدمة المميزة والاهتمام بالتفاصيل.",
+                        likes: 27,
+                        date: "2024-01-01"
+                    }
+                ];
+            }
+
+            generateNewReview() {
+                const arabicNames = ["يوسف أحمد", "لينا عبدالله", "عمر النجار", "ريم العلي", "ماجد السعيد", "هدى القاضي"];
+                const englishNames = ["John Smith", "Emma Wilson", "Michael Brown", "Sarah Johnson", "David Lee", "Lisa Garcia"];
+               
+                const arabicReviews = [
+                    "تجربة رائعة ومميزة، أنصح الجميع!",
+                    "خدمة متميزة وسريعة، شكراً لكم",
+                    "ما شاء الله، عمل متقن واحترافي",
+                    "أسعار مناسبة وجودة عالية",
+                    "فريق عمل محترف ومتعاون",
+                    "توصيل سريع ومنتجات ممتازة"
+                ];
+               
+                const englishReviews = [
+                    "Amazing experience, highly recommended!",
+                    "Excellent service and fast delivery, thank you",
+                    "Outstanding work, very professional",
+                    "Reasonable prices and high quality",
+                    "Professional and cooperative team",
+                    "Fast shipping and excellent products"
+                ];
+
+                const currentLang = document.documentElement.lang;
+                const isArabic = currentLang === 'ar';
+               
+                const names = isArabic ? arabicNames : englishNames;
+                const reviews = isArabic ? arabicReviews : englishReviews;
+               
+                const randomName = names[Math.floor(Math.random() * names.length)];
+                const randomReview = reviews[Math.floor(Math.random() * reviews.length)];
+                const randomStars = Math.floor(Math.random() * 2) + 4; // 4 أو 5 نجوم
+                const randomLikes = Math.floor(Math.random() * 20) + 5;
+
+                return {
+                    name: randomName,
+                    avatar: randomName.charAt(0),
+                    stars: randomStars,
+                    text: randomReview,
+                    likes: randomLikes,
+                    date: new Date().toISOString().split('T')[0]
+                };
+            }
+
+            addNewReview() {
+                const newReview = this.generateNewReview();
+                this.reviews.unshift(newReview); // إضافة في البداية
+               
+                // الحفاظ على حد أقصى للتعليقات (50 تعليق)
+                if (this.reviews.length > 50) {
+                    this.reviews = this.reviews.slice(0, 50);
+                }
+               
+                this.saveToStorage();
+                return newReview;
+            }
+
+            startAutoAdd() {
+                // إضافة عميل جديد كل 3 دقائق لتقليل نشاط الكتابة على التخزين وتحسين الأداء
+                this.autoAddInterval = setInterval(() => {
+                    this.addNewReview();
+                    // إعادة تحميل العرض إذا كان مفتوحاً
+                    if (window.initReviewsCarousel) {
+                        window.initReviewsCarousel();
+                    }
+                }, 180000); // 3 دقائق
+            }
+
+            stopAutoAdd() {
+                if (this.autoAddInterval) {
+                    clearInterval(this.autoAddInterval);
+                }
+            }
+
+            getAllReviews() {
+                return this.reviews;
+            }
+
+            // إضافة تعليق جديد يدويًا
+            pushReview(review) {
+                this.reviews.unshift(review);
+                if (this.reviews.length > 50) this.reviews = this.reviews.slice(0,50);
+                this.saveToStorage();
+            }
+        }
+
+        // إنشاء مدير التعليقات
+        const reviewManager = new ReviewManager();
+
+        // Add specific review (لينا عبدالله) once if not present — run after reviewManager is available
+        (function ensureLinaReview() {
+            const exists = reviewManager.getAllReviews().some(r => r.name === 'لينا عبدالله' && r.text.includes('محترف'));
+            if (!exists) {
+                reviewManager.pushReview({
+                    name: 'لينا عبدالله',
+                    avatar: 'ل',
+                    stars: 5,
+                    text: 'فريق عمل محترف ومتعاون',
+                    likes: 0,
+                    date: new Date().toISOString().split('T')[0]
+                });
+            }
+        })();
+
+        // ضمان وجود مجموعة المراجعات المحددة من المستخدم (بأسماء ونصوص وإعجابات وأحرف ال avatar)
+        (function ensureSpecificSeedReviews() {
+            const required = [
+                { name: "عمر النجار", avatar: "ع", stars: 5, text: "ما شاء الله، عمل متقن واحترافي", likes: 5 },
+                { name: "هدى القاضي", avatar: "ه", stars: 5, text: "فريق عمل محترف ومتعاون", likes: 11 },
+                { name: "لينا عبدالله", avatar: "ل", stars: 5, text: "توصيل سريع ومنتجات ممتازة", likes: 5 },
+                { name: "لينا عبدالله", avatar: "ل", stars: 5, text: "ما شاء الله، عمل ر", likes: 11 },
+                { name: "ريم العلي", avatar: "ر", stars: 5, text: "خدمة متميزة وسريعة، شكراً لكم", likes: 22 },
+                { name: "عمر النجار", avatar: "ع", stars: 5, text: "تجربة رائعة ومميزة، أنصح الجميع!", likes: 22 }
+            ];
+            const existing = reviewManager.getAllReviews();
+            required.forEach(req => {
+                const dup = existing.some(r => r.name === req.name && r.text === req.text && r.likes === req.likes);
+                if (!dup) {
+                    reviewManager.pushReview(Object.assign({}, req, { date: new Date().toISOString().split('T')[0] }));
+                }
+            });
+            // refresh carousel if ready
+            if (window.reviewsCarousel) {
+                window.reviewsCarousel.reviewsData = reviewManager.getAllReviews();
+                window.reviewsCarousel.renderReviews();
+            }
+        })();
+
+        // نظام الترجمة متعدد اللغات
+        const translations = {
+            ar: {
+                reviews_title: "آراء عملائنا",
+                reviews_subtitle: "اكتشف ما يقوله عملاؤنا عن تجربتهم مع خدماتنا",
+                visitor_count: "عدد الزوار",
+                weather_time: "الطقس والوقت",
+                satisfaction_rate: "معدل الرضا",
+                active_users: "مستخدم نشط",
+                growth_rate: "معدل النمو",
+                global_reach: "دولة حول العالم",
+                location_loading: "جاري التعرف على الموقع...",
+                weather_loading: "جاري جلب بيانات الطقس...",
+                location_unavailable: "الموقع غير متاح",
+                weather_unavailable: "بيانات الطقس غير متاحة",
+                location_unsupported: "المتصفح لا يدعم خدمات الموقع",
+                welcome_message: "أهلاً بك زائر الموقع",
+                toggle_language_label: "تبديل اللغة",
+                toggle_language_title: "تبديل إلى الإنجليزية",
+                theme_toggle: "تبديل الثيم",
+                placeholder_name: "الاسم",
+                placeholder_review: "أضف رأيك...",
+                add_button: "أضف",
+                likes_label: "عدد الإعجابات",
+                stars_label: "تقييم النجوم",
+                today_visits: "زيارات اليوم",
+                live_visitors: "زوار الآن"
+            },
+            en: {
+                reviews_title: "Our Customer Reviews",
+                reviews_subtitle: "Discover what our customers say about their experience with our services",
+                visitor_count: "Visitor Count",
+                weather_time: "Weather & Time",
+                satisfaction_rate: "Satisfaction Rate",
+                active_users: "Active Users",
+                growth_rate: "Growth Rate",
+                global_reach: "Countries Worldwide",
+                location_loading: "Detecting location...",
+                weather_loading: "Loading weather data...",
+                location_unavailable: "Location unavailable",
+                weather_unavailable: "Weather data unavailable",
+                location_unsupported: "Browser doesn't support location services",
+                welcome_message: "Welcome to our website",
+                toggle_language_label: "Switch language",
+                toggle_language_title: "Switch to Arabic",
+                theme_toggle: "Toggle theme",
+                placeholder_name: "Name",
+                placeholder_review: "Add your review...",
+                add_button: "Add",
+                likes_label: "Likes",
+                stars_label: "Star rating",
+                today_visits: "Today's Visits",
+                live_visitors: "Live Visitors"
+            }
+        };
+
+        // استدعاء الدالة بعد تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            initLanguageSystem();
+            initReviewsCarousel();
+            createParticles();
+            createHolographicStars();
+            startAutoLikes();
+            initWeatherAndTime();
+            showWelcome();
+            bindAddReviewForm();
+            initThemeSystem();
+            initVisitorCounter();
+
+            // Apply the specific static values requested for the top bar / weather display
+            // Visitor counts
+            document.getElementById('visitors-count').textContent = '20';
+            document.getElementById('today-count').textContent = '20';
+            document.getElementById('live-count').textContent = '5';
+
+            // Weather & Time static content requested
+            document.querySelector('.weather-content h3').textContent = 'Weather & Time';
+            document.getElementById('current-time').textContent = '15:36:06';
+            document.getElementById('current-date').textContent = 'Sunday, April 5, 2026';
+            document.getElementById('current-location').textContent = 'Location unavailable';
+            document.getElementById('current-weather').textContent = 'Weather data unavailable';
+        });
+
+        // نظام اللغة
+        function initLanguageSystem() {
+            const iconBtn = document.querySelector('.header-lang .lang-btn-icon');
+            const themeBtn = document.querySelector('.header-theme .theme-btn-header');
+            const html = document.documentElement;
+            
+            // التحقق من اللغة المخزنة أو استخدام لغة المتصفح
+            const savedLang = localStorage.getItem('preferredLang');
+            const browserLang = navigator.language && navigator.language.startsWith('ar') ? 'ar' : 'en';
+            const currentLang = savedLang || browserLang;
+            
+            // تطبيق اللغة الحالية
+            applyLanguage(currentLang);
+            
+            if (iconBtn) {
+                iconBtn.setAttribute('aria-label', translations[currentLang] && translations[currentLang].toggle_language_label ? translations[currentLang].toggle_language_label : 'Toggle language');
+                iconBtn.title = translations[currentLang] && translations[currentLang].toggle_language_title ? translations[currentLang].toggle_language_title : iconBtn.title;
+                iconBtn.addEventListener('click', () => {
+                    const newLang = document.documentElement.lang === 'ar' ? 'en' : 'ar';
+                    applyLanguage(newLang);
+                    localStorage.setItem('preferredLang', newLang);
+                });
+            }
+            if (themeBtn) {
+                // ensure theme button has translated title/aria but remains fixed
+                themeBtn.setAttribute('aria-label', translations[currentLang].theme_toggle || 'Toggle theme');
+                themeBtn.title = translations[currentLang].theme_toggle || themeBtn.title;
+            }
+            // ensure positions updated on init
+            positionLangTheme(currentLang);
+        }
+
+        // ضبط موضع أزرار اللغة والثيم حسب اللغة (ثابتة)
+        function positionLangTheme(lang) {
+            const headerLang = document.querySelector('.header-lang');
+            const headerTheme = document.querySelector('.header-theme');
+            if (!headerLang || !headerTheme) return;
+            if (lang === 'ar') {
+                headerLang.style.right = '12px';
+                headerLang.style.left = 'auto';
+                headerTheme.style.left = '12px';
+                headerTheme.style.right = 'auto';
+            } else {
+                headerLang.style.left = '12px';
+                headerLang.style.right = 'auto';
+                headerTheme.style.right = '12px';
+                headerTheme.style.left = 'auto';
+            }
+        }
+
+        function applyLanguage(lang) {
+            const html = document.documentElement;
+            html.setAttribute('lang', lang);
+            html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+            // Update all visible texts and labels
+            document.getElementById('reviews-title').textContent = translations[lang].reviews_title;
+            document.getElementById('reviews-subtitle').textContent = translations[lang].reviews_subtitle;
+            document.querySelector('.weather-content h3').textContent = translations[lang].weather_time;
+            document.getElementById('satisfaction-label').textContent = translations[lang].satisfaction_rate;
+            document.getElementById('active-users-label').textContent = translations[lang].active_users;
+            document.getElementById('growth-label').textContent = translations[lang].growth_rate;
+            document.getElementById('global-label').textContent = translations[lang].global_reach;
+
+            // visitors labels
+            document.getElementById('visitors-count-label').textContent = translations[lang].visitor_count + ':';
+            document.getElementById('today-count-label').textContent = translations[lang].today_visits + ':';
+            document.getElementById('live-count-label').textContent = translations[lang].live_visitors + ':';
+
+            // form placeholders and button
+            const nameInput = document.getElementById('add-review-name');
+            const textInput = document.getElementById('add-review-text');
+            const likesInput = document.getElementById('add-review-likes');
+            const submitBtn = document.getElementById('add-review-btn');
+            const starsSelect = document.getElementById('add-review-stars');
+
+            if (nameInput) {
+                nameInput.placeholder = translations[lang].placeholder_name;
+                nameInput.setAttribute('aria-label', translations[lang].placeholder_name);
+            }
+            if (textInput) {
+                textInput.placeholder = translations[lang].placeholder_review;
+                textInput.setAttribute('aria-label', translations[lang].placeholder_review);
+            }
+            if (likesInput) {
+                likesInput.setAttribute('aria-label', translations[lang].likes_label);
+                likesInput.title = translations[lang].likes_label;
+            }
+            if (submitBtn) {
+                submitBtn.textContent = translations[lang].add_button;
+                submitBtn.title = translations[lang].add_button;
+            }
+            if (starsSelect) {
+                starsSelect.setAttribute('aria-label', translations[lang].stars_label);
+                starsSelect.title = translations[lang].stars_label;
+            }
+
+            // update weather placeholders
+            document.getElementById('current-location').textContent = translations[lang].location_loading;
+            document.getElementById('current-weather').textContent = translations[lang].weather_loading;
+
+            // update toast quickly if visible
+            const toast = document.getElementById('welcome-toast');
+            if (toast && toast.style.display !== 'none') {
+                toast.textContent = translations[lang].welcome_message;
+            }
+
+            // keep buttons' aria/title localized (language and theme buttons)
+            const langBtn = document.querySelector('.header-lang .lang-btn-icon');
+            const themeBtn = document.querySelector('.header-theme .theme-btn-header');
+            if (langBtn) {
+                langBtn.setAttribute('aria-label', translations[lang].toggle_language_label || langBtn.getAttribute('aria-label'));
+                langBtn.title = translations[lang].toggle_language_title || langBtn.title;
+            }
+            if (themeBtn) {
+                themeBtn.setAttribute('aria-label', translations[lang].theme_toggle || themeBtn.getAttribute('aria-label'));
+                themeBtn.title = translations[lang].theme_toggle || themeBtn.title;
+            }
+
+            // reposition fixed buttons and refresh reviews carousel texts & layout (translate reviews for display)
+            positionLangTheme(lang);
+            if (window.reviewsCarousel) {
+                window.reviewsCarousel.reviewsData = reviewManager.getAllReviews().map(r => translateReviewForDisplay(r, lang));
+                window.reviewsCarousel.renderReviews();
+            }
+            // update weather/time formatting via existing interval (function reads document.documentElement.lang)
+            // ensure any open UI updates immediately
+            // (no reload)
+        }
+
+        // ترجمة المحتوى الظاهر للتعليقات (لا تغير التخزين) — خريطة بسيطة للأسماء والنصوص الافتراضية
+        function translateReviewForDisplay(review, lang) {
+            // محافظ على الكائن الأصلي دون تغيير
+            const map = {
+                'أحمد محمد': { enName: 'Ahmed Mohamed', enText: 'Great fast service! I recommend them.' },
+                'سارة الخالد': { enName: 'Sara Al-Khalid', enText: 'Excellent experience, very professional team.' },
+                'خالد العلي': { enName: 'Khaled Al-Ali', enText: 'Wonderful work and attention to detail.' },
+                'فاطمة ناصر': { enName: 'Fatima Nasser', enText: 'I loved the service, will return.' },
+                'محمد السعد': { enName: 'Mohammed Al-Saad', enText: 'Good overall experience, recommended.' },
+                'نورة القحطاني': { enName: 'Noura Al-Qahtani', enText: 'Thanks for the great service and attention.' },
+                'لينا عبدالله': { enName: 'Lina Abdullah', enText: 'Professional and cooperative team', arName: 'لينا عبدالله', arText: 'توصيل سريع ومنتجات ممتازة' },
+                'عمر النجار': { enName: 'Omar Al-Najjar', enText: 'Amazing experience, highly recommended!', arName: 'عمر النجار', arText: 'ما شاء الله، عمل متقن واحترافي' },
+                'ريم العلي': { enName: 'Reem Al-Ali', enText: 'Excellent and fast service, thank you', arName: 'ريم العلي', arText: 'خدمة متميزة وسريعة، شكراً لكم' },
+                'هدى القاضي': { enName: 'Huda Al-Qadi', enText: 'Professional and cooperative team', arName: 'هدى القاضي', arText: 'فريق عمل محترف ومتعاون' },
+                // English -> Arabic mapping (fallback simple)
+                'John Smith': { arName: 'جون سميث', arText: 'تجربة رائعة، أنصح بها!' },
+                'Emma Wilson': { arName: 'إيما ويلسون', arText: 'خدمة ممتازة وسريعة، شكراً' },
+                'Michael Brown': { arName: 'مايكل براون', arText: 'عمل رائع ومحترف' },
+                'Sarah Johnson': { arName: 'سارة جونسون', arText: 'فريق محترف ومتعاون' },
+                'David Lee': { arName: 'ديفيد لي', arText: 'توصيل سريع ومنتجات جيدة' },
+                'Lisa Garcia': { arName: 'ليزا غارسيا', arText: 'خدمة ممتازة' }
+            };
+            const copy = Object.assign({}, review);
+            if (lang === 'en') {
+                const m = map[review.name];
+                if (m && m.enName) copy.name = m.enName;
+                if (m && m.enText) copy.text = m.enText;
+                // fallback: transliterate first letter for avatar
+                copy.avatar = copy.name.charAt(0);
+            } else {
+                const m = map[review.name];
+                if (m && m.arName) copy.name = m.arName;
+                if (m && m.arText) copy.text = m.arText;
+                copy.avatar = copy.name.charAt(0);
+            }
+            return copy;
+        }
+
+        // دالة عداد الزوار
+        function initVisitorCounter() {
+            const TOTAL_KEY = 'rh_total_visits';
+            const TODAY_KEY_PREFIX = 'rh_today_visits_';
+            
+            function todayKey() {
+                const d = new Date();
+                const yyyy = d.getFullYear();
+                const mm = String(d.getMonth()+1).padStart(2,'0');
+                const dd = String(d.getDate()).padStart(2,'0');
+                return TODAY_KEY_PREFIX + `${yyyy}-${mm}-${dd}`;
+            }
+            
+            let total = parseInt(localStorage.getItem(TOTAL_KEY) || '0', 10);
+            const tk = todayKey();
+            let today = parseInt(localStorage.getItem(tk) || '0', 10);
+            
+            total += 1;
+            today += 1;
+            localStorage.setItem(TOTAL_KEY, String(total));
+            localStorage.setItem(tk, String(today));
+            
+            document.getElementById('visitors-count').textContent = total.toLocaleString();
+            document.getElementById('today-count').textContent = today;
+            
+            function updateLive() {
+                const live = Math.max(1, Math.floor(Math.random() * 6));
+                document.getElementById('live-count').textContent = live;
+            }
+            
+            updateLive();
+            setInterval(updateLive, 8000);
+        }
+
+        // دالة الطقس والوقت (IP-based location lookup to avoid browser permission prompt)
+        function initWeatherAndTime() {
+            const currentLang = document.documentElement.lang;
+            
+            function updateDateTime() {
+                const now = new Date();
+                const lang = document.documentElement.lang;
+                
+                const timeOptions = {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: lang === 'ar' ? true : false
+                };
+                const timeString = now.toLocaleTimeString(lang === 'ar' ? 'ar-EG' : 'en-US', timeOptions);
+                document.getElementById('current-time').textContent = timeString;
+                
+                const dateOptions = {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                };
+                const dateString = now.toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US', dateOptions);
+                document.getElementById('current-date').textContent = dateString;
+            }
+            
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            
+            // Use IP-based geolocation service (no browser permission required)
+            (async function fetchIpLocationAndWeather() {
+                const locEl = document.getElementById('current-location');
+                const weatherEl = document.getElementById('current-weather');
+                locEl.textContent = translations[currentLang].location_loading;
+                weatherEl.textContent = translations[currentLang].weather_loading;
+                
+                try {
+                    // ipapi.co is simple and returns lat/lon and city/country. This works without prompting the user.
+                    const ipRes = await fetch('https://ipapi.co/json/');
+                    if (!ipRes.ok) throw new Error('IP lookup failed');
+                    const ipData = await ipRes.json();
+                    
+                    const lat = parseFloat(ipData.latitude || ipData.lat || 0);
+                    const lon = parseFloat(ipData.longitude || ipData.lon || 0);
+                    const city = ipData.city || ipData.region || '';
+                    const country = ipData.country_name || ipData.country || '';
+                    const locName = (city && country) ? `${city}, ${country}` : (country || translations[currentLang].location_unavailable);
+                    
+                    locEl.textContent = locName;
+                    
+                    // If we couldn't get coords, show unavailable message
+                    if (!lat || !lon) {
+                        weatherEl.textContent = translations[currentLang].weather_unavailable;
+                        return;
+                    }
+                    
+                    // Fetch weather using coordinates from IP lookup
+                    const weatherResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=auto`);
+                    if (!weatherResponse.ok) throw new Error('Weather fetch failed');
+                    const weatherData = await weatherResponse.json();
+                    
+                    if (weatherData && weatherData.current_weather) {
+                        const temp = Math.round(weatherData.current_weather.temperature);
+                        const weatherCode = weatherData.current_weather.weathercode;
+                        const weatherText = getWeatherDescription(weatherCode, currentLang);
+                        weatherEl.textContent = `${temp}°C - ${weatherText}`;
+                    } else {
+                        weatherEl.textContent = translations[currentLang].weather_unavailable;
+                    }
+                } catch (err) {
+                    console.error('IP location or weather error:', err);
+                    document.getElementById('current-location').textContent = translations[currentLang].location_unavailable;
+                    document.getElementById('current-weather').textContent = translations[currentLang].weather_unavailable;
+                }
+            })();
+        }
+
+        // دالة لتحويل رمز الطقس إلى نص
+        function getWeatherDescription(code, lang) {
+            const weatherMap = {
+                ar: {
+                    0: 'صافي',
+                    1: 'قليل السحب',
+                    2: 'غائم جزئياً',
+                    3: 'غائم',
+                    45: 'ضباب',
+                    48: 'ضباب متجمد',
+                    51: 'رذاذ خفيف',
+                    53: 'رذاذ متوسط',
+                    55: 'رذاذ كثيف',
+                    61: 'مطر خفيف',
+                    63: 'مطر متوسط',
+                    65: 'مطر غزير',
+                    80: 'زخات مطر خفيفة',
+                    81: 'زخات مطر متوسطة',
+                    82: 'زخات مطر غزيرة',
+                    95: 'عاصفة رعدية',
+                    96: 'عاصفة رعدية مع برد خفيف',
+                    99: 'عاصفة رعدية مع برد غزير'
+                },
+                en: {
+                    0: 'Clear',
+                    1: 'Mainly clear',
+                    2: 'Partly cloudy',
+                    3: 'Overcast',
+                    45: 'Fog',
+                    48: 'Depositing rime fog',
+                    51: 'Light drizzle',
+                    53: 'Moderate drizzle',
+                    55: 'Dense drizzle',
+                    61: 'Slight rain',
+                    63: 'Moderate rain',
+                    65: 'Heavy rain',
+                    80: 'Slight rain showers',
+                    81: 'Moderate rain showers',
+                    82: 'Violent rain showers',
+                    95: 'Thunderstorm',
+                    96: 'Thunderstorm with slight hail',
+                    99: 'Thunderstorm with heavy hail'
+                }
+            };
+            
+            return weatherMap[lang][code] || (lang === 'ar' ? 'غير معروف' : 'Unknown');
+        }
+
+        // دالة إنشاء الجسيمات المتحركة (مخففة لخفض العمل على المعالج)
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            // مخفف: أقل عدد من الجسيمات لتقليل الحمل على المعالج
+            for (let i = 0; i < 4; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 10}s`;
+                particle.style.animationDuration = `${12 + Math.random() * 8}s`;
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // دالة إنشاء النجوم الهلوجرامية المحسنة (مخففة)
+        function createHolographicStars() {
+            const starsContainer = document.getElementById('holographic-stars');
+            // مخفف: تقليل عدد النجوم لتحسين الأداء
+            for (let i = 0; i < 4; i++) {
+                const star = document.createElement('div');
+                star.classList.add('hologram-star');
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 6}s`;
+                star.style.animationDuration = `${7 + Math.random() * 6}s`;
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // دالة زيادة الإعجابات تلقائياً (معدلة لتقليل التكرار)
+        function startAutoLikes() {
+            // مخفف: تقليل تكرار الإعجابات التلقائية إلى كل 30 ثانية لتقليل نشاط DOM المتكرر
+            setInterval(() => {
+                const likeElements = document.querySelectorAll('.review-likes:not(.liked)');
+                if (likeElements.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * likeElements.length);
+                    const randomLike = likeElements[randomIndex];
+                    
+                    // إنشاء عنصر الإعجاب المتحرك (خفيف ومدة أقصر)
+                    const autoLike = document.createElement('div');
+                    autoLike.classList.add('auto-like');
+                    autoLike.innerHTML = '<i class="fas fa-heart"></i>';
+                    autoLike.style.left = `${Math.random() * 80 + 10}%`;
+                    autoLike.style.top = `${Math.random() * 80 + 10}%`;
+                    document.querySelector('.reviews-container').appendChild(autoLike);
+                    
+                    // إزالة العنصر بعد انتهاء الحركة
+                    setTimeout(() => {
+                        autoLike.remove();
+                    }, 1800);
+                    
+                    // زيادة العدد
+                    if (!randomLike.classList.contains('liked')) {
+                        const likesCount = randomLike.querySelector('span');
+                        let currentLikes = parseInt(likesCount.textContent);
+                        likesCount.textContent = currentLikes + 1;
+                        randomLike.dataset.likes = currentLikes + 1;
+                        
+                        // إضافة تأثير نبض سريع ثم إزالته
+                        randomLike.classList.add('liked');
+                        setTimeout(() => {
+                            randomLike.classList.remove('liked');
+                        }, 700);
+                    }
+                }
+            }, 30000); // كل 30 ثانية
+        }
+
+        // نظام عرض البطاقات المحسن
+        class ReviewsCarousel {
+            constructor() {
+                this.reviewsGridWrapper = document.getElementById('reviews-grid-wrapper');
+                this.prevArrow = document.getElementById('reviews-prev-arrow');
+                this.nextArrow = document.getElementById('reviews-next-arrow');
+                this.dotsContainer = document.getElementById('reviews-dots');
+                
+                this.reviewsData = reviewManager.getAllReviews();
+                this.itemsPerView = 3;
+                this.gap = 10;
+                
+                this.offset = 0; // current pixel offset for continuous scroll
+                this.speed = 40; // pixels per second
+                this.raf = null;
+                this.isRTL = document.documentElement.dir === 'rtl';
+                
+                this.init();
+            }
+            
+            init() {
+                this.renderReviews();
+                this.attachEventListeners();
+                this.updateLayout();
+                this.startAutoScroll();
+                // observe storage changes (when reviews change elsewhere)
+                window.addEventListener('storage', () => {
+                    this.reviewsData = reviewManager.getAllReviews();
+                    this.renderReviews();
+                    this.updateLayout();
+                });
+            }
+            
+            renderReviews() {
+                // fetch stored reviews and translate them for current UI language (display-only)
+                const lang = document.documentElement.lang || 'ar';
+                const rawReviews = reviewManager.getAllReviews();
+                this.reviewsData = rawReviews.map(r => translateReviewForDisplay(r, lang));
+                
+                if (!this.reviewsGridWrapper) return;
+                this.reviewsGridWrapper.innerHTML = '';
+                if (this.reviewsData.length === 0) {
+                    // localized friendly message without leaving visual gap
+                    this.reviewsGridWrapper.textContent = lang === 'ar' ? 'لا توجد آراء حالياً.' : 'No reviews yet.';
+                    if (this.prevArrow) this.prevArrow.style.display = 'none';
+                    if (this.nextArrow) this.nextArrow.style.display = 'none';
+                    return;
+                }
+                const escapeHtml = (str = '') => String(str || '').replace(/[&<>"'`]/g, s => ({
+                    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;'
+                }[s]));
+                // show a capped number of distinct cards for performance
+                const distinctCount = Math.min(this.reviewsData.length, 12);
+                const fragment = document.createDocumentFragment();
+                
+                for (let i = 0; i < distinctCount; i++) {
+                    const review = this.reviewsData[i];
+                    const card = document.createElement('div');
+                    card.className = 'review-card zoom-in theme-transition';
+                    card.setAttribute('role', 'listitem');
+                    card.style.setProperty('--delay', i);
+
+                    // randomly assign an online/offline status for the visual badge (can be replaced with real status)
+                    const status = Math.random() > 0.4 ? 'online' : 'offline';
+                    const statusText = status === 'online' ? (lang === 'ar' ? 'متصل' : 'Online') : (lang === 'ar' ? 'غير متصل' : 'Offline');
+
+                    card.innerHTML = `
+                        <div class="review-header" style="align-items:center;gap:10px;">
+                            <div class="review-avatar">${escapeHtml(String(review.avatar).slice(0, 1).toUpperCase())}</div>
+                            <div style="display:flex;flex-direction:column;">
+                                <span class="reviewer-name">${escapeHtml(review.name)}</span>
+                                <span class="review-meta" style="font-size:0.8rem;color:var(--gray)">${escapeHtml(review.date || '')}</span>
+                            </div>
+                            <span class="review-status ${status}" title="${escapeHtml(statusText)}">${escapeHtml(statusText)}</span>
+                        </div>
+                        <div class="rating" aria-hidden="true">
+                            ${[...Array(5)].map((_, si) => `
+                                <i class="fas fa-star ${si < review.stars ? '' : 'far'}" style="--star-index: ${si}"></i>`).join('')}
+                        </div>
+                        <p class="review-text">${escapeHtml(review.text)}</p>
+                        <div class="review-footer">
+                            <div class="review-likes" data-index="${i}" data-likes="${review.likes}" title="${lang === 'ar' ? 'إعجابات' : 'Likes'}">
+                                <i class="fas fa-heart"></i> <span>${review.likes}</span>
+                            </div>
+                            <div class="review-share-buttons">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}"
+                                   target="_blank" class="btn-glow-on-click" aria-label="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(review.text)}"
+                                   target="_blank" class="btn-glow-on-click" aria-label="Share on Twitter"><i class="fab fa-x-twitter"></i></a>
+                                <a href="https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(window.location.href)}"
+                                   target="_blank" class="btn-glow-on-click" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    `;
+                    fragment.appendChild(card);
+                }
+                // append the fragment twice (duplicate sequence) to create a seamless loop without gaps
+                this.reviewsGridWrapper.appendChild(fragment.cloneNode(true));
+                this.reviewsGridWrapper.appendChild(fragment.cloneNode(true));
+                
+                // observe for reveal animations on visible cards
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('reveal');
+                            entry.target.classList.remove('zoom-in');
+                            entry.target.classList.add('zoom-out');
+                        }
+                    });
+                }, { threshold: 0.1 });
+                this.reviewsGridWrapper.querySelectorAll('.review-card').forEach(el => observer.observe(el));
+                
+                this.attachLikeListeners();
+                this.updateDots();
+            }
+            
+            updateLayout() {
+                const width = window.innerWidth;
+                if (width <= 360) {
+                    this.itemsPerView = 1;
+                    this.speed = 30;
+                } else if (width <= 420) {
+                    this.itemsPerView = 2;
+                    this.speed = 35;
+                } else if (width <= 768) {
+                    this.itemsPerView = 2;
+                    this.speed = 40;
+                } else {
+                    this.itemsPerView = 3;
+                    this.speed = 40;
+                }
+                this.reviewsGridWrapper.style.flexWrap = 'nowrap';
+                // ensure the sequence is centered inside the reviews container
+                this.reviewsGridWrapper.style.justifyContent = 'center';
+                
+                const cards = this.reviewsGridWrapper.querySelectorAll('.review-card');
+                cards.forEach(card => {
+                    const gapPx = this.gap;
+                    const unit = (this.reviewsGridWrapper.clientWidth - gapPx * (this.itemsPerView - 1)) / this.itemsPerView;
+                    card.style.width = `${Math.max(160, unit)}px`;
+                    card.style.margin = `0 ${Math.floor(gapPx/2)}px`;
+                });
+                
+                // reset offset bounds to safe range when layout changes
+                this.normalizeOffset();
+                this.updateArrowVisibility();
+                this.updateDots();
+            }
+            
+            normalizeOffset() {
+                // keep offset in the width of the first sequence to ensure seamless loop
+                const sequenceWidth = this.getSequenceWidth();
+                if (sequenceWidth === 0) return;
+                // wrap offset so it stays within [0, sequenceWidth)
+                if (this.isRTL) {
+                    this.offset = ((this.offset % sequenceWidth) + sequenceWidth) % sequenceWidth;
+                } else {
+                    this.offset = ((this.offset % sequenceWidth) + sequenceWidth) % sequenceWidth;
+                }
+            }
+            
+            getSequenceWidth() {
+                // sequence width equals half of total content because we appended fragment twice
+                const totalWidth = this.reviewsGridWrapper.scrollWidth;
+                return totalWidth ? totalWidth / 2 : 0;
+            }
+            
+            startAutoScroll() {
+                // Use CSS marquee animation instead of continuous JS RAF for lower CPU usage.
+                const seqWidth = this.getSequenceWidth() || this.reviewsGridWrapper.scrollWidth || 1;
+                // compute duration so speed (pixels/sec) is roughly respected; clamp to sensible range
+                const duration = Math.max(8, Math.min(60, Math.round(seqWidth / this.speed)));
+                // ensure wrapper uses transform-origin left for consistent movement
+                this.reviewsGridWrapper.style.willChange = 'transform';
+                this.reviewsGridWrapper.style.animation = `marqueeScroll ${duration}s linear infinite`;
+                // keep continuous scroll in the same visual position for both LTR/RTL:
+                // avoid flipping the entire wrapper; instead keep normal transform and ensure animation runs forward
+                this.reviewsGridWrapper.style.transform = '';
+                this.reviewsGridWrapper.style.animationDirection = 'normal';
+            }
+            
+            stopAutoScroll() {
+                // stop CSS animation
+                this.reviewsGridWrapper.style.animation = 'none';
+                this.reviewsGridWrapper.style.willChange = 'auto';
+            }
+            
+            updateDots() {
+                if (!this.dotsContainer) return;
+                this.dotsContainer.innerHTML = '';
+                const total = Math.max(1, this.reviewsData.length);
+                const pages = Math.max(1, Math.ceil(total / this.itemsPerView));
+                for (let p = 0; p < pages; p++) {
+                    const dot = document.createElement('button');
+                    dot.className = '';
+                    dot.addEventListener('click', () => {
+                        // on dot click, jump offset to page position within the first sequence
+                        const sequenceWidth = this.getSequenceWidth();
+                        const targetIndex = p * this.itemsPerView;
+                        const card = this.reviewsGridWrapper.querySelectorAll('.review-card')[targetIndex];
+                        if (card) {
+                            const left = card.offsetLeft;
+                            this.offset = left % sequenceWidth;
+                        }
+                    });
+                    this.dotsContainer.appendChild(dot);
+                }
+            }
+            
+            attachLikeListeners() {
+                // delegate clicks (safer for dynamic duplicated nodes)
+                this.reviewsGridWrapper.querySelectorAll('.review-likes').forEach(el => {
+                    el.removeEventListener('click', this.likeHandler);
+                    el.addEventListener('click', this.likeHandler);
+                });
+            }
+            
+            likeHandler(e) {
+                const el = e.currentTarget;
+                if (el.classList.contains('liked')) return;
+                el.classList.add('liked');
+                el.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.25)' }, { transform: 'scale(1)' }], { duration: 400 });
+                let likes = parseInt(el.dataset.likes) + 1;
+                el.dataset.likes = likes;
+                el.querySelector('span').textContent = likes;
+                
+                const heart = document.createElement('div');
+                heart.classList.add('auto-like');
+                heart.innerHTML = '<i class="fas fa-heart"></i>';
+                heart.style.left = `${e.clientX - 20}px`;
+                heart.style.top = `${e.clientY - 20}px`;
+                document.querySelector('.reviews-container').appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 3000);
+            }
+            
+            goNext() {
+                // manual next should nudge the offset forward by one item width
+                const firstCard = this.reviewsGridWrapper.querySelector('.review-card');
+                if (!firstCard) return;
+                const w = firstCard.offsetWidth + (this.gap);
+                this.offset = (this.offset + w) % this.getSequenceWidth();
+            }
+            
+            goPrev() {
+                const firstCard = this.reviewsGridWrapper.querySelector('.review-card');
+                if (!firstCard) return;
+                const w = firstCard.offsetWidth + (this.gap);
+                this.offset = (this.offset - w + this.getSequenceWidth()) % this.getSequenceWidth();
+            }
+            
+            updateArrowVisibility() {
+                const show = this.reviewsData.length > this.itemsPerView;
+                if (this.prevArrow) this.prevArrow.style.display = show ? 'flex' : 'none';
+                if (this.nextArrow) this.nextArrow.style.display = show ? 'flex' : 'none';
+            }
+            
+            attachEventListeners() {
+                if (this.prevArrow) this.prevArrow.addEventListener('click', () => { this.stopAutoScroll(); this.goPrev(); this.startAutoScroll(); });
+                if (this.nextArrow) this.nextArrow.addEventListener('click', () => { this.stopAutoScroll(); this.goNext(); this.startAutoScroll(); });
+                // debounce resize handler to avoid excessive layout recalculations
+                let resizeTimeout = null;
+                window.addEventListener('resize', () => {
+                    if (resizeTimeout) clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        this.updateLayout();
+                        resizeTimeout = null;
+                    }, 150);
+                }, { passive: true });
+                // touch swipe: nudge and restart auto-scroll
+                let startX = 0;
+                this.reviewsGridWrapper.addEventListener('touchstart', (e) => startX = e.touches[0].clientX);
+                this.reviewsGridWrapper.addEventListener('touchend', (e) => {
+                    const diff = e.changedTouches[0].clientX - startX;
+                    if (Math.abs(diff) > 30) {
+                        this.stopAutoScroll();
+                        diff > 0 ? this.goPrev() : this.goNext();
+                        this.startAutoScroll();
+                    }
+                });
+            }
+        }
+
+        // دالة العرض الرئيسية
+        function initReviewsCarousel() {
+            window.reviewsCarousel = new ReviewsCarousel();
+        }
+
+        // جعل الدالة متاحة عالمياً لإعادة الاستدعاء
+        window.initReviewsCarousel = initReviewsCarousel;
+
+        // إظهار رسالة ترحيب
+        function showWelcome() {
+            const toast = document.getElementById('welcome-toast');
+            const currentLang = document.documentElement.lang;
+            toast.textContent = translations[currentLang].welcome_message;
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 5000);
+        }
+
+        // ربط نموذج إضافة التعليقات
+        function bindAddReviewForm() {
+            const form = document.getElementById('add-review-form');
+            if (!form) return;
+            
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('add-review-name').value.trim() || 'زائر';
+                const text = document.getElementById('add-review-text').value.trim();
+                const stars = parseInt(document.getElementById('add-review-stars').value, 10) || 5;
+                let likes = parseInt(document.getElementById('add-review-likes').value, 10);
+                
+                if (!text) return;
+                if (isNaN(likes) || likes < 0) likes = 0;
+                
+                const newReview = {
+                    name,
+                    avatar: name.charAt(0),
+                    stars,
+                    text,
+                    likes,
+                    date: new Date().toISOString().split('T')[0]
+                };
+                
+                reviewManager.pushReview(newReview);
+                
+                // إعادة تحميل العرض
+                if (window.reviewsCarousel) {
+                    window.reviewsCarousel.reviewsData = reviewManager.getAllReviews();
+                    window.reviewsCarousel.renderReviews();
+                }
+                
+                form.reset();
+                
+                // إظهار رسالة نجاح
+                const toast = document.getElementById('welcome-toast');
+                const currentLang = document.documentElement.lang;
+                toast.textContent = currentLang === 'ar' ? 'تمت إضافة رأيك بنجاح!' : 'Your review has been added successfully!';
+                toast.style.display = 'block';
+                
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 3000);
+            });
+        }
+
+        // نظام الثيمات
+        function initThemeSystem() {
+            const themes = ['dark', 'light', 'hologram', 'neon', 'mono', 'solarized'];
+            let currentThemeIndex = 0;
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            // تطبيق الثيم الحالي
+            function applyTheme(themeName) {
+                document.body.setAttribute('data-theme', themeName);
+                localStorage.setItem('currentTheme', themeName);
+                
+                // إضافة تأثير انتقال سلس
+                document.body.classList.add('theme-transition');
+                setTimeout(() => {
+                    document.body.classList.remove('theme-transition');
+                }, 800);
+            }
+            
+            // استرجاع الثيم المحفوظ
+            const savedTheme = localStorage.getItem('currentTheme');
+            if (savedTheme) {
+                applyTheme(savedTheme);
+                currentThemeIndex = themes.indexOf(savedTheme);
+            }
+            
+            // تبديل الثيم عند النقر
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+                    applyTheme(themes[currentThemeIndex]);
+                });
+            }
+            
+            // تخفيف تبديل الثيم التلقائي: كل دقيقتين بدلاً من كل 30 ثانية لتقليل تغييرات الستايل
+            setInterval(() => {
+                currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+                applyTheme(themes[currentThemeIndex]);
+            }, 120000);
+        }
+
+        // تهيئة عداد الزوار
+        initVisitorCounter();
+    </script>
+</body>
+</html>

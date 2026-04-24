@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JARVIS — ROBOT HOUSE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg:       #020408;
+  --panel:    rgba(6,14,26,0.96);
+  --border:   rgba(0,200,255,0.15);
+  --cyan:     #00c8ff;
+  --gold:     #C6A85A;
+  --text:     #e8f4ff;
+  --muted:    #7a9bb5;
+  --accent:   #ff9a3d;
+  --r:        18px;
+  --glow:     0 0 30px rgba(0,200,255,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);}
+
+/* ── background grid ── */
+body::before{
+  content:"";position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(0,200,255,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,200,255,0.03) 1px,transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;z-index:0;
+}
+
+/* ── layout ── */
+.shell{
+  position:relative;z-index:1;
+  height:100%;display:grid;
+  grid-template-rows:auto 1fr auto;
+  grid-template-columns:280px 1fr;
+  grid-template-areas:"hd hd" "sb chat" "sb comp";
+  gap:0;
+}
+
+/* ── header ── */
+.j-header{
+  grid-area:hd;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 22px;
+  background:linear-gradient(90deg,rgba(0,10,20,0.98),rgba(2,18,36,0.98));
+  border-bottom:1px solid var(--border);
+  box-shadow:0 2px 20px rgba(0,0,0,0.6);
+}
+.j-brand{display:flex;align-items:center;gap:14px;}
+.j-logo{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,#0a1628,#0d2040);
+  border:1px solid var(--cyan);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;color:var(--cyan);
+  box-shadow:0 0 16px rgba(0,200,255,0.3);
+  animation:logoPulse 3s ease-in-out infinite;
+}
+@keyframes logoPulse{0%,100%{box-shadow:0 0 16px rgba(0,200,255,0.3);}50%{box-shadow:0 0 28px rgba(0,200,255,0.6);}}
+.j-name{font-size:1.1rem;font-weight:900;letter-spacing:.06em;}
+.j-name span{color:var(--cyan);}
+.j-sub{font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.08em;}
+.j-controls{display:flex;align-items:center;gap:10px;}
+.ctrl-btn{
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  color:var(--text);padding:8px 14px;border-radius:999px;
+  cursor:pointer;font-family:inherit;font-weight:700;font-size:.82rem;
+  transition:.2s ease;display:flex;align-items:center;gap:6px;
+}
+.ctrl-btn:hover{border-color:var(--cyan);color:var(--cyan);}
+.ctrl-btn.active{background:rgba(0,200,255,0.12);border-color:var(--cyan);color:var(--cyan);}
+#langBtn{min-width:52px;justify-content:center;}
+#voiceBtn{width:40px;height:40px;padding:0;justify-content:center;border-radius:50%;}
+#voiceBtn.listening{background:rgba(255,60,60,0.15);border-color:#ff4444;color:#ff4444;animation:voicePulse 1s infinite;}
+@keyframes voicePulse{0%,100%{box-shadow:0 0 0 0 rgba(255,60,60,0.4);}50%{box-shadow:0 0 0 8px rgba(255,60,60,0);}}
+
+/* ── sidebar ── */
+.j-sidebar{
+  grid-area:sb;
+  background:var(--panel);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+.sb-section{padding:16px;border-bottom:1px solid rgba(255,255,255,0.05);}
+.sb-label{font-size:.7rem;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
+.nav-chip{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 12px;border-radius:10px;
+  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);
+  cursor:pointer;transition:.2s ease;font-size:.88rem;font-weight:700;
+  margin-bottom:6px;color:var(--text);
+}
+.nav-chip:hover{background:rgba(0,200,255,0.08);border-color:rgba(0,200,255,0.25);color:var(--cyan);}
+.nav-chip i{width:18px;text-align:center;color:var(--cyan);font-size:.9rem;}
+.quick-list{flex:1;overflow-y:auto;padding:14px;}
+.quick-list::-webkit-scrollbar{width:3px;}
+.quick-list::-webkit-scrollbar-thumb{background:rgba(0,200,255,0.2);border-radius:3px;}
+.q-chip{
+  display:block;width:100%;text-align:right;
+  padding:9px 12px;border-radius:10px;margin-bottom:6px;
+  background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);
+  cursor:pointer;font-family:inherit;font-size:.84rem;font-weight:600;
+  color:var(--muted);transition:.2s ease;
+}
+.q-chip:hover{background:rgba(198,168,90,0.08);border-color:rgba(198,168,90,0.3);color:var(--gold);}
+.status-bar{
+  padding:12px 16px;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+  font-size:.78rem;color:var(--muted);font-weight:700;
+}
+.status-dot{width:7px;height:7px;border-radius:50%;background:#00ff88;box-shadow:0 0 6px #00ff88;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+/* ── chat area ── */
+.j-chat{
+  grid-area:chat;
+  overflow-y:auto;
+  padding:22px;
+  display:flex;flex-direction:column;gap:16px;
+  background:radial-gradient(ellipse at 80% 10%,rgba(0,200,255,0.05),transparent 40%),
+             radial-gradient(ellipse at 10% 90%,rgba(198,168,90,0.04),transparent 35%);
+}
+.j-chat::-webkit-scrollbar{width:4px;}
+.j-chat::-webkit-scrollbar-thumb{background:rgba(0,200,255,0.2);border-radius:4px;}
+
+/* messages */
+.msg{max-width:min(88%,760px);border-radius:16px;padding:14px 18px;line-height:1.85;word-wrap:break-word;animation:msgIn .25s ease;}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.msg-label{font-size:.72rem;font-weight:800;letter-spacing:.08em;margin-bottom:6px;opacity:.7;}
+.msg.user{
+  align-self:flex-end;
+  background:linear-gradient(135deg,rgba(198,168,90,0.9),rgba(143,107,46,0.95));
+  color:#0a0800;border-bottom-right-radius:4px;
+}
+.msg.user .msg-label{color:rgba(0,0,0,0.5);}
+.msg.bot{
+  align-self:flex-start;
+  background:linear-gradient(180deg,rgba(6,18,34,0.95),rgba(4,12,24,0.98));
+  border:1px solid var(--border);
+  border-bottom-left-radius:4px;
+  box-shadow:var(--glow);
+}
+.msg.bot .msg-label{color:var(--cyan);}
+.msg.bot ul,.msg.bot ol{margin:8px 0 0 18px;}
+.msg.bot li{margin-bottom:4px;}
+.msg.bot strong{color:var(--cyan);}
+.msg.bot a{color:var(--gold);text-decoration:none;}
+
+/* typing */
+.typing-dots{display:inline-flex;gap:5px;align-items:center;padding:4px 0;}
+.typing-dots span{width:7px;height:7px;border-radius:50%;background:var(--cyan);animation:dot .9s infinite ease-in-out;}
+.typing-dots span:nth-child(2){animation-delay:.15s;}
+.typing-dots span:nth-child(3){animation-delay:.3s;}
+@keyframes dot{0%,80%,100%{transform:scale(.6);opacity:.4;}40%{transform:scale(1);opacity:1;}}
+
+/* ── composer ── */
+.j-composer{
+  grid-area:comp;
+  padding:16px 22px;
+  background:rgba(4,10,20,0.98);
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.j-input{
+  flex:1;background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);border-radius:14px;
+  color:var(--text);padding:13px 18px;
+  font:inherit;font-size:.95rem;outline:none;
+  transition:.2s ease;
+}
+.j-input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,200,255,0.08);}
+.j-input::placeholder{color:var(--muted);}
+.send-btn{
+  background:linear-gradient(135deg,var(--cyan),#0090cc);
+  border:none;border-radius:14px;
+  color:#020a14;padding:13px 22px;
+  font:inherit;font-weight:900;font-size:.9rem;
+  cursor:pointer;transition:.2s ease;
+  white-space:nowrap;
+}
+.send-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,200,255,0.3);}
+.send-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+
+/* ── mobile ── */
+@media(max-width:860px){
+  body{overflow:auto;}
+  .shell{grid-template-columns:1fr;grid-template-areas:"hd" "chat" "comp";height:auto;min-height:100%;}
+  .j-sidebar{display:none;}
+  .j-chat{min-height:60vh;}
+}
+@media(max-width:480px){
+  .j-header{padding:10px 14px;}
+  .j-name{font-size:.95rem;}
+  .j-chat{padding:14px;}
+  .j-composer{padding:12px 14px;}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- HEADER -->
+  <header class="j-header">
+    <div class="j-brand">
+      <div class="j-logo"><i class="fas fa-robot"></i></div>
+      <div>
+        <div class="j-name">J.A.R.V.I.S &nbsp;<span>ROBOT HOUSE</span></div>
+        <div class="j-sub">AI ASSISTANT — FZ LLC</div>
+      </div>
+    </div>
+    <div class="j-controls">
+      <button class="ctrl-btn" id="ttsBtn" title="قراءة بصوت"><i class="fas fa-volume-up"></i></button>
+      <button class="ctrl-btn" id="voiceBtn" title="إدخال صوتي"><i class="fas fa-microphone"></i></button>
+      <button class="ctrl-btn" id="clearBtn"><i class="fas fa-trash-alt"></i></button>
+      <button class="ctrl-btn" id="langBtn">AR</button>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <aside class="j-sidebar">
+    <div class="sb-section">
+      <div class="sb-label" id="navLabel">التنقل السريع</div>
+      <div id="navChips"></div>
+    </div>
+    <div class="quick-list" id="quickList"></div>
+    <div class="status-bar">
+      <div class="status-dot"></div>
+      <span id="statusText">JARVIS متصل</span>
+    </div>
+  </aside>
+
+  <!-- CHAT -->
+  <main class="j-chat" id="chatArea"></main>
+
+  <!-- COMPOSER -->
+  <div class="j-composer">
+    <input class="j-input" id="msgInput" type="text" placeholder="اسأل JARVIS أي شيء..." autocomplete="off">
+    <button class="send-btn" id="sendBtn"><i class="fas fa-paper-plane"></i> إرسال</button>
+  </div>
+
+</div>
+<script>
+/* ================================================================
+   JARVIS — ROBOT HOUSE AI Assistant
+   Gemini 1.5 Flash + Web Speech API
+================================================================ */
+const JARVIS = (() => {
+  'use strict';
+
+  /* ── config — Groq (مجاني 100%) ── */
+  // احصل على مفتاحك المجاني من: https://console.groq.com
+  const GROQ_KEY = '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';
+  const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
+  const GROQ_MODEL = 'llama-3.3-70b-versatile'; // أقوى موديل مجاني
+  let lang = getLang();
+  let ttsEnabled = true;
+  let history = [];
+  let listening = false;
+  let recognition = null;
+  let currentUtterance = null;
+
+  /* ── i18n ── */
+  const T = {
+    ar: {
+      you: 'أنت', bot: 'JARVIS',
+      placeholder: 'اسأل JARVIS أي شيء...',
+      send: 'إرسال', clear: 'مسح',
+      navLabel: 'التنقل السريع', quickLabel: 'أسئلة مقترحة',
+      status: 'JARVIS متصل',
+      welcome: `مرحباً! أنا **JARVIS**، المساعد الذكي الرسمي لشركة **ROBOT HOUSE FZ LLC**.\n\nيمكنني مساعدتك في:\n- معرفة كل شيء عن منتجاتنا وتقنياتنا\n- فرص الاستثمار والعوائد\n- التنقل في أقسام الموقع\n- الإجابة على أي سؤال عام\n\nكيف يمكنني مساعدتك اليوم؟`,
+      quick: ['ما هي منتجات ROBOT HOUSE؟','حدثني عن المجمع السكني الذكي','ما فرص الاستثمار المتاحة؟','ما التقنيات المستخدمة في المدينة الذكية؟','كيف يعمل المنزل الذكي المتنقل؟','ما مميزات القطار الذكي؟','حدثني عن الطاقة الشمسية في المشروع','ما الفرق بين ROBOT HOUSE والمشاريع الأخرى؟'],
+      nav: [
+        {icon:'fa-home',label:'الرئيسية',key:'home'},
+        {icon:'fa-box',label:'المنتجات',key:'products'},
+        {icon:'fa-chart-line',label:'الاستثمار',key:'investors'},
+        {icon:'fa-microchip',label:'التقنيات',key:'technology'},
+        {icon:'fa-star',label:'آراء العملاء',key:'testimonials'},
+        {icon:'fa-envelope',label:'تواصل معنا',key:'contact'},
+      ]
+    },
+    en: {
+      you: 'You', bot: 'JARVIS',
+      placeholder: 'Ask JARVIS anything...',
+      send: 'Send', clear: 'Clear',
+      navLabel: 'Quick Navigation', quickLabel: 'Suggested Questions',
+      status: 'JARVIS Online',
+      welcome: `Hello! I'm **JARVIS**, the official AI assistant of **ROBOT HOUSE FZ LLC**.\n\nI can help you with:\n- Everything about our products and technologies\n- Investment opportunities and returns\n- Navigating website sections\n- Answering any general question\n\nHow can I assist you today?`,
+      quick: ['What are ROBOT HOUSE products?','Tell me about the Smart Residential Complex','What investment opportunities are available?','What technologies power the smart city?','How does the Mobile Smart Home work?','What are the Smart Train features?','Tell me about solar energy in the project','What makes ROBOT HOUSE different?'],
+      nav: [
+        {icon:'fa-home',label:'Home',key:'home'},
+        {icon:'fa-box',label:'Products',key:'products'},
+        {icon:'fa-chart-line',label:'Investment',key:'investors'},
+        {icon:'fa-microchip',label:'Technology',key:'technology'},
+        {icon:'fa-star',label:'Testimonials',key:'testimonials'},
+        {icon:'fa-envelope',label:'Contact',key:'contact'},
+      ]
+    }
+  };
+
+  /* ── helpers ── */
+  function getLang() {
+    try { return localStorage.getItem('site-lang') || parent.localStorage.getItem('site-lang') || 'ar'; }
+    catch(e) { return localStorage.getItem('site-lang') || 'ar'; }
+  }
+
+  function t(key) { return T[lang]?.[key] ?? T.ar[key]; }
+
+  function md(text) {
+    return text
+      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g,'<em>$1</em>')
+      .replace(/^- (.+)/gm,'<li>$1</li>')
+      .replace(/(<li>.*<\/li>)/s,'<ul>$1</ul>')
+      .replace(/\n/g,'<br>');
+  }
+
+  function stripMd(text) {
+    return text.replace(/\*\*?|__?|\[.*?\]\(.*?\)|`/g,'').replace(/<[^>]+>/g,'');
+  }
+
+  /* ── DOM ── */
+  const chatArea  = document.getElementById('chatArea');
+  const msgInput  = document.getElementById('msgInput');
+  const sendBtn   = document.getElementById('sendBtn');
+  const clearBtn  = document.getElementById('clearBtn');
+  const langBtn   = document.getElementById('langBtn');
+  const voiceBtn  = document.getElementById('voiceBtn');
+  const ttsBtn    = document.getElementById('ttsBtn');
+  const navChips  = document.getElementById('navChips');
+  const quickList = document.getElementById('quickList');
+  const statusTxt = document.getElementById('statusText');
+  const navLabel  = document.getElementById('navLabel');
+
+  /* ── render UI ── */
+  function renderUI() {
+    document.documentElement.lang = lang;
+    document.documentElement.dir  = lang === 'ar' ? 'rtl' : 'ltr';
+    document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    msgInput.placeholder = t('placeholder');
+    sendBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${t('send')}`;
+    langBtn.textContent = lang === 'ar' ? 'EN' : 'AR';
+    statusTxt.textContent = t('status');
+    navLabel.textContent = t('navLabel');
+
+    /* nav chips */
+    navChips.innerHTML = '';
+    t('nav').forEach(n => {
+      const btn = document.createElement('button');
+      btn.className = 'nav-chip';
+      btn.innerHTML = `<i class="fas ${n.icon}"></i>${n.label}`;
+      btn.onclick = () => navigateTo(n.key, n.label);
+      navChips.appendChild(btn);
+    });
+
+    /* quick questions */
+    quickList.innerHTML = `<div class="sb-label" style="padding:0 0 10px">${t('quickLabel')}</div>`;
+    t('quick').forEach(q => {
+      const btn = document.createElement('button');
+      btn.className = 'q-chip';
+      btn.textContent = q;
+      btn.onclick = () => { msgInput.value = q; send(); };
+      quickList.appendChild(btn);
+    });
+  }
+
+  /* ── messages ── */
+  function addMsg(role, html, raw) {
+    const div = document.createElement('div');
+    div.className = `msg ${role}`;
+    const label = role === 'user' ? t('you') : t('bot');
+    div.innerHTML = `<div class="msg-label">${label}</div>${html}`;
+    chatArea.appendChild(div);
+    chatArea.scrollTop = chatArea.scrollHeight;
+    if (role === 'bot' && ttsEnabled && raw) speak(raw);
+    return div;
+  }
+
+  function showTyping() {
+    const div = document.createElement('div');
+    div.className = 'msg bot';
+    div.id = 'typing';
+    div.innerHTML = `<div class="msg-label">${t('bot')}</div><div class="typing-dots"><span></span><span></span><span></span></div>`;
+    chatArea.appendChild(div);
+    chatArea.scrollTop = chatArea.scrollHeight;
+  }
+
+  function removeTyping() {
+    document.getElementById('typing')?.remove();
+  }
+
+  /* ── TTS ── */
+  function speak(text) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const clean = stripMd(text).substring(0, 500);
+    const utt = new SpeechSynthesisUtterance(clean);
+    utt.lang = lang === 'ar' ? 'ar-SA' : 'en-US';
+    utt.rate = 1.05; utt.pitch = 1;
+    currentUtterance = utt;
+    window.speechSynthesis.speak(utt);
+  }
+
+  /* ── STT ── */
+  function initSTT() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) return;
+    recognition = new SR();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.onresult = e => {
+      const txt = e.results[0][0].transcript;
+      msgInput.value = txt;
+      stopListening();
+      send();
+    };
+    recognition.onerror = () => stopListening();
+    recognition.onend   = () => stopListening();
+  }
+
+  function startListening() {
+    if (!recognition) return;
+    recognition.lang = lang === 'ar' ? 'ar-SA' : 'en-US';
+    recognition.start();
+    listening = true;
+    voiceBtn.classList.add('listening');
+    voiceBtn.innerHTML = '<i class="fas fa-stop"></i>';
+  }
+
+  function stopListening() {
+    if (recognition) try { recognition.stop(); } catch(e){}
+    listening = false;
+    voiceBtn.classList.remove('listening');
+    voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+  }
+
+  /* ── navigation ── */
+  function navigateTo(key, label) {
+    try {
+      const p = window.parent;
+      const el = p.document.getElementById(key) || p.document.querySelector(`[data-section="${key}"]`);
+      if (el) { el.scrollIntoView({behavior:'smooth',block:'start'}); }
+      else { p.location.hash = key; }
+    } catch(e) { window.location.hash = key; }
+    addMsg('bot', `<span>🧭 ${lang==='ar'?'جاري الانتقال إلى':'Navigating to'} <strong>${label}</strong></span>`, '');
+  }
+
+  /* ── parse JARVIS commands ── */
+  function parseCommands(text) {
+    let clean = text;
+
+    const navMatch = text.match(/\[NAVIGATE:([^\]]+)\]/);
+    if (navMatch) {
+      const key = navMatch[1].trim();
+      const navItem = t('nav').find(n => n.key === key || n.label === key);
+      navigateTo(key, navItem?.label || key);
+      clean = clean.replace(navMatch[0], '').trim();
+    }
+
+    const themeMatch = text.match(/\[THEME:(gold|dark|white)\]/i);
+    if (themeMatch) {
+      try { window.parent.__robotHouseHologramThemes?.set(themeMatch[1]); } catch(e){}
+      try { window.parent.applyTheme?.(themeMatch[1]); } catch(e){}
+      clean = clean.replace(themeMatch[0], '').trim();
+    }
+
+    const soundMatch = text.match(/\[SOUND:(on|off)\]/i);
+    if (soundMatch) {
+      ttsEnabled = soundMatch[1].toLowerCase() === 'on';
+      clean = clean.replace(soundMatch[0], '').trim();
+    }
+
+    return clean;
+  }
+
+  /* ── System prompt ── */
+  function getSystem() {
+    return lang === 'ar'
+      ? `أنت JARVIS، المساعد الذكي الرسمي لشركة ROBOT HOUSE FZ LLC.
+شركة ROBOT HOUSE شركة إماراتية رائدة في المدن الذكية المتكاملة.
+المنتجات: المجمع السكني الذكي (480 شقة، كهرباء مجانية، إنترنت 5 سنوات)، المركبات المبتكرة، المنزل الذكي المتنقل (مضاد للرصاص، مقاوم للحريق)، المدينة الذكية الأولى عالمياً، مرافق ذكية (مدرسة، مول، مستشفى، فندق)، القطار الذكي، شاحنة الشاورما الذكية، المزرعة الذكية، المطعم البحري الذكي، الجسر المعلق.
+التقنيات: ذكاء اصطناعي، هولوجرام، طاقة شمسية، إسمنت مولّد للكهرباء، فلترة مياه، تحكم صوتي.
+الاستثمار: عوائد مرتفعة، سوق الإمارات والخليج والعالم.
+أجب بثقة واحترافية، ردود مختصرة وواضحة بالعربية الفصحى السهلة.`
+      : `You are JARVIS, the official AI assistant of ROBOT HOUSE FZ LLC.
+ROBOT HOUSE is a UAE-based company pioneering integrated smart cities.
+Products: Smart Residential Complex (480 luxury apartments, free electricity, 5-year internet), Innovative Vehicles, Mobile Smart Home (bulletproof, fireproof, AI-controlled), World's First Smart City, Smart Facilities (school, mall, hospital, hotel), Smart Train, Smart Shawarma Truck, Smart Farm, Smart Seafood Restaurant, Suspended Bridge.
+Technologies: AI, hologram, solar energy, electricity-generating cement, water filtration, voice control.
+Investment: high returns, UAE/Gulf/global market.
+Respond confidently and professionally with concise clear answers.`;
+  }
+
+  /* ── API call — Groq (OpenAI-compatible) ── */
+  async function askJarvis(message) {
+    sendBtn.disabled = true;
+    showTyping();
+
+    /* بناء messages بصيغة OpenAI */
+    const messages = [{ role: 'system', content: getSystem() }];
+    history.slice(-10).forEach(h => {
+      messages.push({ role: h.role === 'model' ? 'assistant' : h.role, content: h.text });
+    });
+    messages.push({ role: 'user', content: message });
+
+    const payload = {
+      model: GROQ_MODEL,
+      messages,
+      temperature: 0.7,
+      max_tokens: 1024,
+      top_p: 0.9,
+      stream: false
+    };
+
+    try {
+      const res = await fetch(GROQ_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GROQ_KEY}`
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        const apiErr = data?.error?.message || `HTTP ${res.status}`;
+        throw new Error(apiErr);
+      }
+
+      const raw = data?.choices?.[0]?.message?.content
+               || (lang === 'ar' ? 'عذراً، لم أتلقَّ رداً. حاول مرة أخرى.' : 'Sorry, no response received. Please try again.');
+
+      history.push({ role: 'user',      text: message });
+      history.push({ role: 'assistant', text: raw });
+      if (history.length > 20) history = history.slice(-20);
+
+      const clean = parseCommands(raw);
+      removeTyping();
+      addMsg('bot', md(clean), clean);
+
+    } catch(err) {
+      removeTyping();
+      console.error('JARVIS error:', err);
+      const errMsg = lang === 'ar'
+        ? `⚠️ خطأ: ${err.message}`
+        : `⚠️ Error: ${err.message}`;
+      addMsg('bot', `<span style="color:#ff6b6b;font-size:.9rem">${errMsg}</span>`, '');
+    } finally {
+      sendBtn.disabled = false;
+      msgInput.focus();
+    }
+  }
+
+  /* ── send ── */
+  function send() {
+    const msg = msgInput.value.trim();
+    if (!msg || sendBtn.disabled) return;
+    msgInput.value = '';
+    addMsg('user', `<span>${msg}</span>`, '');
+    askJarvis(msg);
+  }
+
+  /* ── events ── */
+  sendBtn.onclick = send;
+  msgInput.onkeydown = e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } };
+
+  clearBtn.onclick = () => {
+    history = [];
+    chatArea.innerHTML = '';
+    window.speechSynthesis?.cancel();
+    addMsg('bot', md(t('welcome')), '');
+  };
+
+  langBtn.onclick = () => {
+    lang = lang === 'ar' ? 'en' : 'ar';
+    try { localStorage.setItem('site-lang', lang); } catch(e){}
+    renderUI();
+  };
+
+  voiceBtn.onclick = () => {
+    if (!recognition) { alert(lang==='ar'?'المتصفح لا يدعم الإدخال الصوتي':'Browser does not support voice input'); return; }
+    listening ? stopListening() : startListening();
+  };
+
+  ttsBtn.onclick = () => {
+    ttsEnabled = !ttsEnabled;
+    ttsBtn.classList.toggle('active', ttsEnabled);
+    window.speechSynthesis?.cancel();
+  };
+
+  /* ── parent theme sync ── */
+  window.addEventListener('message', e => {
+    if (e.data?.type === 'site-lang') { lang = e.data.lang; renderUI(); }
+    if (e.data?.type === 'rh-theme-change') { /* theme already applied in parent */ }
+  });
+
+  /* ── init ── */
+  function init() {
+    initSTT();
+    renderUI();
+    ttsBtn.classList.toggle('active', ttsEnabled);
+    addMsg('bot', md(t('welcome')), '');
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
