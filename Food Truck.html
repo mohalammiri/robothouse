@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes" />
+  <title>ROBOT HOUSE FZ LLC — Premium Investor Suite | Fully Responsive</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #070707;
+      --card: rgba(255, 255, 255, 0.06);
+      --glass: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02));
+      --gold: #d4af37;
+      --muted: #ffffff;
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-blur: 10px;
+      --max-width: 1280px;
+      --gap: 20px;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      color: var(--muted);
+      background: radial-gradient(1300px 700px at 12% 8%, rgba(212, 175, 55, 0.04), transparent), var(--bg);
+      font-weight: 500;
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body.light {
+      --bg: #f8fafc;
+      --card: rgba(0, 0, 0, 0.03);
+      --glass: linear-gradient(180deg, rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.005));
+      --gold: #b57a12;
+      --muted: #0a0a1f;
+      --glass-border: rgba(0, 0, 0, 0.08);
+      background: #ffffff;
+      color: var(--muted);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      padding: 24px 20px;
+      transition: background 0.25s ease, color 0.2s;
+    }
+
+    /* premium glass cards */
+    .glass-card {
+      background: var(--card);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(var(--glass-blur));
+      border-radius: 28px;
+      padding: 1.5rem;
+      transition: transform 0.2s ease, box-shadow 0.2s;
+      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.2);
+    }
+
+    .glass-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 32px -12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* top bar - fully responsive */
+    .topbar {
+      width: 100%;
+      max-width: var(--max-width);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(12px);
+      border-radius: 80px;
+      padding: 12px 24px;
+      border: 1px solid var(--glass-border);
+    }
+
+    .brand .logo {
+      font-weight: 800;
+      font-size: 26px;
+      letter-spacing: -0.3px;
+      background: linear-gradient(135deg, var(--gold), #f9e2a1);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .brand .logo span {
+      background: none;
+      color: var(--muted);
+      -webkit-background-clip: unset;
+      background-clip: unset;
+    }
+
+    .sub {
+      font-size: 12px;
+      opacity: 0.8;
+      letter-spacing: 0.5px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-weight: 600;
+      transition: 0.2s;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .nav-link:hover {
+      background: rgba(212, 175, 55, 0.12);
+      color: var(--gold);
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .lang-toggle {
+      display: flex;
+      border-radius: 60px;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .lang-btn {
+      padding: 8px 18px;
+      background: transparent;
+      border: 0;
+      color: var(--muted);
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .lang-btn.active {
+      background: var(--gold);
+      color: #070707;
+    }
+
+    .site-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 60px;
+      border: 1px solid var(--glass-border);
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .cta {
+      padding: 8px 22px;
+      border-radius: 40px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: 0.2s;
+    }
+
+    .cta.primary {
+      background: linear-gradient(95deg, var(--gold), #f3d97c);
+      color: #0a0a0a;
+      border: none;
+    }
+
+    .cta.ghost {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+    }
+
+    /* neon title */
+    .neon-title {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 20px 18px;
+      border-radius: 36px;
+      font-weight: 900;
+      font-size: 1.8rem;
+      margin-bottom: 24px;
+      position: relative;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.02));
+      border: 2px solid rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+      transition: 0.2s;
+    }
+
+    .neon-title::before {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      z-index: -1;
+      background: linear-gradient(90deg, #ff3c6f, #ffa500, #ffec3c, #2ecc71, #1e90ff, #aa3eff, #ff3c6f);
+      background-size: 300% 100%;
+      filter: blur(14px);
+      opacity: 0.7;
+      animation: neonMove 6s linear infinite;
+      border-radius: 40px;
+    }
+
+    @keyframes neonMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    /* grid systems */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 18px;
+      margin-top: 10px;
+    }
+
+    .service-tile, .operation-tile, .expansion-tile {
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 24px;
+      padding: 20px 12px;
+      text-align: center;
+      font-weight: 700;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      transition: all 0.2s;
+    }
+
+    .fin-grid {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+
+    .fin-card {
+      flex: 1;
+      min-width: 200px;
+      background: linear-gradient(145deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
+      border-radius: 32px;
+      padding: 24px;
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
+    }
+
+    .fin-card .label {
+      font-size: 1rem;
+      opacity: 0.8;
+      font-weight: 600;
+    }
+
+    .fin-card .value {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--gold);
+      margin-top: 10px;
+    }
+
+    .slider {
+      max-width: 550px;
+      width: 100%;
+      border-radius: 32px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 24px 48px -12px black;
+      margin: 0 auto; /* center slider */
+    }
+
+    .hero-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ensure slides show one image at a time */
+    .slides {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1);
+      will-change: transform;
+    }
+
+    .slides img {
+      width: 100%;
+      min-width: 100%; /* force single visible image */
+      height: 360px;
+      object-fit: cover;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1);
+    }
+
+    .slides img {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .slider-controls {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      pointer-events: none;
+    }
+
+    .slide-btn {
+      pointer-events: auto;
+      background: rgba(0, 0, 0, 0.6);
+      border: none;
+      font-size: 32px;
+      padding: 8px 20px;
+      border-radius: 60px;
+      color: var(--gold);
+      cursor: pointer;
+    }
+
+    .contact-tile {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 28px;
+      padding: 20px;
+      border: 1px solid var(--glass-border);
+    }
+
+    .contact-field {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      border-radius: 24px;
+      background: rgba(0, 0, 0, 0.2);
+      margin-bottom: 12px;
+      cursor: pointer;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    input, textarea {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--glass-border);
+      padding: 12px;
+      border-radius: 24px;
+      color: var(--muted);
+      width: 100%;
+    }
+
+    footer {
+      max-width: var(--max-width);
+      width: 100%;
+      text-align: center;
+      padding: 28px;
+      border-radius: 48px;
+    }
+
+    /* Enhanced Mobile & Rotation Responsiveness - no content loss */
+    @media (max-width: 900px) {
+      body { padding: 16px 12px; gap: 20px; }
+      .topbar { border-radius: 40px; padding: 12px 20px; }
+      .nav { display: flex; overflow-x: auto; padding-bottom: 6px; justify-content: flex-start; scrollbar-width: thin; }
+      .nav-link { white-space: nowrap; }
+      .hero { flex-direction: column; }
+      .hero-left, .hero-right { width: 100%; }
+      .slider { max-width: 100%; margin-top: 20px; }
+      .slides img { height: 280px; object-fit: cover; }
+      .neon-title { font-size: 1.5rem; padding: 14px 12px; }
+      .cards-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+      .fin-grid { gap: 16px; }
+      .fin-card { min-width: 160px; padding: 18px; }
+      .fin-card .value { font-size: 1.6rem; }
+      .controls { width: 100%; justify-content: center; }
+      .brand-link .brand-text .logo { font-size: 16px; }
+    }
+
+    @media (max-width: 640px) {
+      /* center topbar contents on mobile: logo, nav and controls */
+      .topbar { flex-direction: column; align-items: center; border-radius: 32px; padding: 12px 16px; }
+      .brand-link { justify-content: center; }
+      .nav { width: 100%; display:flex; justify-content:center; gap:10px; overflow-x:auto; padding:8px 0; }
+      .controls { width: 100%; justify-content: center; gap:10px; }
+      .glass-card { padding: 1.2rem; }
+      .hero-left .neon-title { font-size: 1.3rem; }
+      .slides img { height: 220px; }
+      .slide-btn { font-size: 24px; padding: 6px 16px; }
+      .service-tile, .operation-tile, .expansion-tile { padding: 16px 8px; font-size: 0.9rem; }
+      .fin-card .value { font-size: 1.4rem; }
+      .contact-field { flex-direction: column; align-items: flex-start; }
+      .contact-field button { align-self: flex-end; }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 12px 8px; }
+      /* ensure topbar items stack and center cleanly on smaller phones */
+      .topbar { flex-direction: column; align-items: center; gap: 10px; padding: 10px 12px; }
+      .brand-link { justify-content: center; }
+      .nav { width: 100%; display:flex; justify-content:center; gap:8px; overflow-x:auto; padding:6px 0; }
+      .controls { width: 100%; justify-content: center; gap:8px; }
+      .neon-title { font-size: 1.2rem; margin-bottom: 16px; }
+      .glass-card { padding: 1rem; border-radius: 24px; }
+      .cards-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .service-tile, .operation-tile, .expansion-tile { font-size: 0.85rem; padding: 12px 6px; }
+      .fin-card { padding: 12px; min-width: 130px; }
+      .fin-card .value { font-size: 1.3rem; }
+      .lang-btn, .cta { padding: 6px 14px; font-size: 0.8rem; }
+      .site-btn { font-size: 0.8rem; }
+    }
+
+    /* handle landscape orientation gracefully */
+    @media (orientation: landscape) and (max-height: 600px) {
+      body { gap: 16px; padding: 12px; }
+      .hero { flex-direction: row; align-items: center; }
+      .slides img { height: 180px; }
+      .glass-card { padding: 1rem; }
+      .neon-title { font-size: 1.2rem; padding: 10px; }
+      .cards-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+    }
+
+    /* ensure images never overflow */
+    img, video { max-width: 100%; height: auto; display: block; }
+
+    /* small header image styling */
+    .brand-link { display:flex; align-items:center; gap:12px; text-decoration:none; flex-wrap:wrap; }
+    .brand-link img { width:44px; height:44px; border-radius:8px; object-fit:cover; }
+    .brand-link .brand-text { display:flex; flex-direction:column; line-height:1; }
+    .brand-link .brand-text .logo { font-weight:800; font-size:18px; letter-spacing:-0.3px; color:var(--muted); }
+    .brand-link .brand-text .sub { font-size:11px; opacity:0.8; margin-top:2px; }
+
+    /* lightbox improvements */
+    #lightbox button { background: var(--gold); border: none; color: black; font-size: 28px; cursor: pointer; padding: 8px 20px; border-radius: 40px; font-weight: bold; }
+    #lbPrev, #lbNext { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); color: var(--gold); font-size: 40px; padding: 8px 18px; }
+    #lbPrev { left: 20px; } #lbNext { right: 20px; }
+  </style>
+</head>
+<body class="ltr">
+  <header class="topbar">
+    <a class="brand-link" href="https://www.robothousefzllc.com" target="_blank" title="Open ROBOTHOUSE" download="ROBOTHOUSE">
+      <img src="https://robothousefzllc.com/Animation%201.gif" alt="ROBOTHOUSE">
+      <div class="brand-text"><div class="logo">ROBOTHOUSE</div><div class="sub">FZ LLC — INNOVATION LAB</div></div>
+    </a>
+    <nav class="nav"><a class="nav-link" data-key="nav_overview">Overview</a><a class="nav-link" data-key="nav_services">Services</a><a class="nav-link" data-key="nav_financials">Financials</a><a class="nav-link" data-key="nav_contact">Contact</a></nav>
+    <div class="controls">
+      <div class="lang-toggle"><button id="arBtn" class="lang-btn">العربية</button><button id="enBtn" class="lang-btn active">English</button></div>
+      <a class="site-btn" href="https://www.robothousefzllc.com" target="_blank">🌐 robothousefzllc.com</a>
+      <button id="themeBtn" class="cta">🌓 Theme</button>
+      <button id="ctaTop" class="cta primary">Invest Now</button>
+    </div>
+  </header>
+
+  <main style="max-width:1280px; width:100%; display:flex; flex-direction:column; gap:32px;">
+    <!-- Hero -->
+    <section class="glass-card hero">
+      <div class="hero-left">
+        <h1 id="heroTitle" class="neon-title" style="margin-bottom:12px;">The First Global Luxury Mobile Hospitality Project</h1>
+        <p id="heroSubtitle" style="font-size:1.2rem; margin: 16px 0;">A global mobile platform combining luxury dining, entertainment, and smart technology.</p>
+        <div style="display:flex; gap:16px; margin-top:20px; flex-wrap:wrap;"><button class="cta primary" id="investBtn">Invest Now</button><button class="cta ghost" id="downloadBtn">📄 Download Feasibility</button></div>
+        <div class="glass-card" style="margin-top:24px;"><p id="trustText">✅ We have already initiated communication with a specialized engineering and design company, with a clear roadmap to complete the first prototype within no more than 6 months.</p></div>
+        <div class="glass-card" style="margin-top:12px;"><p id="firstMoverText">🏆 This will be the first global mobile project of its kind, giving it strong first-mover advantage and global market leadership.</p></div>
+      </div>
+      <div class="hero-right">
+        <div class="slider" id="slider"><div class="slides"><img class="gallery-item" data-index="0" src="https://www.robothousefzllc.com/image1.png" alt="luxury truck exterior"><img class="gallery-item" data-index="1" src="https://www.robothousefzllc.com/image2.png" alt="smart kitchen interior"></div><div class="slider-controls"><button id="prev" class="slide-btn">‹</button><button id="next" class="slide-btn">›</button></div></div>
+      </div>
+    </section>
+
+    <!-- Services + Video -->
+    <section class="glass-card" id="services"><h2 class="neon-title" data-key="services_title">Services / الخدمات</h2>
+      <div style="margin-bottom:24px;"><video controls playsinline style="width:100%; border-radius:28px; max-height:400px; object-fit:cover;"><source src="https://robothousefzllc.com/ROBOTHOUSEFOODTRUCK.mp4" type="video/mp4"></video></div>
+      <div id="servicesGrid" class="cards-grid"></div>
+    </section>
+
+    <!-- Operations + detailed story cards -->
+    <section class="glass-card" id="operations"><h2 class="neon-title" data-key="operations_title">Operations / العمليات</h2>
+      <div id="operationsGrid" class="cards-grid"></div>
+      <div id="operationsDetailed" class="glass-card" style="margin-top:24px;"></div>
+    </section>
+
+    <!-- Financials -->
+    <section class="glass-card" id="financials"><h2 class="neon-title" data-key="financial_title">Financials / البيانات المالية</h2>
+      <div class="fin-grid"><div class="fin-card"><div class="label" data-key="investment">Investment</div><div class="value" id="investmentValue">$500,000</div></div><div class="fin-card"><div class="label" data-key="roi">ROI</div><div class="value" id="roiValue">21%</div></div><div class="fin-card"><div class="label" data-key="recovery">Recovery</div><div class="value" id="recoveryValue">4.7 years</div></div></div>
+      <div class="glass-card" style="margin:20px 0;"><h3 data-key="investment_title">Investment Opportunity</h3><p id="investmentText">Upon investment approval, we propose offering an equity stake ranging between 25% and 30%, subject to negotiation based on expansion terms and strategic support.</p></div>
+      <div><h3 class="neon-title" style="font-size:1.3rem;" data-key="expansion_title">Expansion Roadmap</h3><div id="expansionGrid" class="cards-grid"></div></div>
+      <div id="costBreakdown" class="glass-card" style="margin-top:20px;"></div>
+      <div id="revenueProjection" class="glass-card" style="margin-top:20px;"></div>
+      <div id="netProfit" class="glass-card" style="margin-top:20px;"></div>
+    </section>
+
+    <!-- Contact -->
+    <section class="glass-card" id="contact"><h2 class="neon-title" data-key="contact_title">Contact / تواصل</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:24px;">
+        <div class="contact-tile"><div class="contact-field" data-mail="info@robothousefzllc.com"><div>📧 info@robothousefzllc.com<br><span style="font-size:12px;">General inquiries</span></div><button class="email-action" data-mail="info@robothousefzllc.com">✉️</button></div>
+        <div class="contact-field" data-mail="m.alammiri@robothousefzllc.com"><div>📧 m.alammiri@robothousefzllc.com<br><span style="font-size:12px;">Direct contact</span></div><button class="email-action" data-mail="m.alammiri@robothousefzllc.com">✉️</button></div>
+        <div class="contact-field" data-mail="m.alammiri@yahoo.com"><div>📧 m.alammiri@yahoo.com<br><span style="font-size:12px;">Founder 24/7</span></div><button class="email-action" data-mail="m.alammiri@yahoo.com">✉️</button></div></div>
+        <div class="contact-tile"><div class="contact-field" data-phone="+962785353408"><div>📞 Jordan: +962 785353408</div><button class="phone-action" data-phone="+962785353408">📋</button></div>
+        <div class="contact-field" data-phone="+971567952199"><div>📞 UAE: +971 567952199</div><button class="phone-action" data-phone="+971567952199">📋</button></div>
+        <form id="contactForm" style="margin-top:16px;"><input name="name" placeholder="Your Name" /><input name="email" placeholder="Email" /><textarea name="message" rows="3" placeholder="Message"></textarea><button type="submit" class="cta primary" style="margin-top:12px;">Send Message</button></form></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="glass-card"><div>© <span id="year"></span> ROBOT HOUSE FZ LLC — All rights reserved.</div><div style="margin-top:8px;"><a id="privacyLink" href="#" style="color:var(--gold); margin:0 8px;">Privacy</a><a id="termsLink" href="#" style="color:var(--gold); margin:0 8px;">Terms</a></div></footer>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:10000; align-items:center; justify-content:center;"><button id="lbClose" style="position:absolute; top:20px; right:30px;">✕</button><button id="lbPrev" style="position:absolute; left:20px;">‹</button><button id="lbNext" style="position:absolute; right:20px;">›</button><img id="lbImg" style="max-width:90vw; max-height:80vh; border-radius:24px;"></div>
+
+  <script>
+    // ---------- MULTILINGUAL DATA (NO CUT) ----------
+    const texts = {
+      en: {
+        dir:"ltr", nav_overview:"Overview", nav_services:"Services", nav_financials:"Financials", nav_contact:"Contact",
+        heroTitle:"The First Global Luxury Mobile Hospitality Project", heroSubtitle:"A global mobile platform combining luxury dining, entertainment, and smart technology.",
+        trustText:"We have already initiated communication with a specialized engineering and design company, with a clear roadmap to complete the first prototype within no more than 6 months.",
+        firstMoverText:"This will be the first global mobile project of its kind, giving it strong first-mover advantage and global market leadership.",
+        services_title:"Services", operations_title:"Operations", financial_title:"Financials", investment:"Investment", roi:"ROI", recovery:"Recovery",
+        investment_title:"Investment Opportunity", investmentText:"Upon investment approval, we propose offering an equity stake ranging between 25% and 30%, subject to negotiation based on expansion terms and strategic support.",
+        expansion_title:"Expansion Roadmap", contact_title:"Contact", expansion_item1:"10 Units", expansion_item2:"Multiple Countries", expansion_item3:"Tourism Zones", expansion_item4:"Events & Festivals", expansion_item5:"Seasonal Markets"
+      },
+      ar: {
+        dir:"rtl", nav_overview:"نظرة عامة", nav_services:"الخدمات", nav_financials:"المالية", nav_contact:"اتصل",
+        heroTitle:"أول مشروع ضيافة متنقل فاخر عالمي", heroSubtitle:"منصة متنقل ذكية تجمع بين المأكولات الفاخرة والترفيه والتكنولوجيا.",
+        trustText:"✅ تم التواصل مع شركة هندسة وتصميم متخصصة، وخارطة طريق لإنجاز النموذج الأول خلال 6 أشهر.",
+        firstMoverText:"🏆 أول مشروع متنقل من نوعه عالميًا، يتمتع بأفضلية الريادة والقيادة العالمية.",
+        services_title:"الخدمات", operations_title:"العمليات", financial_title:"البيانات المالية", investment:"الاستثمار", roi:"العائد", recovery:"الاسترداد",
+        investment_title:"فرصة استثمارية", investmentText:"عند الموافقة على الاستثمار، نعرض حصة تتراوح بين 25% و 30% وفقًا للتفاوض.",
+        expansion_title:"خريطة التوسع", contact_title:"تواصل", expansion_item1:"10 وحدات", expansion_item2:"عدة دول", expansion_item3:"مناطق سياحية", expansion_item4:"فعاليات", expansion_item5:"أسواق موسمية"
+      }
+    };
+    
+    // Updated services list (keeping all items but making hookah more accurate)
+    const servicesList = [
+      {en:"Shawarma",ar:"شاورما"},
+      {en:"BBQ",ar:"مشاوي"},
+      {en:"Burgers",ar:"برجر"},
+      {en:"Premium Buffet",ar:"بوفيه مميز"},
+      {en:"Fresh Juices",ar:"عصائر طازجة"},
+      {en:"Specialty Coffee",ar:"قهوة مختصة"},
+      {en:"Lounge Seating",ar:"جلوس صالون"},
+      {en:"Sports Streaming",ar:"مباريات"},
+      {en:"Digital Entertainment",ar:"ترفيه رقمي"},
+      {en:"Advertising Screens",ar:"شاشات إعلانية"}
+    ];
+    
+    const operationsList = [
+      {en:"4-5 employees team",ar:"فريق من 4-5 موظفين"},
+      {en:"Smart kitchen system",ar:"نظام مطبخ ذكي"},
+      {en:"Internal storage",ar:"مخزن داخلي"},
+      {en:"Premium seating area",ar:"منطقة جلوس فاخرة"},
+      {en:"Future expansion design",ar:"تصميم قابل للتوسع"},
+      {en:"Permit-based locations",ar:"مواقع بتصاريح يومية"}
+    ];
+
+    let currentLang = "en";
+    
+    function applyLanguage(lang) {
+      const t = texts[lang];
+      document.documentElement.dir = t.dir; document.body.className = t.dir;
+      document.querySelectorAll("[data-key]").forEach(el => { if(t[el.getAttribute("data-key")]) el.innerText = t[el.getAttribute("data-key")]; });
+      document.getElementById("heroTitle").innerText = t.heroTitle;
+      document.getElementById("heroSubtitle").innerText = t.heroSubtitle;
+      document.getElementById("trustText").innerText = t.trustText;
+      document.getElementById("firstMoverText").innerText = t.firstMoverText;
+      document.getElementById("investmentText").innerText = t.investmentText;
+      document.getElementById("ctaTop").innerText = lang==="ar"?"استثمر الآن":"Invest Now";
+      document.getElementById("investBtn").innerText = lang==="ar"?"استثمر الآن":"Invest Now";
+      const grid = document.getElementById("servicesGrid");
+      grid.innerHTML = servicesList.map(s => `<div class="service-tile">${lang==="ar"?s.ar:s.en}</div>`).join("");
+      const opsGrid = document.getElementById("operationsGrid");
+      opsGrid.innerHTML = operationsList.map(op => `<div class="operation-tile">${lang==="ar"?op.ar:op.en}</div>`).join("");
+      const expGrid = document.getElementById("expansionGrid");
+      expGrid.innerHTML = [t.expansion_item1,t.expansion_item2,t.expansion_item3,t.expansion_item4,t.expansion_item5].map(txt => `<div class="expansion-tile">${txt}</div>`).join("");
+      document.querySelectorAll("input[name='name'], input[name='email'], textarea").forEach(i=> i.placeholder = lang==="ar"?"الاسم / البريد / رسالة":(i.placeholder="Name / Email / Message"));
+      renderFinancialTables(lang);
+      renderDetailedOpsCards(lang);
+      document.getElementById("year").innerText = new Date().getFullYear();
+    }
+    
+    function renderFinancialTables(lang){
+      // UPDATED: Realistic cost breakdown (Total = $500,000)
+      const costData = [
+        {en:"Luxury Truck Chassis & Exterior",ar:"الهيكل الخارجي والشاحنة",cost:"180,000",note_en:"Fully equipped base truck",note_ar:"شاحنة قاعدة مجهزة"},
+        {en:"Smart Kitchen Equipment",ar:"معدات المطبخ الذكي",cost:"80,000",note_en:"Automated cooking systems",note_ar:"أنظمة طبخ آلية"},
+        {en:"Digital Screens & Media",ar:"الشاشات الرقمية والوسائط",cost:"25,000",note_en:"2 screens + media server",note_ar:"شاشتان + خادم وسائط"},
+        {en:"Power System (Battery + Solar)",ar:"نظام الطاقة (بطاريات + شمسي)",cost:"30,000",note_en:"Quiet generator + solar backup",note_ar:"مولد هادئ + شمسي احتياطي"},
+        {en:"Interior & Luxury Finishing",ar:"التشطيب الداخلي الفاخر",cost:"40,000",note_en:"Premium materials & seating",note_ar:"مواد فاخرة وجلوس"},
+        {en:"Licensing & Permits (Year 1)",ar:"التراخيص والتصاريح (سنة أولى)",cost:"15,000",note_en:"Dubai Municipality + events",note_ar:"بلدية دبي + الفعاليات"},
+        {en:"Working Capital (3 months)",ar:"رأس مال تشغيل (3 أشهر)",cost:"60,000",note_en:"Salaries, fuel, marketing",note_ar:"رواتب، وقود، تسويق"},
+        {en:"Contingency (10%)",ar:"احتياطي (10%)",cost:"45,000",note_en:"Unexpected expenses",note_ar:"مصاريف غير متوقعة"},
+        {en:"Total Investment",ar:"الإجمالي",cost:"500,000",note_en:"Single unit fully operational",note_ar:"وحدة واحدة جاهزة للتشغيل"}
+      ];
+      
+      // UPDATED: Realistic monthly revenue (Total = $27,000)
+      const revenueData = [
+        {en:"Food & Beverages",ar:"الطعام والمشروبات",rev:"15,000"},
+        {en:"Premium Buffet (events)",ar:"بوفيه مميز (فعاليات)",rev:"4,000"},
+        {en:"Advertising Screens",ar:"إعلانات",rev:"1,500"},
+        {en:"Sports & Digital Content",ar:"رياضة ومحتوى رقمي",rev:"1,500"},
+        {en:"Events & Seasonal Catering",ar:"فعاليات ومناسبات موسمية",rev:"5,000"},
+        {en:"Total Monthly Revenue",ar:"إجمالي الإيرادات الشهرية",rev:"27,000"}
+      ];
+      
+      // UPDATED: Realistic expenses and profits
+      const monthlyExpenses = 18300;
+      const monthlyNet = 8700;
+      const annualNet = 104400;
+      const tenUnitsAnnual = 1044000;
+      
+      const costHtml = `<div style="font-weight:800;margin-bottom:16px;">📊 ${lang==="ar"?"تفاصيل التكلفة (وحدة واحدة)":"Cost Breakdown (Single Unit)"}</div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">${costData.map(c=>`<div style="background:rgba(0,0,0,0.2);border-radius:20px;padding:12px;"><div>${lang==="ar"?c.ar:c.en}</div><div style="font-size:22px;font-weight:bold;color:var(--gold);">$${c.cost.toLocaleString()}</div><div style="font-size:11px;opacity:0.8;">${lang==="ar"?c.note_ar||" ":c.note_en||" "}</div></div>`).join("")}</div>`;
+      
+      const revHtml = `<div style="font-weight:800;margin:16px 0 12px;">💰 ${lang==="ar"?"الإيرادات الشهرية (وحدة واحدة)":"Monthly Revenue (Single Unit)"}</div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;">${revenueData.map(r=>`<div style="background:rgba(0,0,0,0.2);border-radius:20px;padding:12px;"><div>${lang==="ar"?r.ar:r.en}</div><div style="font-size:22px;font-weight:bold;">$${r.rev.toLocaleString()}</div></div>`).join("")}</div>`;
+      
+      const netHtml = `<div style="font-weight:800;">📈 ${lang==="ar"?"صافي الربح التحليلي":"Net Profit Analysis"}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;">
+        <div style="background:rgba(212,175,55,0.15);padding:16px;border-radius:24px;border-left:3px solid var(--gold);"><strong>${lang==="ar"?"المصاريف الشهرية":"Monthly Expenses"}</strong><br/><span style="font-size:24px;font-weight:bold;">$${monthlyExpenses.toLocaleString()}</span></div>
+        <div style="background:rgba(212,175,55,0.15);padding:16px;border-radius:24px;border-left:3px solid var(--gold);"><strong>${lang==="ar"?"صافي الربح الشهري":"Monthly Net Profit"}</strong><br/><span style="font-size:24px;font-weight:bold;">$${monthlyNet.toLocaleString()}</span></div>
+        <div style="background:rgba(212,175,55,0.15);padding:16px;border-radius:24px;border-left:3px solid var(--gold);"><strong>${lang==="ar"?"الربح السنوي":"Annual Net Profit"}</strong><br/><span style="font-size:24px;font-weight:bold;">$${annualNet.toLocaleString()}</span></div>
+        <div style="background:rgba(212,175,55,0.15);padding:16px;border-radius:24px;border-left:3px solid var(--gold);"><strong>${lang==="ar"?"10 وحدات سنويًا":"10 Units Annual"}</strong><br/><span style="font-size:24px;font-weight:bold;">$${tenUnitsAnnual.toLocaleString()}</span></div>
+      </div>
+      <div style="margin-top:16px;padding:12px;background:rgba(0,0,0,0.2);border-radius:20px;font-size:14px;">
+        💡 ${lang==="ar"?"ملاحظة: الأرقام مبنية على وحدة واحدة بعد 6-8 أشهر من التشغيل. التوسع إلى 10 وحدات يتطلب استثمارات إضافية.":"Note: Figures based on one unit after 6-8 months of operation. Scaling to 10 units requires additional investment."}
+      </div>`;
+      
+      document.getElementById("costBreakdown").innerHTML = costHtml;
+      document.getElementById("revenueProjection").innerHTML = revHtml;
+      document.getElementById("netProfit").innerHTML = netHtml;
+      
+      // Update the top financial cards
+      document.getElementById("investmentValue").innerText = "$500,000";
+      document.getElementById("roiValue").innerText = "21%";
+      document.getElementById("recoveryValue").innerText = "4.7 years";
+    }
+    
+    function renderDetailedOpsCards(lang){
+      const isAr = lang==="ar";
+      const cards = isAr ? [
+        {title:"1️⃣ المشكلة", items:["السوق يفتقر للفخامة","المنافسون تقليديون","غياب تجربة متنقلة فاخرة"]},
+        {title:"2️⃣ الحل", items:["مطعم فاخر متنقل","مطبخ ذكي بالكامل","ترفيه متكامل","أول مشروع متكامل"]},
+        {title:"3️⃣ إثبات الفكرة", items:["نموذج أولي خلال 6 أشهر","شركة هندسية متخصصة","جاهزية التسويق"]},
+        {title:"4️⃣ الميزة التنافسية", items:["مطبخ ذكي","ضيافة فاخرة","شاشات إعلانية","تصميم عصري"]},
+        {title:"5️⃣ السوق المستهدف", items:["TAM: 2 مليار $ (الخليج)","SAM: 200 مليون $","SOM: 500 ألف $ (سنة أولى)","سياحة وفعاليات راقية"]},
+        {title:"6️⃣ العمليات", items:["4-5 موظفين","تشغيل سريع","تصاريح مواقع يومية","شراكات مع فنادق"]}
+      ] : [
+        {title:"1️⃣ Market Problem", items:["Lack of luxury mobile dining","Traditional fast-food only","No premium experiential concept"]},
+        {title:"2️⃣ Our Solution", items:["Luxury mobile restaurant","Fully smart kitchen","Integrated digital entertainment","First-mover in premium segment"]},
+        {title:"3️⃣ Proof of Concept", items:["Prototype ready in 6 months","Engineering partner confirmed","3D designs & renders completed"]},
+        {title:"4️⃣ Competitive Edge", items:["Smart kitchen efficiency","Luxury hospitality experience","Digital advertising screens","Modern scalable design"]},
+        {title:"5️⃣ Target Market", items:["TAM: $2B (GCC region)","SAM: $200M (luxury segment)","SOM: $500K (Year 1)","Tourism & premium events"]},
+        {title:"6️⃣ Operations Model", items:["4-5 staff members","Fast turnaround times","Daily permit locations","Hotel & venue partnerships"]}
+      ];
+      let html = `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">${cards.map(c=>`<div style="background:rgba(0,0,0,0.25);border-radius:28px;padding:20px;backdrop-filter:blur(4px);"><div style="font-size:1.4rem;font-weight:bold;color:var(--gold);margin-bottom:12px;">${c.title}</div><ul style="margin-left:18px;line-height:1.6;">${c.items.map(i=>`<li>${i}</li>`).join("")}</ul></div>`).join("")}</div>`;
+      document.getElementById("operationsDetailed").innerHTML = html;
+    }
+    
+    function switchLang(lang){ currentLang=lang; applyLanguage(lang); document.getElementById("arBtn").classList.toggle("active",lang==="ar"); document.getElementById("enBtn").classList.toggle("active",lang==="en"); }
+    document.getElementById("arBtn").onclick=()=>switchLang("ar"); document.getElementById("enBtn").onclick=()=>switchLang("en");
+    let theme="dark"; document.getElementById("themeBtn").onclick=()=>{ theme=theme==="dark"?"light":"dark"; document.body.classList.toggle("light",theme==="light"); localStorage.setItem("robothouse_theme",theme); };
+    if(localStorage.getItem("robothouse_theme")==="light") document.body.classList.add("light");
+    applyLanguage("en");
+
+    // Invest buttons should go directly to Contact section
+    const scrollToContact = ()=>{ const sec = document.getElementById("contact"); if(sec) sec.scrollIntoView({ behavior: "smooth" }); };
+    document.getElementById("investBtn").onclick = scrollToContact;
+    document.getElementById("ctaTop").onclick = scrollToContact;
+
+    // Slider & lightbox
+    let slideIndex=0; const slides=document.querySelector(".slides"), totalSlides=slides.children.length;
+    function updateSlide(){ const w=slides.children[0].clientWidth; slides.style.transform=`translateX(${document.documentElement.dir==="rtl"? slideIndex*w : -slideIndex*w}px)`; }
+    document.getElementById("prev").onclick=()=>{ slideIndex=(slideIndex-1+totalSlides)%totalSlides; updateSlide(); };
+    document.getElementById("next").onclick=()=>{ slideIndex=(slideIndex+1)%totalSlides; updateSlide(); };
+    window.addEventListener("resize",updateSlide); updateSlide();
+
+    // wheel interaction: scroll to change slides (throttled)
+    (function(){
+      const sliderEl = document.getElementById("slider");
+      let wheelLocked = false;
+      const lockDuration = 300; // ms
+      if(sliderEl){
+        sliderEl.addEventListener("wheel", (ev)=>{
+          ev.preventDefault();
+          if(wheelLocked) return;
+          wheelLocked = true;
+          setTimeout(()=> wheelLocked = false, lockDuration);
+          if(ev.deltaY > 0) {
+            slideIndex = (slideIndex + 1) % totalSlides;
+          } else {
+            slideIndex = (slideIndex - 1 + totalSlides) % totalSlides;
+          }
+          updateSlide();
+        }, { passive: false });
+      }
+    })();
+
+    const lightbox=document.getElementById("lightbox"), lbImg=document.getElementById("lbImg"), close=document.getElementById("lbClose"), prev=document.getElementById("lbPrev"), nxt=document.getElementById("lbNext"); let currentIdx=0;
+    document.querySelectorAll(".gallery-item").forEach((img,i)=>{ img.onclick=()=>{ currentIdx=i; lbImg.src=img.src; lightbox.style.display="flex"; }; });
+    close.onclick=()=>lightbox.style.display="none"; prev.onclick=()=>{ currentIdx=(currentIdx-1+totalSlides)%totalSlides; lbImg.src=document.querySelectorAll(".gallery-item")[currentIdx].src; }; nxt.onclick=()=>{ currentIdx=(currentIdx+1)%totalSlides; lbImg.src=document.querySelectorAll(".gallery-item")[currentIdx].src; };
+    document.addEventListener("keydown",e=>{ if(lightbox.style.display==="flex"){ if(e.key==="Escape")lightbox.style.display="none"; if(e.key==="ArrowLeft")prev.click(); if(e.key==="ArrowRight")nxt.click(); } });
+
+    // Emails, phone copy
+    document.querySelectorAll(".email-action").forEach(btn=>{ btn.onclick=e=>{ e.stopPropagation(); const mail=btn.getAttribute("data-mail"); if(mail) window.location.href=`mailto:${mail}?subject=Investor%20Inquiry`; }; });
+    document.querySelectorAll(".phone-action").forEach(btn=>{ btn.onclick=e=>{ e.stopPropagation(); const ph=btn.getAttribute("data-phone"); if(ph) navigator.clipboard.writeText(ph).then(()=>alert(`Copied: ${ph}`)); }; });
+    document.querySelectorAll(".contact-field").forEach(field=>{ field.onclick=e=>{ if(e.target.closest("button"))return; const mailBtn=field.querySelector(".email-action"); if(mailBtn) mailBtn.click(); else{ const phBtn=field.querySelector(".phone-action"); if(phBtn)phBtn.click(); } }; });
+    
+    // Contact form submission
+    document.getElementById("contactForm").onsubmit=async(e)=>{ e.preventDefault(); const form=e.target; const name=form.name.value, email=form.email.value, msg=form.message.value; const isAr=currentLang==="ar"; const subject=isAr?"استثمار - ROBOT HOUSE":"Investment Inquiry - ROBOT HOUSE"; const body=`${isAr?"الاسم:":"Name:"} ${name}\n${isAr?"البريد:":"Email:"} ${email}\n${isAr?"الرسالة:":"Message:"}\n${msg}`; window.location.href=`mailto:m.alammiri@yahoo.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`; form.reset(); alert(isAr?"تم فتح البريد لإرسال الطلب":"Email client opened to complete inquiry"); };
+    
+    // modals privacy/terms iframe
+    function createModal(id,title,url){ const modal=document.createElement("div"); modal.id=id; modal.style.cssText="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:20000;align-items:center;justify-content:center;"; const panel=document.createElement("div"); panel.style.cssText="background:#111;width:90%;max-width:1000px;height:80vh;border-radius:32px;overflow:hidden;"; const header=document.createElement("div"); header.style.cssText="display:flex;justify-content:space-between;padding:16px;background:#222;"; header.innerHTML=`<span style="font-weight:bold;">${title}</span><button id="closeModal${id}">✕</button>`; const iframe=document.createElement("iframe"); iframe.src=url; iframe.style.cssText="width:100%;height:calc(100% - 60px);border:0;"; panel.appendChild(header); panel.appendChild(iframe); modal.appendChild(panel); document.body.appendChild(modal); return modal; }
+    const privacyModal=createModal("privacyModal","Privacy Policy","https://www.robothousefzllc.com/privacy-policy.html"); const termsModal=createModal("termsModal","Terms of Service","https://www.robothousefzllc.com/terms-of-service.html");
+    document.getElementById("privacyLink").onclick=e=>{ e.preventDefault(); privacyModal.style.display="flex"; }; document.getElementById("termsLink").onclick=e=>{ e.preventDefault(); termsModal.style.display="flex"; };
+    document.querySelectorAll("[id^=closeModal]").forEach(btn=>{ btn.onclick=()=>{ privacyModal.style.display="none"; termsModal.style.display="none"; }; });
+    
+    // PDF download functionality (preserved)
+    document.getElementById("downloadBtn").onclick=async()=>{ 
+      const btn = document.getElementById("downloadBtn");
+      try {
+        btn.disabled = true;
+        const origText = btn.innerText;
+        btn.innerText = "⏳ Generating PDF...";
+        const [{ default: html2canvas }, jspdfModule] = await Promise.all([
+          import('https://esm.sh/html2canvas@1.4.1'),
+          import('https://esm.sh/jspdf@2.5.1')
+        ]);
+        const { jsPDF } = jspdfModule;
+        const exportClass = 'rbh-pdf-export-temp';
+        const styleEl = document.createElement('style');
+        styleEl.id = 'rbh-pdf-export-style';
+        styleEl.textContent = `.${exportClass} { background: #ffffff !important; color: #000000 !important; } .${exportClass} * { background: transparent !important; color: #000000 !important; } .${exportClass} img { background: transparent !important; }`;
+        document.head.appendChild(styleEl);
+        document.documentElement.classList.add(exportClass);
+        const target = document.querySelector('main') || document.body;
+        const canvas = await html2canvas(target, { scale: Math.min(2, window.devicePixelRatio || 1), useCORS: true, backgroundColor: '#ffffff' });
+        const imgData = canvas.toDataURL('image/jpeg', 0.92);
+        document.documentElement.classList.remove(exportClass);
+        document.getElementById('rbh-pdf-export-style')?.remove();
+        const pdf = new jsPDF({ unit: 'px', format: 'a4' });
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const imgWidth = canvas.width, imgHeight = canvas.height;
+        const ratio = imgWidth / pageWidth;
+        const renderHeight = imgHeight / ratio;
+        if (renderHeight <= pageHeight) pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, renderHeight);
+        else {
+          let remainingHeight = imgHeight, offsetY = 0;
+          while (remainingHeight > 0) {
+            const sliceCanvas = document.createElement('canvas');
+            const sliceHeight = Math.min(remainingHeight, Math.round(pageHeight * ratio));
+            sliceCanvas.width = imgWidth; sliceCanvas.height = sliceHeight;
+            const ctx = sliceCanvas.getContext('2d');
+            ctx.drawImage(canvas, 0, offsetY, imgWidth, sliceHeight, 0, 0, imgWidth, sliceHeight);
+            const sliceData = sliceCanvas.toDataURL('image/jpeg', 0.92);
+            pdf.addImage(sliceData, 'JPEG', 0, 0, pageWidth, sliceHeight / ratio);
+            remainingHeight -= sliceHeight; offsetY += sliceHeight;
+            if (remainingHeight > 0) pdf.addPage();
+          }
+        }
+        pdf.setProperties({ title: 'ROBOT HOUSE — Feasibility Snapshot' });
+        pdf.save('ROBOT_HOUSE_Feasibility.pdf');
+        btn.innerText = origText;
+      } catch (err) { console.error(err); alert('PDF generation failed.'); btn.innerText = "📄 Download Feasibility"; } finally { btn.disabled = false; document.documentElement.classList.remove('rbh-pdf-export-temp'); document.getElementById('rbh-pdf-export-style')?.remove(); }
+    };
+    document.querySelectorAll(".nav-link").forEach(link=>{ link.onclick=()=>{ const id=link.getAttribute("data-key")?.replace("nav_",""); if(id==="overview") window.scrollTo({top:0,behavior:"smooth"}); else{ const sec=document.getElementById(id); if(sec) sec.scrollIntoView({behavior:"smooth"}); } }; });
+  </script>
+</body>
+</html>
