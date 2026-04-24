@@ -1,0 +1,2897 @@
+<!DOCTYPE html><html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ROBOT HOUSE FZ LLC | مدينة ذكية متكاملة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="wheel-widget.css">
+    <link rel="stylesheet" href="mobile_overrides.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://robothousefzllc.com" crossorigin>
+    <link rel="preconnect" href="https://www.robothousefzllc.com" crossorigin>
+    <link rel="dns-prefetch" href="https://robothousefzllc.com">
+    <link rel="dns-prefetch" href="https://www.robothousefzllc.com">
+                            <!-- preload important videos to prioritize fetch and warm CDN connections -->
+    <link rel="preload" as="video" href="https://robothousefzllc.com/ROBOT%20HOUSE%20Header%20Video.mp4" type="video/mp4" fetchpriority="high">
+    <link rel="preload" as="video" href="https://robothousefzllc.com/Smart%20Train%20Video.mp4" type="video/mp4">
+    <!-- removed inline styles moved to styles.css -->
+    <style>
+      /* Compact social shortcuts for mobile: hide text labels, reduce gaps, remove theme button space */
+      @media (max-width: 600px) {
+        .social-links { gap: 6px !important; width: auto !important; padding: 4px !important; }
+        .social-links a, .social-links .weather-temp, #site-lang-toggle.social-links-lang, .food-truck-btn {
+          width: 36px !important;
+          height: 36px !important;
+          padding: 0 !important;
+          border-radius: 10px !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          font-size: 0.92rem !important;
+        }
+        /* hide textual labels inside chips to save header space */
+        .social-links a .food-text, .social-links a span, .social-links a .food-text { display: none !important; }
+        .social-links a i, #site-lang-toggle.social-links-lang i { margin: 0 !important; font-size: 1.08rem !important; }
+        /* ensure weather cell is compact */
+        .social-links .weather-temp { padding: 6px 8px !important; font-size: 0.78rem !important; gap:6px !important; }
+        /* ensure the theme switcher is not shown in old top-bar (removed from DOM) */
+        /* #theme-switcher { display: none !important; } -- removed, new top bar uses tb-ctrl-btn */
+        /* tighten top-bar vertical spacing */
+        .top-bar .container { padding: 6px 10px !important; gap: 6px !important; }
+      }
+      /* Desktop tweaks: slightly reduce gap to avoid large header footprint */
+      @media (min-width: 601px) {
+        .social-links { gap: 8px !important; }
+        #site-lang-toggle.social-links-lang { width: 40px !important; height: 40px !important; }
+      }
+
+      /* Mini weather widget (compact) */
+      .mini-weather-widget {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 8px;
+        background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.04);
+        color: #e6f7fb;
+        font-weight: 800;
+        min-width: 116px;
+        box-shadow: 0 8px 18px rgba(2,6,23,0.18);
+      }
+      .mini-weather-widget .weather-icon {
+        width: 34px;
+        height: 34px;
+        display: inline-grid;
+        place-items: center;
+        font-size: 1.05rem;
+        border-radius: 8px;
+        background: linear-gradient(180deg, rgba(255,214,118,0.08), rgba(255,140,66,0.04));
+        color: #ffd166;
+      }
+      .mini-weather-widget .weather-info { display:flex; flex-direction:column; line-height:1; text-align:right; }
+      .mini-weather-widget .weather-temp { font-size:0.98rem; color:#fff; }
+      .mini-weather-widget .weather-desc { font-size:0.72rem; color:#cfeff4; white-space:nowrap; }
+      .mini-weather-widget .weather-location { display:flex; align-items:center; gap:6px; font-size:0.7rem; color:#9fdfea; margin-inline-start:6px; }
+      @media (max-width: 420px) {
+        .mini-weather-widget { min-width: 96px; gap:6px; padding:4px 6px; }
+        .mini-weather-widget .weather-info { display:none; }
+        .mini-weather-widget .weather-location { display:none; }
+        .mini-weather-widget .weather-icon { width:28px; height:28px; font-size:0.95rem; }
+      }
+   </style>
+   <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
+            color: #e0e0e0;
+        }
+        /* ========== الثيم الذهبي (الافتراضي) ========== */
+        body.gold {
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
+        }
+        body.gold .top-bar, body.gold .nav-container.main-nav {
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        }
+        body.gold .brand { color: #d4af37; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
+        body.gold .action-btn, body.gold .theme-toggle-btn, body.gold .lang-toggle-btn {
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            border: 1px solid #d4af37;
+            color: #ffd966;
+        }
+        body.gold .social-icon {
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #d4af37;
+        }
+        body.gold .nav-links a { color: #e0e0e0; }
+        body.gold .nav-links a:hover { color: #ffd700; }
+        /* ========== الثيم الأبيض المعلق ========== */
+        body.white-luxury {
+            background: linear-gradient(145deg, #f5f5f0 0%, #e8e4d8 100%);
+        }
+        body.white-luxury .top-bar, body.white-luxury .nav-container.main-nav {
+            background: rgba(255,255,250,0.96);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        }
+        body.white-luxury .brand { color: #1a1a1a; }
+        body.white-luxury .action-btn, body.white-luxury .theme-toggle-btn, body.white-luxury .lang-toggle-btn {
+            background: #ffffff;
+            border: 1px solid #ccc;
+            color: #1a1a1a;
+        }
+        body.white-luxury .social-icon {
+            background: #fff;
+            border: 1px solid #ddd;
+            color: #333;
+        }
+        body.white-luxury .nav-links a { color: #2c2c2c; }
+        body.white-luxury .nav-links a:hover { color: #000; }
+        /* ========== الثيم الأسود الطبيعي ========== */
+        body.natural-dark {
+            background: #0f0f0f;
+        }
+        body.natural-dark .top-bar, body.natural-dark .nav-container.main-nav {
+            background: #141414;
+            border: 1px solid #2a2a2a;
+        }
+        body.natural-dark .brand { color: #ddd; }
+        body.natural-dark .action-btn, body.natural-dark .theme-toggle-btn, body.natural-dark .lang-toggle-btn {
+            background: #1e1e1e;
+            border: 1px solid #3a3a3a;
+            color: #ccc;
+        }
+        body.natural-dark .social-icon {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #aaa;
+        }
+        body.natural-dark .nav-links a { color: #aaa; }
+        body.natural-dark .nav-links a:hover { color: #fff; }
+        /* التنسيقات العامة */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 20px;
+            transition: all 0.4s ease;
+        }
+        .main-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .nav-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            border-radius: 60px;
+            padding: 12px 24px;
+        }
+        .nav-container.main-nav {
+            border-radius: 50px;
+            margin-top: 8px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+        }
+        .top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .social-icons-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .social-icon {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .brand {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-align: center;
+            font-family: monospace;
+            white-space: nowrap;
+        }
+        .actions-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .action-btn, .theme-toggle-btn, .lang-toggle-btn {
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'Cairo', sans-serif;
+        }
+        .theme-toggle-btn, .lang-toggle-btn {
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            justify-content: center;
+        }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-links a {
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+        /* تنسيق الجوال */
+        @media (max-width: 768px) {
+            .top-bar { padding: 8px 12px; }
+            .nav-container { padding: 10px 16px; gap: 12px; }
+            .top-row { flex-direction: column; gap: 10px; }
+            .social-icons-group { order: 1; justify-content: center; gap: 6px; flex-wrap: nowrap; overflow-x: auto; width: 100%; padding-bottom: 4px; }
+            .social-icon { width: 32px; height: 32px; flex-shrink: 0; font-size: 13px; }
+            .brand { order: 2; font-size: 14px; white-space: normal; width: 100%; }
+            .actions-group { order: 3; justify-content: center; gap: 6px; }
+            .action-btn { padding: 4px 12px; font-size: 10px; }
+            .theme-toggle-btn, .lang-toggle-btn { width: 34px; height: 34px; }
+            .nav-links { gap: 8px; }
+            .nav-links a { font-size: 10px; padding: 4px 8px; }
+        }
+        @media (max-width: 480px) {
+            .social-icon { width: 28px; height: 28px; font-size: 11px; }
+            .brand { font-size: 12px; }
+            .action-btn { padding: 3px 10px; font-size: 9px; }
+        }
+        /* الحفاظ على باقي الأنماط الأصلية */
+        .navbar .nav-menu ul { display: flex; list-style: none; gap: 20px; justify-content: center; flex-wrap: wrap; padding: 10px 0; }
+        .navbar .nav-menu ul li a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .glass-card, .info-card, .product-window, .tech-holo-card, .financial-rect { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 20px; margin: 10px 0; border: 1px solid rgba(255,255,255,0.1); }
+        .section-title { text-align: center; font-size: 2rem; margin: 2rem 0; color: var(--accent, #d4af37); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        video { border-radius: 16px; max-width: 100%; }
+        footer { background: rgba(0,0,0,0.8); padding: 30px 0; margin-top: 40px; text-align: center; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+    /* Injected luxury title style (gold gradient) */
+    .luxury-title{
+        font-family: 'Cinzel', serif;
+        /* slightly smaller to tighten header spacing */
+        font-size: clamp(19px, 3.4vw, 40px);
+        text-align:center;
+        letter-spacing: 2px;
+        white-space: nowrap;
+        background:
+        linear-gradient(
+            135deg,
+            #5a4300 0%,
+            #c6a94a 20%,
+            #fff2a6 35%,
+            #d4af37 50%,
+            #fff2a6 65%,
+            #b8962e 80%,
+            #5a4300 100%
+        );
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+        text-shadow:
+            0 2px 2px #000,
+            0 0 8px rgba(212,175,55,0.4),
+            0 0 18px rgba(255,215,0,0.25);
+        position:relative;
+        z-index:3;
+    }
+    .luxury-title::after{
+        content:"";
+        position:absolute;
+        top:0;
+        left:-100%;
+        width:35%;
+        height:100%;
+        background:linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,0.5),
+            transparent
+        );
+        transform:skewX(-20deg);
+        animation: rh-shine 6s infinite;
+    }
+    @keyframes rh-shine{
+        0%{ left:-100%; }
+        100%{ left:200%; }
+    }
+    .luxury-title .sub{
+        display:block;
+        font-size: clamp(14px, 1.5vw, 22px);
+        letter-spacing:4px;
+        margin-top:10px;
+    }
+    /* ensure the top-row brand keeps layout spacing in the top-bar */
+    .tb-row-brand { display:flex; justify-content:center; width:100%; }
+    .tb-row-brand .luxury-title { line-height:1; }
+    </style>
+    <link rel="stylesheet" href="theme-system.css">
+
+    <!-- Assistant audio bar styles (lightweight, scoped) -->
+    <style id="assistant-bar-styles">
+      .tb-row-brand { position: relative; } /* allow absolute positioning of the assistant behind the title */
+      .holo-bar{
+        position: relative;
+        width: 100%;
+        max-width: 420px;
+        height: 36px; /* reduced height to minimize visible footprint behind the title */
+        border-radius: 12px;
+        overflow: hidden;
+        background: rgba(0,10,20,0.55); /* slightly more transparent so it's less visually intrusive */
+        backdrop-filter: blur(3px);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+        transition: all 0.28s ease;
+        cursor: default;
+        z-index: 1; /* sits above wrapper but behind title */
+        pointer-events: none; /* ensure bar sits visually behind title and does not capture clicks */
+      }
+      /* place the wrapper absolutely so the bar sits centered behind the title */
+      #assistantBarWrapper {
+        position: absolute;
+        left: 50%;
+        top: 44%; /* slightly raised so bar sits snugly behind the title text */
+        transform: translate(-50%, -50%); /* center precisely horizontally, slightly above vertical center */
+        z-index: 0; /* keep behind the title */
+        pointer-events: none; /* allow clicks on title/logo to pass through */
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        transition: transform 0.28s ease, top 0.28s ease;
+        will-change: transform;
+      }
+      /* make title sit above the bar */
+      .luxury-title { position: relative; z-index: 5; }
+      .holo-bar[data-state="sleep"]{
+        opacity: 0.78;
+      }
+      .holo-bar[data-state="talk"]{
+        opacity: 1;
+        box-shadow: 0 0 20px rgba(0,180,255,0.22), 0 6px 28px rgba(0,0,0,0.32);
+      }
+      #wave{ width:100%; height:100%; display:block; }
+      /* keep canvas crisp on high-DPI */
+      #assistantBar canvas { image-rendering: optimizeQuality; }
+      /* responsive minor tweak */
+      @media (max-width:520px){ .holo-bar{ height:44px; max-width:380px; border-radius:10px; } #assistantBarWrapper{ transform:translate(-50%,-50%);} }
+    </style>
+</head>
+<body class="gold" data-theme="gold-diamond">
+<script>
+  // Performance-safe light mode: short-circuit heavy modules and network noise during load.
+  // Set this early so subsequent scripts can check it and no-op heavy work.
+  window.RH_LIGHT_MODE = true;
+  // Also disable visitor notifications and visual popups by default for max speed.
+  window.RH_NOTIFY_DISABLED = true;
+  window.RH_VOICE_LIGHT_ONLY = true;
+  // Prevent jarvis boot audio autoplay attempts from running
+  try { sessionStorage.setItem('rh_boot_played', '1'); } catch(e){}
+</script>
+
+    <!-- ===== TOP BAR الجديد ===== -->
+    <div class="top-bar" id="mainTopBar">
+        <div class="main-wrapper">
+
+            <!-- الصف الأول: شعار في المنتصف -->
+            <div class="tb-row tb-row-logo" style="position:relative;">
+                <div class="tb-logo-3d">
+                    <img src="Animation 6.gif" alt="Robot House Logo" class="tb-logo-img"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <div class="tb-logo-fallback">🦅</div>
+                </div>
+
+            </div>
+
+            <!-- الصف الثاني: اسم الشركة في المنتصف أسفل الشعار -->
+            <div class="tb-row tb-row-brand" style="position:relative;">
+                <div class="luxury-title">ROBOT HOUSE<span class="sub">· FZ LLC</span></div>
+
+                <!-- Assistant bar placed behind the title so it visually sits under the name -->
+                <div id="assistantBarWrapper" style="position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:100%;display:flex;justify-content:center;pointer-events:none;z-index:0;">
+                  <div id="assistantBar" class="holo-bar" data-state="sleep" role="presentation" aria-hidden="true" title="ROBOT HOUSE voice bar (decorative)" style="pointer-events:none;">
+                    <canvas id="wave" aria-hidden="true"></canvas>
+                  </div>
+                </div>
+            </div>
+
+            <!-- Assistant bar (hologram audio bar) inserted under brand row -->
+            
+
+            <!-- Assistant bar audio-visual script: adaptive VAD + animated waves -->
+            <script>
+            (function(){
+              'use strict';
+              const canvas = document.getElementById('wave');
+              if(!canvas) return;
+
+              // Styling helper: ensure crisp canvas on high-dpi
+              function resizeCanvas() {
+                const dpr = window.devicePixelRatio || 1;
+                const w = canvas.offsetWidth;
+                const h = canvas.offsetHeight;
+                if (canvas.width !== Math.floor(w * dpr) || canvas.height !== Math.floor(h * dpr)) {
+                  canvas.width = Math.floor(w * dpr);
+                  canvas.height = Math.floor(h * dpr);
+                  canvas.getContext('2d').scale(dpr, dpr);
+                }
+              }
+              window.addEventListener('resize', resizeCanvas, { passive:true });
+              setTimeout(resizeCanvas, 60);
+
+              // Visual / audio state
+              let audioCtx, analyser, dataArray, source;
+              let time = 0;
+              const SMOOTHING = 0.2;
+              const NOISE_ADAPT = 0.01;
+              const ENTER_OFFSET = 18;
+              const EXIT_OFFSET = 10;
+              const SILENCE_HOLD = 15;
+              let noiseFloor = 0, smoothed = 0, silenceFrames = 0;
+
+              function setAssistantState(state){
+                try {
+                  const bar = document.getElementById('assistantBar');
+                  if(bar) bar.setAttribute('data-state', state);
+                } catch(e){}
+              }
+
+              async function initMic(){
+                if (audioCtx) return;
+                try {
+                  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                  analyser = audioCtx.createAnalyser();
+                  analyser.fftSize = 256;
+                  const bufferLength = analyser.frequencyBinCount;
+                  dataArray = new Uint8Array(bufferLength);
+                  source = audioCtx.createMediaStreamSource(stream);
+                  source.connect(analyser);
+                  draw(); // start rendering loop
+                } catch (err) {
+                  console.warn('Assistant mic init failed', err);
+                }
+              }
+
+              // Adaptive VAD decision
+              function detectState(avg){
+                smoothed = smoothed * (1 - SMOOTHING) + avg * SMOOTHING;
+                if (smoothed < noiseFloor + 10) {
+                  noiseFloor = noiseFloor * (1 - NOISE_ADAPT) + smoothed * NOISE_ADAPT;
+                } else if (noiseFloor === 0) {
+                  noiseFloor = smoothed * 0.7;
+                }
+                const enterThreshold = noiseFloor + ENTER_OFFSET;
+                const exitThreshold = noiseFloor + EXIT_OFFSET;
+                if (smoothed > enterThreshold) {
+                  setAssistantState('talk');
+                  silenceFrames = 0;
+                } else if (smoothed < exitThreshold) {
+                  silenceFrames++;
+                  if (silenceFrames > SILENCE_HOLD) setAssistantState('sleep');
+                }
+              }
+
+              // drawing helpers (ported from provided code)
+              function drawSeaWave(ctx, w, h, centerY, audioLevel, t){
+                const points = 200;
+                const step = w / points;
+                const audioInfluence = 5 + (audioLevel / 255) * 15;
+                for(let layer = 0; layer < 3; layer++){
+                  ctx.beginPath();
+                  let gradient = ctx.createLinearGradient(0, 0, w, 0);
+                  if(layer === 0){
+                    gradient.addColorStop(0, '#4a90e2'); gradient.addColorStop(0.5, '#7bb3f0'); gradient.addColorStop(1, '#4a90e2');
+                    ctx.lineWidth = 2.5;
+                  } else if(layer === 1){
+                    gradient.addColorStop(0, '#2c6bcb'); gradient.addColorStop(0.5, '#5a9be8'); gradient.addColorStop(1, '#2c6bcb');
+                    ctx.lineWidth = 1.5;
+                  } else {
+                    gradient.addColorStop(0, '#a8d0ff'); gradient.addColorStop(0.5, '#ffffff'); gradient.addColorStop(1, '#a8d0ff');
+                    ctx.lineWidth = 1;
+                  }
+                  ctx.strokeStyle = gradient;
+                  for(let i = 0; i <= points; i++){
+                    const x = i * step;
+                    const waveHeight = 12 + layer * 4;
+                    const y = centerY + 
+                      Math.sin(t * 1.2 + i * 0.05 + layer * 1.5) * (waveHeight + audioInfluence * 0.3) +
+                      Math.sin(t * 0.6 + i * 0.03) * 4;
+                    if(i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                  }
+                  ctx.stroke();
+                }
+              }
+
+              function drawFourWaves(ctx, w, h, centerY, audioLevel, t){
+                const points = 200;
+                const step = w / points;
+                const audioIntensity = 15 + (audioLevel / 255) * 45;
+                const colors = [
+                  { start: '#ff3366', end: '#ff6b9d', speed: 1.5, height: 20 },
+                  { start: '#ffaa00', end: '#ffdd66', speed: 1.8, height: 18 },
+                  { start: '#33ccff', end: '#66e8ff', speed: 1.3, height: 22 },
+                  { start: '#aa44ff', end: '#cc88ff', speed: 2.0, height: 16 }
+                ];
+                for(let layer = 0; layer < 4; layer++){
+                  ctx.beginPath();
+                  const gradient = ctx.createLinearGradient(0, 0, w, 0);
+                  gradient.addColorStop(0, colors[layer].start);
+                  gradient.addColorStop(0.5, colors[layer].end);
+                  gradient.addColorStop(1, colors[layer].start);
+                  ctx.strokeStyle = gradient; ctx.lineWidth = 2.5;
+                  for(let i = 0; i <= points; i++){
+                    const x = i * step;
+                    const waveHeight = colors[layer].height + audioIntensity * 0.4;
+                    const y = centerY + 
+                      Math.sin(t * colors[layer].speed + i * 0.06 + layer) * (waveHeight) +
+                      Math.sin(t * 1.0 + i * 0.04) * (8 + audioIntensity * 0.2);
+                    if(i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                  }
+                  ctx.stroke();
+                }
+                ctx.globalCompositeOperation = 'lighter';
+                for(let layer = 0; layer < 4; layer++){
+                  ctx.beginPath();
+                  ctx.strokeStyle = colors[layer].start; ctx.lineWidth = 1;
+                  for(let i = 0; i <= points; i++){
+                    const x = i * step;
+                    const waveHeight = colors[layer].height + audioIntensity * 0.6;
+                    const y = centerY + 
+                      Math.sin(t * colors[layer].speed + i * 0.06 + layer) * (waveHeight) +
+                      Math.sin(t * 1.0 + i * 0.04) * (8 + audioIntensity * 0.3);
+                    if(i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                  }
+                  ctx.stroke();
+                }
+                ctx.globalCompositeOperation = 'source-over';
+              }
+
+              function drawWaveFrame(){
+                resizeCanvas();
+                if(!analyser) return;
+                analyser.getByteFrequencyData(dataArray);
+                const ctx = canvas.getContext('2d');
+                const rect = canvas.getBoundingClientRect();
+                const w = rect.width;
+                const h = rect.height;
+                ctx.clearRect(0,0,w,h);
+                // compute average
+                let sum = 0;
+                for(let i=0;i<dataArray.length;i++) sum += dataArray[i];
+                const avg = (dataArray.length ? (sum / dataArray.length) : 0);
+                detectState(avg);
+                const state = (document.getElementById('assistantBar') || {}).getAttribute && document.getElementById('assistantBar').getAttribute('data-state') || 'sleep';
+                const centerY = h / 2;
+                if(state === 'sleep') drawSeaWave(ctx, w, h, centerY, avg, time);
+                else drawFourWaves(ctx, w, h, centerY, avg, time);
+              }
+
+              // main loop
+              function draw(){
+                requestAnimationFrame(draw);
+                time += 0.03;
+                if (analyser && dataArray) drawWaveFrame();
+              }
+
+              // Lazy init: start mic on first user interaction to respect permissions/policies
+              function startOnInteract(){
+                document.removeEventListener('pointerdown', startOnInteract, { passive:true });
+                document.removeEventListener('keydown', startOnInteract, { passive:true });
+                initMic();
+                // small visual hint when starting
+                setAssistantState('listen');
+                setTimeout(()=> setAssistantState('sleep'), 900);
+              }
+              document.addEventListener('pointerdown', startOnInteract, { passive:true });
+              document.addEventListener('keydown', startOnInteract, { passive:true });
+
+              // Allow clicking the bar to toggle mic start/stop
+              (function attachBarToggle(){
+                const bar = document.getElementById('assistantBar');
+                if(!bar) return;
+                let micRunning = false;
+                bar.addEventListener('click', async function(e){
+                  e.preventDefault();
+                  if(!micRunning){
+                    await initMic();
+                    micRunning = !!analyser;
+                    if(micRunning) setAssistantState('listen');
+                  } else {
+                    try {
+                      if (source && source.mediaStream) source.mediaStream.getTracks().forEach(t=>t.stop());
+                    } catch(e){}
+                    try { if(audioCtx) audioCtx.close(); } catch(e){}
+                    audioCtx = analyser = dataArray = source = null;
+                    micRunning = false;
+                    setAssistantState('sleep');
+                    const ctx = canvas.getContext('2d');
+                    if(ctx) ctx.clearRect(0,0,canvas.width,canvas.height);
+                  }
+                }, false);
+              })();
+
+            })();
+            </script>
+
+
+            <!-- الصف الثالث: ثيم+لغة (يسار) | تواصل (وسط مطلق) | أزرار محمية (يمين) -->
+            <div class="tb-row tb-row-controls">
+
+                <!-- يسار: ثيم + لغة -->
+                <div class="tb-util-group">
+                    <button class="tb-util-btn" id="theme-switcher" aria-label="Toggle theme" title="تغيير الثيم">
+                        <i class="fas fa-palette"></i>
+                    </button>
+                    <button class="tb-util-btn tb-lang-btn" id="site-lang-toggle" aria-label="Toggle language" title="تغيير اللغة" data-lang="auto">
+                        <i class="fas fa-globe"></i>
+                    </button>
+                </div>
+
+                <!-- وسط مطلق: أيقونات التواصل -->
+                <div class="tb-social tb-social-center">
+                    <a href="https://wa.me/971501234567" target="_blank" aria-label="WhatsApp" class="tb-social-btn tb-wa" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://youtube.com/@robothousefzllc" target="_blank" aria-label="YouTube" class="tb-social-btn tb-yt" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://instagram.com/robothousefzllc" target="_blank" aria-label="Instagram" class="tb-social-btn tb-ig" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/robothousefzllc" target="_blank" aria-label="Facebook" class="tb-social-btn tb-fb" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://linkedin.com/company/robothousefzllc" target="_blank" aria-label="LinkedIn" class="tb-social-btn tb-li" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+
+                <!-- يمين: أزرار محمية -->
+                <div class="tb-protected-group">
+                    <button class="tb-protected-btn tb-ft" onclick="rhOpenProtected('ft')" title="Food Truck">
+                        <i class="fas fa-truck"></i><span>Food Truck</span>
+                    </button>
+                    <button class="tb-protected-btn tb-sw" onclick="rhOpenProtected('sw')" title="Shawarma">
+                        <i class="fas fa-drumstick-bite"></i><span>Shawarma</span>
+                    </button>
+                    <button class="tb-protected-btn tb-fs" onclick="rhOpenProtected('fs')" title="Feasibility">
+                        <i class="fas fa-chart-bar"></i><span>Feasibility</span>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- الصف الرابع: أزرار التنقل -->
+            <div class="tb-row tb-row-nav">
+                <nav class="tb-nav" aria-label="التنقل الرئيسي">
+                    <a href="#home" class="tb-nav-btn"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+                    <a href="#about" class="tb-nav-btn"><i class="fas fa-users"></i><span>من نحن</span></a>
+                    <a href="#products" class="tb-nav-btn"><i class="fas fa-cubes"></i><span>المنتجات</span></a>
+                    <a href="#technology" class="tb-nav-btn"><i class="fas fa-microchip"></i><span>التقنيات</span></a>
+                    <a href="#market" class="tb-nav-btn"><i class="fas fa-chart-line"></i><span>السوق والتوقعات</span></a>
+                    <a href="#financials" class="tb-nav-btn"><i class="fas fa-dollar-sign"></i><span>الجوانب المالية</span></a>
+                    <a href="#investors" class="tb-nav-btn"><i class="fas fa-lightbulb"></i><span>فرص الاستثمار</span></a>
+                    <a href="#photo-album" class="tb-nav-btn"><i class="fas fa-images"></i><span>ألبوم الصور</span></a>
+                    <a href="#contact" class="tb-nav-btn tb-nav-contact"><i class="fas fa-envelope"></i><span>تواصل معنا</span></a>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== Password Modal ===== -->
+    <div id="rhPassModal" role="dialog" aria-modal="true" aria-labelledby="rhModalTitle">
+        <div class="rh-modal-overlay" onclick="rhCloseModal()"></div>
+        <div class="rh-modal-box" id="rhModalBox">
+            <button class="rh-modal-close" onclick="rhCloseModal()" aria-label="Close">&times;</button>
+            <div class="rh-modal-logo">🔐</div>
+            <h2 class="rh-modal-title" id="rhModalTitle">Protected Content</h2>
+            <p class="rh-modal-sub">Enter password to access this page</p>
+            <div class="rh-modal-field">
+                <input type="password" id="rhPassInput" placeholder="Password" autocomplete="off" onkeydown="if(event.key==='Enter')rhSubmitPass()">
+                <button class="rh-modal-eye" onclick="rhToggleEye()" id="rhEyeBtn" title="Show/Hide"><i class="fas fa-eye" id="rhEyeIcon"></i></button>
+            </div>
+            <p class="rh-modal-err" id="rhPassErr"></p>
+            <button class="rh-modal-submit" onclick="rhSubmitPass()">
+                <i class="fas fa-unlock-alt"></i> Access
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== أنماط الـ Top Bar الجديد ===== -->
+    <style>
+    /* ======== CONTAINER ======== */
+    #mainTopBar {
+        position: sticky; top: 0; z-index: 1000;
+        background: linear-gradient(180deg, rgba(4,4,10,0.98) 0%, rgba(8,8,18,0.96) 100%);
+        backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(212,175,55,0.3);
+        box-shadow: 0 4px 32px rgba(0,0,0,0.55), 0 0 80px rgba(212,175,55,0.04);
+        padding: 0;
+    }
+    #mainTopBar .main-wrapper { max-width: 1500px; margin: 0 auto; padding: 0 20px; }
+    .tb-row { display: flex; align-items: center; width: 100%; }
+    /* صف الشعار */
+    .tb-row-logo { justify-content: center; padding: 10px 0 4px; }
+    /* صف الاسم — LTR دائماً لمنع العكس */
+    .tb-row-brand {
+        justify-content: center;
+        gap: 8px;
+        padding: 2px 0 8px;
+        border-bottom: 1px solid rgba(212,175,55,0.1);
+        direction: ltr;
+    }
+    /* صف الأزرار — position relative لتمركز التواصل بالمنتصف المطلق */
+    .tb-row-controls {
+        position: relative;
+        justify-content: space-between;
+        padding: 6px 0;
+        border-bottom: 1px solid rgba(212,175,55,0.08);
+        flex-wrap: nowrap;
+        gap: 6px;
+        min-height: 44px;
+    }
+    /* صف التنقل */
+    .tb-row-nav { justify-content: center; padding: 5px 0; }
+    /* LOGO 3D */
+    .tb-logo-3d {
+        width: 72px; height: 72px; border-radius: 50%; overflow: hidden;
+        border: 2.5px solid rgba(212,175,55,0.75);
+        box-shadow: 0 0 0 4px rgba(212,175,55,0.12), 0 0 0 7px rgba(212,175,55,0.05),
+            0 8px 28px rgba(0,0,0,0.7), 0 2px 8px rgba(212,175,55,0.2),
+            inset 0 2px 4px rgba(255,255,255,0.15), inset 0 -2px 4px rgba(0,0,0,0.4);
+        background: radial-gradient(circle at 38% 32%, rgba(212,175,55,0.18), rgba(0,0,0,0.9));
+        display: flex; align-items: center; justify-content: center;
+        transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease;
+        cursor: pointer;
+    }
+    .tb-logo-3d:hover {
+        transform: scale(1.1) rotate(6deg);
+        box-shadow: 0 0 0 4px rgba(212,175,55,0.3), 0 0 0 8px rgba(212,175,55,0.1),
+            0 14px 40px rgba(212,175,55,0.25), inset 0 2px 4px rgba(255,255,255,0.2);
+    }
+    .tb-logo-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+    .tb-logo-fallback { font-size: 2rem; display: none; align-items: center; justify-content: center; }
+    /* BRAND */
+    .tb-brand-name {
+        font-family: 'Cairo', monospace; font-size: 1.15rem; font-weight: 900;
+        letter-spacing: 3px; color: #d4af37;
+        text-shadow: 0 0 14px rgba(212,175,55,0.5), 0 0 30px rgba(212,175,55,0.15);
+        text-transform: uppercase; white-space: nowrap;
+    }
+    .tb-brand-sep { color: rgba(212,175,55,0.35); font-size: 0.9rem; }
+    .tb-brand-sub { font-size: 0.68rem; font-weight: 700; color: rgba(212,175,55,0.5); letter-spacing: 4px; text-transform: uppercase; }
+    /* SOCIAL — في المنتصف المطلق للصف */
+    .tb-social { display: flex; gap: 5px; align-items: center; }
+    .tb-social-center {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 5px;
+        align-items: center;
+    }
+    .tb-social-btn {
+        width: 34px; height: 34px;
+        display: inline-flex; align-items: center; justify-content: center;
+        border-radius: 9px; font-size: 1rem; text-decoration: none;
+        color: rgba(255,255,255,0.75);
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.12);
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08);
+        position: relative; overflow: hidden;
+    }
+    .tb-social-btn::before {
+        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 48%;
+        background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent);
+        border-radius: 9px 9px 0 0; pointer-events: none;
+    }
+    .tb-social-btn:hover {
+        color: #fff;
+        background: rgba(212,175,55,0.15);
+        border-color: rgba(212,175,55,0.4);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 14px rgba(0,0,0,0.35);
+    }
+    /* إزالة الألوان الخاصة بكل شبكة */
+    .tb-wa, .tb-yt, .tb-ig, .tb-fb, .tb-li { background: rgba(255,255,255,0.07); }
+    /* DIVIDER */
+    .tb-divider { width: 1px; height: 24px; background: linear-gradient(180deg, transparent, rgba(212,175,55,0.25), transparent); }
+    /* PROTECTED BUTTONS — صغيرة بحجم النص */
+    .tb-protected-group { display: flex; gap: 4px; align-items: center; }
+    .tb-protected-btn {
+        display: inline-flex; align-items: center; gap: 4px;
+        padding: 4px 9px; border-radius: 7px;
+        font-size: 0.72rem; font-weight: 700; height: 26px;
+        border: none; cursor: pointer; color: #fff;
+        font-family: 'Cairo', sans-serif;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+        position: relative; overflow: hidden; white-space: nowrap;
+        letter-spacing: 0.2px;
+    }
+    .tb-protected-btn::before {
+        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%;
+        background: linear-gradient(180deg, rgba(255,255,255,0.1), transparent); pointer-events: none;
+    }
+    .tb-protected-btn:hover { transform: translateY(-1px); opacity: 0.9; box-shadow: 0 5px 12px rgba(0,0,0,0.4); }
+    .tb-protected-btn i { font-size: 0.72rem; }
+    .tb-ft { background: linear-gradient(145deg, #ff8c42, #d45a00); }
+    .tb-sw { background: linear-gradient(145deg, #e53935, #7b0000); }
+    .tb-fs { background: linear-gradient(145deg, #1e88e5, #0a3d8f); }
+    /* UTIL BUTTONS — نفس حجم أيقونات التواصل */
+    .tb-util-group { display: flex; gap: 5px; align-items: center; }
+    .tb-util-btn {
+        width: 34px; height: 34px; border-radius: 9px;
+        border: 1px solid rgba(212,175,55,0.28);
+        background: rgba(212,175,55,0.07); color: #d4af37;
+        font-size: 0.95rem; cursor: pointer;
+        display: inline-flex; align-items: center; justify-content: center;
+        transition: all 0.2s ease;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.07);
+    }
+    .tb-util-btn:hover { background: rgba(212,175,55,0.16); border-color: rgba(212,175,55,0.55); transform: translateY(-2px); }
+    /* زر اللغة — كرة أرضية أكبر قليلاً بنفس حجم الثيم */
+    .tb-lang-btn {
+        width: 38px; height: 38px;
+        font-size: 1.15rem;
+        background: linear-gradient(145deg, rgba(0,120,200,0.18), rgba(0,60,120,0.12));
+        border-color: rgba(100,180,255,0.3);
+        color: #7ecfff;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.3), 0 0 12px rgba(100,180,255,0.08), inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .tb-lang-btn:hover {
+        background: linear-gradient(145deg, rgba(0,140,230,0.25), rgba(0,80,160,0.18));
+        border-color: rgba(100,180,255,0.55);
+        color: #aee4ff;
+        box-shadow: 0 5px 16px rgba(0,120,200,0.25);
+    }
+
+    /* ثيم أبيض — أيقونات التواصل تصبح داكنة */
+    body.white-luxury .tb-social-btn {
+        color: rgba(30,30,30,0.75);
+        background: rgba(0,0,0,0.06);
+        border-color: rgba(0,0,0,0.12);
+    }
+    body.white-luxury .tb-social-btn:hover {
+        color: #111;
+        background: rgba(0,0,0,0.12);
+        border-color: rgba(0,0,0,0.25);
+    }
+    body.white-luxury .tb-wa, body.white-luxury .tb-yt,
+    body.white-luxury .tb-ig, body.white-luxury .tb-fb,
+    body.white-luxury .tb-li { background: rgba(0,0,0,0.06); }
+    /* NAV */
+    .tb-nav { display: flex; align-items: center; gap: 3px; flex-wrap: wrap; justify-content: center; }
+    .tb-nav-btn {
+        display: inline-flex; align-items: center; gap: 5px;
+        padding: 5px 11px; border-radius: 26px;
+        font-size: 0.79rem; font-weight: 700;
+        text-decoration: none; color: #b8ccd8;
+        background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+        transition: all 0.2s ease; white-space: nowrap; font-family: 'Cairo', sans-serif;
+    }
+    .tb-nav-btn i { font-size: 0.78rem; color: #d4af37; }
+    .tb-nav-btn:hover, .tb-nav-btn.tb-active {
+        background: rgba(212,175,55,0.13); border-color: rgba(212,175,55,0.38);
+        color: #ffd700; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212,175,55,0.1);
+    }
+    .tb-nav-contact { background: linear-gradient(135deg, rgba(212,175,55,0.14), rgba(255,140,66,0.08)); border-color: rgba(212,175,55,0.28); color: #ffd700; }
+    .tb-nav-btn.tb-active { background: rgba(212,175,55,0.17); border-color: rgba(212,175,55,0.48); color: #ffd700; }
+    /* MOBILE */
+    @media (max-width: 768px) {
+        #mainTopBar .main-wrapper { padding: 0 10px; }
+        .tb-logo-3d { width: 50px; height: 50px; }
+        .tb-row-logo { padding: 6px 0 3px; }
+        .tb-brand-name { font-size: 0.88rem; letter-spacing: 1.8px; }
+        .tb-brand-sub { font-size: 0.56rem; letter-spacing: 2px; }
+        .tb-row-brand { padding: 2px 0 5px; gap: 5px; }
+        .tb-row-controls { gap: 4px; padding: 5px 0; justify-content: space-between; min-height: 36px; }
+        .tb-social-center { gap: 3px; }
+        .tb-social-btn { width: 26px; height: 26px; font-size: 0.78rem; border-radius: 6px; }
+        /* أزرار محمية على الجوال — أيقونة فقط */
+        .tb-protected-btn { height: 24px; padding: 0 6px; font-size: 0; gap: 0; border-radius: 6px; }
+        .tb-protected-btn i { font-size: 0.72rem; }
+        .tb-protected-btn span { display: none; }
+        .tb-util-btn { width: 26px; height: 26px; font-size: 0.78rem; border-radius: 6px; }
+        .tb-lang-btn { width: 30px; height: 30px; font-size: 1rem; }
+        .tb-nav-btn { padding: 4px 7px; font-size: 0; border-radius: 20px; }
+        .tb-nav-btn i { font-size: 0.85rem; }
+        .tb-nav-btn span { display: none; }
+        .tb-row-nav { padding: 4px 0; }
+        .tb-nav { gap: 2px; }
+    }
+    @media (max-width: 480px) {
+        /* شاشات صغيرة جداً: التواصل يتدفق في صف منفصل */
+        .tb-row-controls { flex-wrap: wrap; justify-content: center; gap: 5px; }
+        .tb-social-center { position: static; transform: none; order: 2; width: 100%; justify-content: center; }
+        .tb-util-group { order: 1; }
+        .tb-protected-group { order: 3; }
+    }
+    @media (max-width: 400px) {
+        .tb-logo-3d { width: 42px; height: 42px; }
+        .tb-brand-name { font-size: 0.75rem; letter-spacing: 1.2px; }
+        .tb-brand-sep, .tb-brand-sub { display: none; }
+        .tb-social-btn, .tb-util-btn { width: 24px; height: 24px; }
+        .tb-lang-btn { width: 28px; height: 28px; }
+        .tb-protected-btn { height: 22px; padding: 0 5px; }
+        .tb-social-center { gap: 2px; } .tb-protected-group { gap: 2px; } .tb-util-group { gap: 2px; }
+    }
+    /* PASSWORD MODAL */
+    #rhPassModal { position: fixed; inset: 0; z-index: 99999; display: none; align-items: center; justify-content: center; }
+    #rhPassModal.rh-open { display: flex; }
+    .rh-modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.78); backdrop-filter: blur(7px); animation: rhFadeIn 0.22s ease; }
+    .rh-modal-box {
+        position: relative; z-index: 2;
+        background: linear-gradient(160deg, #0d1117 0%, #111827 60%, #0a0f1a 100%);
+        border: 1px solid rgba(212,175,55,0.32); border-radius: 20px;
+        padding: 34px 30px 26px; width: min(400px, 92vw);
+        box-shadow: 0 30px 80px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.04);
+        animation: rhScaleIn 0.26s cubic-bezier(0.34,1.56,0.64,1); text-align: center;
+    }
+    @keyframes rhFadeIn { from{opacity:0} to{opacity:1} }
+    @keyframes rhScaleIn { from{opacity:0;transform:scale(0.86)} to{opacity:1;transform:scale(1)} }
+    .rh-modal-close {
+        position: absolute; top: 12px; right: 14px;
+        background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+        color: #888; width: 28px; height: 28px; border-radius: 7px;
+        font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .rh-modal-close:hover { background: rgba(255,80,80,0.14); color: #ff6b6b; }
+    .rh-modal-logo { font-size: 2.6rem; margin-bottom: 8px; filter: drop-shadow(0 0 10px rgba(212,175,55,0.4)); }
+    .rh-modal-title { color: #d4af37; font-size: 1.25rem; font-weight: 900; margin: 0 0 5px; letter-spacing: 1px; }
+    .rh-modal-sub { color: #6b7a8d; font-size: 0.83rem; margin: 0 0 20px; }
+    .rh-modal-field {
+        display: flex; align-items: center;
+        background: rgba(255,255,255,0.04); border: 1px solid rgba(212,175,55,0.2);
+        border-radius: 11px; overflow: hidden; margin-bottom: 10px; transition: border-color 0.2s;
+    }
+    .rh-modal-field:focus-within { border-color: rgba(212,175,55,0.52); box-shadow: 0 0 0 3px rgba(212,175,55,0.07); }
+    .rh-modal-field input {
+        flex: 1; background: transparent; border: none; outline: none;
+        color: #e2e8f0; font-size: 1rem; padding: 12px 14px;
+        font-family: 'Cairo', sans-serif; letter-spacing: 2px;
+    }
+    .rh-modal-field input::placeholder { color: #3d4a58; letter-spacing: 0; }
+    .rh-modal-eye { background: transparent; border: none; color: #5a6878; padding: 0 13px; cursor: pointer; font-size: 0.9rem; transition: color 0.2s; }
+    .rh-modal-eye:hover { color: #d4af37; }
+    .rh-modal-err { color: #fc8181; font-size: 0.8rem; min-height: 16px; margin: 0 0 12px; font-weight: 700; }
+    .rh-modal-submit {
+        width: 100%; padding: 12px;
+        background: linear-gradient(135deg, #d4af37, #b8860b);
+        border: none; border-radius: 11px; color: #0a0a0a;
+        font-size: 0.92rem; font-weight: 900; cursor: pointer; font-family: 'Cairo', sans-serif;
+        display: flex; align-items: center; justify-content: center; gap: 7px;
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+        box-shadow: 0 5px 18px rgba(212,175,55,0.28), inset 0 1px 0 rgba(255,255,255,0.18);
+    }
+    .rh-modal-submit:hover { transform: translateY(-2px); box-shadow: 0 9px 26px rgba(212,175,55,0.38); }
+    @keyframes rhShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+    </style>
+
+    <!-- سكريبت التنقل النشط + نظام الحماية بكلمة مرور -->
+    <script>
+    /* ---- Active nav highlight ---- */
+    (function() {
+        function updateActiveNav() {
+            const ids = ['home','about','products','technology','market','financials','investors','photo-album','contact'];
+            const btns = document.querySelectorAll('.tb-nav-btn');
+            let cur = '';
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && window.scrollY >= el.offsetTop - 130) cur = id;
+            });
+            btns.forEach(b => {
+                b.classList.toggle('tb-active', b.getAttribute('href') === '#' + cur);
+            });
+        }
+        window.addEventListener('scroll', updateActiveNav, { passive: true });
+        document.addEventListener('DOMContentLoaded', updateActiveNav);
+    })();
+
+    /* ---- Password-protected buttons ---- */
+    // Obfuscated: key segments joined at runtime — never stored as plain string
+    const _rh = (function(){
+        const _a = ['1','2','3'], _b = ['A','L','A'], _c = ['M','M','I','R','I'];
+        return _a.join('') + _b.join('') + _c.join('');
+    })();
+
+    const _rhLinks = {
+        ft: (function(){ const p=['https://www.robothousefzllc.com/','Food%20Truck.html']; return p.join(''); })(),
+        sw: (function(){ const p=['https://robothousefzllc.com/','shawarma.html']; return p.join(''); })(),
+        fs: (function(){ const p=['https://robothousefzllc.com/','robot-house-feasibility.html']; return p.join(''); })()
+    };
+
+    let _rhTarget = null;
+
+    window.rhOpenProtected = function(key) {
+        _rhTarget = key;
+        const modal = document.getElementById('rhPassModal');
+        const input = document.getElementById('rhPassInput');
+        const err = document.getElementById('rhPassErr');
+        err.textContent = '';
+        input.value = '';
+        modal.classList.add('rh-open');
+        setTimeout(() => input.focus(), 80);
+    };
+
+    window.rhCloseModal = function() {
+        document.getElementById('rhPassModal').classList.remove('rh-open');
+        _rhTarget = null;
+    };
+
+    window.rhSubmitPass = function() {
+        const input = document.getElementById('rhPassInput');
+        const err = document.getElementById('rhPassErr');
+        const val = input.value.trim();
+        if (!val) { err.textContent = 'Please enter the password.'; return; }
+        if (val === _rh && _rhTarget && _rhLinks[_rhTarget]) {
+            document.getElementById('rhPassModal').classList.remove('rh-open');
+            window.open(_rhLinks[_rhTarget], '_blank', 'noopener,noreferrer');
+            _rhTarget = null;
+            input.value = '';
+        } else {
+            err.textContent = '✗ Incorrect Password';
+            input.value = '';
+            input.focus();
+            // re-trigger shake animation
+            err.style.animation = 'none';
+            requestAnimationFrame(() => { err.style.animation = ''; });
+        }
+    };
+
+    window.rhToggleEye = function() {
+        const inp = document.getElementById('rhPassInput');
+        const icon = document.getElementById('rhEyeIcon');
+        if (inp.type === 'password') {
+            inp.type = 'text';
+            icon.className = 'fas fa-eye-slash';
+        } else {
+            inp.type = 'password';
+            icon.className = 'fas fa-eye';
+        }
+    };
+
+    // Close on ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') window.rhCloseModal();
+    });
+    </script>
+
+    <header class="main-header" id="home">
+        <div class="video-container">
+            <video class="header-video" playsinline muted loop autoplay poster="https://robothousefzllc.com/poster.jpg">
+                <source src="https://robothousefzllc.com/ROBOT%20HOUSE%20Header%20Video.mp4" type="video/mp4">
+            </video>
+            <div class="fullwidth-glass-ticker"><div class="glass-ticker-track"><div class="glass-ticker-item"><span class="glass-ticker-text">ROBOT HOUSE - SMART LIVING FUTURE - INNOVATION & TECHNOLOGY - مدينة ذكية متكاملة</span></div></div></div>
+        </div>
+    </header>
+
+    
+    <main>
+        <section id="about">
+            <div class="container stacked-rect">
+                <h2 class="section-title">من نحن</h2>
+                <!-- باقي محتوى القسم يبقى كما هو دون تغيير -->
+            </div>
+        </section>
+            <div class="content-block about-intro" style="align-items:flex-start; gap:1.2rem;">
+              <div class="glass-card" style="width:100%; max-width:900px; margin:0 auto; text-align:right; padding:2rem;">
+                <h3 class="about-overview-title" style="color:var(--accent); margin-bottom:12px; font-size:1.4rem; text-align:center;">ROBΟT HOUSE — منظومة ابتكار متكاملة</h3>
+                <p class="about-overview-text" style="font-size:1.02rem; color:#e6f7fb; line-height:1.85; max-width:880px; margin:0 auto 12px; text-align:right;">
+                  ROBOT HOUSE هي شركة رائدة في ابتكار نماذج الحياة المستقبلية، تتبنى رؤية جريئة لتأسيس أول منظومة ذكية متكاملة بالكامل في العالم العربي، حيث تلتقي الرفاهية بالتكنولوجيا، وتندمج الاستدامة مع الذكاء الاصطناعي في كل تفصيل من تفاصيل الحياة اليومية.
+                </p>
+                <p class="about-overview-text" style="font-size:1.02rem; color:#cfeff4; margin-top:6px; max-width:880px; margin-left:auto; margin-right:auto; text-align:right;">
+                  نحن شركة خاصة ذات مسؤولية محدودة، متخصصة في تطوير أنظمة سكنية، تشغيلية، وضيافية ذكية تعتمد على أحدث تقنيات الذكاء الاصطناعي، الطاقة النظيفة، والأتمتة المتقدمة، بهدف بناء مشاريع ريادية ذات قابلية توسع عالمية وعائد استثماري مرتفع.
+                </p>
+              </div>
+
+              <div style="width:100%; display:flex; justify-content:center;">
+                <div class="glass-card" style="width:420px; display:flex; flex-direction:column; gap:10px; align-items:center; justify-content:center;">
+                  <video class="about-video" playsinline muted loop autoplay style="width:100%; height:240px; border-radius:12px; object-fit:cover;">
+                    <source src="https://robothousefzllc.com/About%20Us%20Video.mp4" type="video/mp4">
+                  </video>
+                  <div style="font-weight:800; color:var(--accent); text-align:center;">منظومتنا: إنتاج — تشغيل — مدينة ذكية</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single-line summary -->
+            <div style="margin-top:18px; text-align:center;">
+              <div class="glass-card" style="display:inline-block; padding:12px 18px;">
+                <strong style="color:var(--accent); font-weight:900;">نحن لا نقدم منتجًا واحدًا، بل نبني نظامًا اقتصاديًا وتقنيًا متكاملًا يبدأ من الإنتاج والتوريد، ويمتد إلى التشغيل والخدمات والمدينة الذكية.</strong>
+              </div>
+            </div>
+
+            <!-- Product widgets: stacked rectangular cards (vertical list) -->
+            <div class="about-cards stacked-list" style="display:flex; flex-direction:column; gap:16px; margin-top:28px;">
+              
+              <div class="glass-card about-card-rect" style="padding:1.4rem; display:flex; gap:14px; align-items:center; flex-direction:row-reverse;">
+                <div style="flex:1; text-align:right;">
+                  <h4 style="color:var(--accent); margin:0 0 6px; font-size:1.05rem; text-align:right;">المنازل الذكية والمدن المستقبلية</h4>
+                  <p style="color:#dbeafe; margin:0; line-height:1.6; text-align:right;">حلول شاملة للتخطيط العمراني، البنية التحتية الذكية وإدارة المجمعات.</p>
+                </div>
+                <div style="flex:0 0 56px;"><i class="fas fa-city" style="font-size:28px; color:var(--secondary); display:block; text-align:center;"></i></div>
+              </div>
+
+              <div class="glass-card about-card-rect" style="padding:1.4rem; display:flex; gap:14px; align-items:center; flex-direction:row-reverse;">
+                <div style="flex:1; text-align:right;">
+                  <h4 style="color:var(--accent); margin:0 0 6px; font-size:1.05rem; text-align:right;">شاحنات الضيافة الكهربائية الذكية والمطاعم المتنقلة</h4>
+                  <p style="color:#dbeafe; margin:0; line-height:1.6; text-align:right;">نماذج متنقلة متصلة بالـ AI لتجربة ضيافة متطورة وفعّالة.</p>
+                </div>
+                <div style="flex:0 0 56px;"><i class="fas fa-truck-monster" style="font-size:28px; color:var(--secondary); display:block; text-align:center;"></i></div>
+              </div>
+
+              <div class="glass-card about-card-rect" style="padding:1.4rem; display:flex; gap:14px; align-items:center; flex-direction:row-reverse;">
+                <div style="flex:1; text-align:right;">
+                  <h4 style="color:var(--accent); margin:0 0 6px; font-size:1.05rem; text-align:right;">شاحنات الشاورما والمشاوي الفاخرة</h4>
+                  <p style="color:#dbeafe; margin:0; line-height:1.6; text-align:right;">سلاسل مطاعم متنقلة بعمليات متمتعة وقياس أداء في الزمن الحقيقي.</p>
+                </div>
+                <div style="flex:0 0 56px;"><i class="fas fa-drumstick-bite" style="font-size:28px; color:var(--secondary); display:block; text-align:center;"></i></div>
+              </div>
+
+              <div class="glass-card about-card-rect" style="padding:1.4rem; display:flex; gap:14px; align-items:center; flex-direction:row-reverse;">
+                <div style="flex:1; text-align:right;">
+                  <h4 style="color:var(--accent); margin:0 0 6px; font-size:1.05rem; text-align:right;">المطاعم الذكية وروبوتات المطبخ</h4>
+                  <p style="color:#dbeafe; margin:0; line-height:1.6; text-align:right;">أتمتة كاملة للمطابخ، روبوتات تحضير وتقديم متكاملة.</p>
+                </div>
+                <div style="flex:0 0 56px;"><i class="fas fa-utensils" style="font-size:28px; color:var(--secondary); display:block; text-align:center;"></i></div>
+              </div>
+
+              <div class="glass-card about-card-rect" style="padding:1.4rem; display:flex; gap:14px; align-items:center; flex-direction:row-reverse;">
+                <div style="flex:1; text-align:right;">
+                  <h4 style="color:var(--accent); margin:0 0 6px; font-size:1.05rem; text-align:right;">مزارع الدواجن الآلية بطاقة تشغيل كبيرة</h4>
+                  <p style="color:#dbeafe; margin:0; line-height:1.6; text-align:right;">حلول زراعية ذات كفاءة تشغيلية عالية ومراقبة ذكية للحاضنات والتغذية.</p>
+                </div>
+                <div style="flex:0 0 56px;"><i class="fas fa-tractor" style="font-size:28px; color:var(--secondary); display:block; text-align:center;"></i></div>
+              </div>
+
+              <div class="glass-card about-card-rect" style="padding:1.4rem; display:flex; gap:14px; align-items:center; flex-direction:row-reverse;">
+                <div style="flex:1; text-align:right;">
+                  <h4 style="color:var(--accent); margin:0 0 6px; font-size:1.05rem; text-align:right;">نقل المأكولات البحرية الحية</h4>
+                  <p style="color:#dbeafe; margin:0; line-height:1.6; text-align:right;">سلاسل تبريد ونقل متقدمة للسمك والروبيان والكافيار.</p>
+                </div>
+                <div style="flex:0 0 56px;"><i class="fas fa-fish" style="font-size:28px; color:var(--secondary); display:block; text-align:center;"></i></div>
+              </div>
+
+              <div class="glass-card about-card-rect" style="padding:1.4rem; display:flex; gap:14px; align-items:center; flex-direction:row-reverse;">
+                <div style="flex:1; text-align:right;">
+                  <h4 style="color:var(--accent); margin:0 0 6px; font-size:1.05rem; text-align:right;">استيراد التوابل ومصنع التتبيلة والخلطات السرية</h4>
+                  <p style="color:#dbeafe; margin:0; line-height:1.6; text-align:right;">شبكة توريد عالمية ومصانع تصنيع بخصائص جودة وسرية عالية.</p>
+                </div>
+                <div style="flex:0 0 56px;"><i class="fas fa-box" style="font-size:28px; color:var(--secondary); display:block; text-align:center;"></i></div>
+              </div>
+
+              <div class="glass-card about-card-rect" style="padding:1.4rem; display:flex; gap:14px; align-items:center; flex-direction:row-reverse;">
+                <div style="flex:1; text-align:right;">
+                  <h4 style="color:var(--accent); margin:0 0 6px; font-size:1.05rem; text-align:right;">أنظمة التوصيل الذكي والدرون</h4>
+                  <p style="color:#dbeafe; margin:0; line-height:1.6; text-align:right;">لوجستيات متصلة بالـ AI لتسليم سريع وآمن داخل المجمعات والمدن.</p>
+                </div>
+                <div style="flex:0 0 56px;"><i class="fas fa-shipping-fast" style="font-size:28px; color:var(--secondary); display:block; text-align:center;"></i></div>
+              </div>
+
+              <div class="glass-card about-card-rect" style="padding:1.4rem; display:flex; gap:14px; align-items:center; flex-direction:row-reverse;">
+                <div style="flex:1; text-align:right;">
+                  <h4 style="color:var(--accent); margin:0 0 6px; font-size:1.05rem; text-align:right;">الطاقة الشمسية والتخزين الذكي</h4>
+                  <p style="color:#dbeafe; margin:0; line-height:1.6; text-align:right;">حلول توزيع طاقة متجددة مع نظم تخزين وإدارة ذكية للشبكات المحلية.</p>
+                </div>
+                <div style="flex:0 0 56px;"><i class="fas fa-solar-panel" style="font-size:28px; color:var(--secondary); display:block; text-align:center;"></i></div>
+              </div>
+
+              <div class="glass-card about-card-rect" style="padding:1.4rem; display:flex; gap:14px; align-items:center; flex-direction:row-reverse;">
+                <div style="flex:1; text-align:right;">
+                  <h4 style="color:var(--accent); margin:0 0 6px; font-size:1.05rem; text-align:right;">المركبات البرمائية والطائرات الكهربائية المستقبلية</h4>
+                  <p style="color:#dbeafe; margin:0; line-height:1.6; text-align:right;">بحث وتطوير في مركبات متعددة الاستخدام للطيران والسطح والماء.</p>
+                </div>
+                <div style="flex:0 0 56px;"><i class="fas fa-ship" style="font-size:28px; color:var(--secondary); display:block; text-align:center;"></i></div>
+              </div>
+
+              <div class="glass-card about-card-rect" style="padding:1.4rem; display:flex; gap:14px; align-items:center; flex-direction:row-reverse;">
+                <div style="flex:1; text-align:right;">
+                  <h4 style="color:var(--accent); margin:0 0 6px; font-size:1.05rem; text-align:right;">حلول النقل الذكي والبنية الحضرية</h4>
+                  <p style="color:#dbeafe; margin:0; line-height:1.6; text-align:right;">تكامل النقل، الجسور المعلقة والأنظمة التي تحسّن التنقل داخل المدن الذكية.</p>
+                </div>
+                <div style="flex:0 0 56px;"><i class="fas fa-bus-alt" style="font-size:28px; color:var(--secondary); display:block; text-align:center;"></i></div>
+              </div>
+
+            </div>
+
+            <!-- Closing statement -->
+            <div style="margin-top:20px; text-align:center;">
+              <div class="glass-card" style="padding:14px;">
+                <p style="color:#e6f7fb; margin:0; line-height:1.6;">
+                  ROBOT HOUSE ليست مجرد شركة، بل منظومة ابتكار متكاملة تعيد تعريف أسلوب الحياة، الضيافة، الغذاء، النقل، والبنية الحضرية في المستقبل.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+        
+        <section style="background:linear-gradient(135deg, #0a2b4e20, #0f172a);"><div class="container"><div class="glass-card" style="text-align:center; margin-bottom:3rem;"><h2 style="color:var(--accent); font-size:2rem;">مرحباً بكم في Robot House</h2><p style="font-size:1.2rem;">ريادة في الحلول الذكية للمنازل والمشاريع المستقبلية</p></div><div class="hexagon-video-container"><div class="hexagon-shape"><video id="hexVideo" muted loop playsinline autoplay preload="none"><source src="https://robothousefzllc.com/Why Invest With Us Video.mp4" type="video/mp4"></video></div><button class="watch-btn" id="watchBtn"><i class="fas fa-play-circle"></i> شاهد العرض</button></div></div></section>
+        
+        <section id="products">
+          <div class="container">
+            <h2 class="section-title">منتجاتنا</h2>
+
+            <!-- Product windows stacked in clear rectangular cards, preserving all original content -->
+            <div class="product-windows">
+
+              <article class="product-window">
+                <div class="pw-header">
+                  <i class="fas fa-building pw-icon"></i>
+                  <div class="pw-title-wrap">
+                    <h3 class="pw-title">المجمع السكني الذكي</h3>
+                    <p class="pw-sub">4 أبراج • 480 شقة فاخرة • 400م² • كهرباء مجانية • إنترنت 5 سنوات</p>
+                  </div>
+                </div>
+                <div class="pw-body">
+                  <div class="pw-media">
+                    <video class="about-video" muted loop playsinline preload="none">
+                      <source src="https://robothousefzllc.com/Smart Residential Complex Video.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="pw-content">
+                    <p>الوصف: 4 أبراج • 480 شقة فاخرة • 400م² • كهرباء مجانية • إنترنت 5 سنوات • تعليم ذكي للأطفال. 8 غرف نوم، 3 حمامات ذكية، جاكوزي، مطبخ ذكي.</p>
+                    <ul class="pw-features">
+                      <li>480 شقة فاخرة بمساحات مرنة</li>
+                      <li>شبكة طاقة شمسية مركزية</li>
+                      <li>خدمات اشتراك للإنترنت والصيانة</li>
+                    </ul>
+                    <div class="pw-actions">
+                      <button class="btn-primary">اطلب عرض سعر</button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="product-window media-right">
+                <div class="pw-header">
+                  <i class="fas fa-car pw-icon"></i>
+                  <div class="pw-title-wrap">
+                    <h3 class="pw-title">المركبات المبتكرة</h3>
+                    <p class="pw-sub">سيارة روبوت برمائية • طائرة كهربائية شفافة • قطار ذكي</p>
+                  </div>
+                </div>
+                <div class="pw-body">
+                  <div class="pw-media">
+                    <video class="about-video" muted loop playsinline preload="none">
+                      <source src="https://robothousefzllc.com/Innovative%20Vehicles%20Video.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="pw-content">
+                    <p>الوصف: سيارة روبوت برمائية (50,000$) • طائرة شفافة كهربائية • قطار ليزر ذكي. عجلات كروية، حمولة &gt;3000 كجم.</p>
+                    <ul class="pw-features">
+                      <li>سيارة روبوت برمائية — سعر مرجعي: 50,000$</li>
+                      <li>طائرة كهربائية شفافة قابلة للغوص الجوي</li>
+                      <li>حلول نقل ذكي للمجمع</li>
+                    </ul>
+                    <div class="pw-actions">
+                      <button class="btn-primary" onclick="(async function(){ try { const v = event.target.closest('.product-window').querySelector('video'); if(!v) return; const url = v.querySelector('source')?.src; if(!url) return; const resp = await fetch(url, {mode:'cors'}); if(resp.ok){ const blob = await resp.blob(); const blobUrl = URL.createObjectURL(blob); v.querySelector('source')?.remove(); v.src = blobUrl; v.play().catch(()=>{}); window.addEventListener('beforeunload', ()=> URL.revokeObjectURL(blobUrl)); } } catch(e){ console.warn('Video load failed', e); } })()">تشغيل الفيديو</button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="product-window">
+                <div class="pw-header">
+                  <i class="fas fa-home pw-icon"></i>
+                  <div class="pw-title-wrap">
+                    <h3 class="pw-title">المنزل الذكي المتنقل</h3>
+                    <p class="pw-sub">مضاد للرصاص • مقاوم للماء والحريق • جدران قابلة لتغيير اللون</p>
+                  </div>
+                </div>
+                <div class="pw-body">
+                  <div class="pw-media">
+                    <video class="about-video" muted loop playsinline autoplay preload="none">
+                      <source src="https://robothousefzllc.com/ROBOT%20HOUSE%20Header%20Video.mp4" type="video/mp4">
+                      متصفحك لا يدعم عرض الفيديو.
+                    </video>
+                  </div>
+                  <div class="pw-content">
+                    <p>الوصف: مضاد للرصاص، مقاوم للماء والحريق • مكونات ذكية داخل الجدران • مساحات متعددة قابلة للتعديل • جدران قابلة لتغيير اللون.</p>
+                    <ul class="pw-features">
+                      <li>هندسة مرنة للمساحات الداخلية</li>
+                      <li>مقاومة عالية ومواد متقدمة</li>
+                      <li>تكامل كامل مع نظام AI للمستخدم</li>
+                    </ul>
+                    <div class="pw-actions">
+                      <button class="btn-primary">اطلب عرض سعر</button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="product-window media-right">
+                <div class="pw-header">
+                  <i class="fas fa-school pw-icon"></i>
+                  <div class="pw-title-wrap">
+                    <h3 class="pw-title">المدرسة الذكية</h3>
+                    <p class="pw-sub">42,000م² • 10 طوابق • تعليم بالذكاء الاصطناعي</p>
+                  </div>
+                </div>
+                <div class="pw-body">
+                  <div class="pw-media">
+                    <video class="about-video" muted loop playsinline preload="none">
+                      <source src="https://robothousefzllc.com/Smart%20Apartment.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="pw-content">
+                    <p>الوصف: 42,000م² • 10 طوابق • تعليم بالذكاء الاصطناعي من الحضانة للجامعة.</p>
+                    <ul class="pw-features">
+                      <li>برامج تعليمية مخصصة بالـ AI</li>
+                      <li>مرافق بحث وتطوير متقدمة</li>
+                      <li>بيئة تعليمية متصلة للمجتمع</li>
+                    </ul>
+                    <div class="pw-actions">
+                      <button class="btn-primary">اطلب تفاصيل</button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="product-window">
+                <div class="pw-header">
+                  <i class="fas fa-store pw-icon"></i>
+                  <div class="pw-title-wrap">
+                    <h3 class="pw-title">المول التجاري الذكي</h3>
+                    <p class="pw-sub">محلات ذكية • طاقة مجانية • تجربة تسوق مبتكرة</p>
+                  </div>
+                </div>
+                <div class="pw-body">
+                  <div class="pw-media placeholder-media">
+                    <video class="about-video" muted loop playsinline autoplay preload="none">
+                      <source src="https://robothousefzllc.com/The%20world%27s%20first%20smart%20residential%20city.mp4" type="video/mp4">
+                      متصفحك لا يدعم عرض الفيديو.
+                    </video>
+                  </div>
+                  <div class="pw-content">
+                    <p>الوصف: محلات بأنظمة AI، طاقة مجانية، تجربة تسوق مبتكرة.</p>
+                    <ul class="pw-features">
+                      <li>واجهات بيع ذكية وتحليلات سلوك العملاء</li>
+                      <li>تكامل لوجستي داخلي للموردين</li>
+                      <li>مساحات تجارية قابلة للتكيف</li>
+                    </ul>
+                    <div class="pw-actions">
+                      <button class="btn-primary">تفاصيل إيجارية</button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="product-window media-right">
+                <div class="pw-header">
+                  <i class="fas fa-bridge pw-icon"></i>
+                  <div class="pw-title-wrap">
+                    <h3 class="pw-title">الجسر المعلق</h3>
+                    <p class="pw-sub">الطابق 15 • 1,200م² • ربط الأبراج مع مرافق</p>
+                  </div>
+                </div>
+                <div class="pw-body">
+                  <div class="pw-media placeholder-media">
+                    <video class="about-video" muted loop playsinline autoplay preload="none">
+                      <source src="https://robothousefzllc.com/Smart%20Facilities%20Video.mp4" type="video/mp4">
+                      متصفحك لا يدعم عرض الفيديو.
+                    </video>
+                  </div>
+                  <div class="pw-content">
+                    <p>الوصف: الطابق 15، يربط الأبراج الأربعة، 1,200م²، سوبرماركت، مقهى، جلسات خارجية.</p>
+                    <ul class="pw-features">
+                      <li>مساحات تجارية وخدمية مدمجة</li>
+                      <li>تصميم يربط ويعزز التنقل بين الأبراج</li>
+                      <li>مساحات عرض ومناظر خارجية</li>
+                    </ul>
+                    <div class="pw-actions">
+                      <button class="btn-primary">اطلب مخطط</button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- New product: ROBO SHAWARMA TRUCK -->
+              <article class="product-window">
+                <div class="pw-header">
+                  <i class="fas fa-truck-fast pw-icon"></i>
+                  <div class="pw-title-wrap">
+                    <h3 class="pw-title">شاحنة الشاورما الذكية الفاخرة — ROBO SHAWARMA TRUCK</h3>
+                    <p class="pw-sub">شاحنة ضيافة كهربائية ذكية • طول 24 قدم • قدرة تشغيل 420 وجبة/يوم</p>
+                  </div>
+                </div>
+                <div class="pw-body">
+                  <div class="pw-media">
+                    <video class="about-video" muted loop playsinline preload="none">
+                      <source src="https://www.robothousefzllc.com/Shawarma truck video.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="pw-content">
+                    <p>الوصف: أول شاحنة ضيافة كهربائية ذكية بطول 24 قدم، مزودة ببطارية 300kW، ألواح شمسية وتقنية V2G لتشغيل مستقر حتى 420 وجبة يوميًا، بمستوى فخامة مطعم متنقل.</p>
+                    <ul class="pw-features">
+                      <li>4 مشاوي شاورما (لحم • دجاج • سجق • ديك رومي)</li>
+                      <li>نظام تبريد ذكي بسعة 800 كجم</li>
+                      <li>شاشة OLED 85 بوصة لعروض القائمة والإعلانات</li>
+                      <li>نظام طلب بالذكاء الاصطناعي وتقطيع روبوتي</li>
+                      <li>خدمة توصيل بالدرون ومخطط داخلي تفاعلي AR</li>
+                    </ul>
+                    <div class="pw-actions">
+                      <button class="btn-primary">اطلب عرض الشاحنة</button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- New product: SMART FARM & SUPPLY CHAIN -->
+              <article class="product-window media-right">
+                <div class="pw-header">
+                  <i class="fas fa-tractor pw-icon"></i>
+                  <div class="pw-title-wrap">
+                    <h3 class="pw-title">المزرعة الذكية وسلسلة التوريد — SMART FARM & SUPPLY CHAIN</h3>
+                    <p class="pw-sub">منظومة إنتاج غذائي آلية • مزرعة دواجن 50,000 دجاجة/شهر • تعبئة وتوزيع ذكي</p>
+                  </div>
+                </div>
+                <div class="pw-body">
+                  <div class="pw-media">
+                    <video class="about-video" muted loop playsinline preload="none">
+                      <source src="https://www.robothousefzllc.com/Poultry farm video.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="pw-content">
+                    <p>الوصف: نظام متكامل للإنتاج والتغذية والمراقبة الذكية لتخفيض التكلفة التشغيلية وتحسين الجودة مع إعادة تدوير المخلفات وتحويلها إلى وقود حيوي.</p>
+                    <ul class="pw-features">
+                      <li>مزرعة دواجن آلية بطاقة 50,000 دجاجة شهريًا</li>
+                      <li>تغذية آلية وتحكم مناخي ومراقبة صحة بالـ AI</li>
+                      <li>تقليل النفايات بنسبة 45٪ وإعادة تدوير وتحويل السماد لوقود</li>
+                      <li>مصنع التتبيلة السرية وتعبئة ذكية وشراكات توريد عالمية</li>
+                    </ul>
+                    <div class="pw-actions">
+                      <button class="btn-primary">اطلب شراكة توريد</button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- New product: SEAFOOD MOBILITY & SMART RESTAURANT -->
+              <article class="product-window">
+                <div class="pw-header">
+                  <i class="fas fa-ship pw-icon"></i>
+                  <div class="pw-title-wrap">
+                    <h3 class="pw-title">النقل البحري والمطعم الذكي — SEAFOOD MOBILITY & SMART RESTAURANT</h3>
+                    <p class="pw-sub">حل لوجستي ومطعم فاخر للمأكولات البحرية • نقل مبرد • طهي مباشر</p>
+                  </div>
+                </div>
+                <div class="pw-body">
+                  <div class="pw-media">
+                    <video class="about-video" muted loop playsinline preload="none">
+                      <source src="https://www.robothousefzllc.com/Fish%20transport%20truck.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="pw-content">
+                    <p>الوصف: حلول متكاملة لنقل المأكولات البحرية الحية وتقديمها داخل مطاعم ذكية فاخرة مع تحكم حراري دقيق، أنظمة أكسجين وفلترة متقدمة، ومراقبة GPS+IoT على مدار الساعة.</p>
+                    <ul class="pw-features">
+                      <li>شاحنات نقل مبردة ومراقبة GPS + IoT 24/7</li>
+                      <li>سلالات: سلمون • روبيان • كافيار (ستورجون)</li>
+                      <li>أنظمة أكسجين متقدمة وفلترة مياه وتحكم حراري ±0.5°</li>
+                      <li>مطعم ذكي مع AI ordering، روبوتات مطبخ وجدران قوائم رقمية</li>
+                    </ul>
+                    <div class="pw-actions">
+                      <button class="btn-primary">استفسر عن الخدمة</button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- New product: Global Spice Import & Secret Marinade Factory -->
+              <article class="product-window media-right">
+                <div class="pw-header">
+                  <i class="fas fa-seedling pw-icon"></i>
+                  <div class="pw-title-wrap">
+                    <h3 class="pw-title">🌍 استيراد التوابل العالمية — مصنع التتبيلة السرية</h3>
+                    <p class="pw-sub">منظومة استيراد متكاملة • خلطات حصرية • تعبئة ذكية • توزيع عالمي</p>
+                  </div>
+                </div>
+                <!-- Force horizontal layout: video on the right, content on the left -->
+                <div class="pw-body" style="display:flex; flex-direction:row-reverse; gap:18px; align-items:center; flex-wrap:nowrap;">
+                  <div class="pw-media" style="order:1; flex:0 0 420px; max-width:420px;">
+                    <video class="about-video" muted loop playsinline preload="none">
+                      <source src="https://robothousefzllc.com/Spices%20video.mp4" type="video/mp4">
+                      متصفحك لا يدعم عرض الفيديو.
+                    </video>
+                  </div>
+                  <div class="pw-content" style="order:0; flex:1 1 320px; text-align:left;">
+                    <p>نوفّر منظومة استيراد متكاملة لأجود أنواع التوابل من مختلف دول العالم، عبر شراكات مباشرة مع الموردين والمزارع المعتمدة، لضمان استمرارية التوريد وجودة ثابتة على مدار العام.</p>
+                    <ul class="pw-features">
+                      <li>🌿 توابل عضوية نقية</li>
+                      <li>🤝 شراكات مباشرة مع دول المنشأ</li>
+                      <li>🍍🥭 خلطة فواكه طبيعية 100٪</li>
+                      <li>📦 تعبئة ذكية وآمنة</li>
+                      <li>🌐 توزيع عالمي واستمرارية لوجستية</li>
+                      <li>🛡 براءة اختراع مسجلة</li>
+                    </ul>
+                    <p style="color:#cfeff4; margin-top:8px;">مصنع التتبيلة السرية ينتج خلطات مبتكرة وحصرية تم تطويرها وفق معايير عالية، تجمع بين النكهات الشرقية والعالمية بتركيبات سرية مميزة تمنح المنتج طابعًا فريدًا لا يُنسى. تم تصميم سلسلة الإمداد لضمان عدم انقطاع المواد الخام مع خطط استيراد وتخزين ذكية تدعم التوسع المستقبلي.</p>
+                    <div class="pw-actions">
+                      <button class="btn-primary">اطلب معلومات عن الاستيراد</button>
+                      <button class="btn-outline">اطلب عينة من التتبيلة</button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+            </div><!-- .product-windows -->
+
+          </div>
+        </section>
+        
+        <section id="technology">
+          <div class="container stacked-rect">
+            <h2 class="section-title">التقنيات المستخدمة</h2>
+
+            <!-- Holographic geometric widget layout for technologies (widgets moved above text and centered) -->
+            <div class="tech-holo-grid">
+              <div class="tech-holo-card">
+                <div class="holo-badge"><i class="fas fa-microchip"></i></div>
+                <div class="holo-widgets" style="justify-content:center;">
+                  <span class="chip">تحليل بيانات</span>
+                  <span class="chip">تحكم أوتوماتيكي</span>
+                </div>
+                <div class="holo-content" style="text-align:center;">
+                  <h3>الذكاء الاصطناعي AI</h3>
+                  <p>يتحكم في أنظمة المنازل الذكية، الأمان البيومتري، التعليم، وتجربة التسوق.</p>
+                </div>
+              </div>
+
+              <div class="tech-holo-card">
+                <div class="holo-badge"><i class="fas fa-sun"></i></div>
+                <div class="holo-widgets" style="justify-content:center;">
+                  <span class="chip">تخزين ذكي</span>
+                  <span class="chip">ألواح شفافة</span>
+                </div>
+                <div class="holo-content" style="text-align:center;">
+                  <h3>الطاقة الشمسية</h3>
+                  <p>اعتماد كامل على الطاقة الشمسية لتوفير كهرباء مجانية ومستدامة.</p>
+                </div>
+              </div>
+
+              <div class="tech-holo-card">
+                <div class="holo-badge"><i class="fas fa-brain"></i></div>
+                <div class="holo-widgets" style="justify-content:center;">
+                  <span class="chip">تخصيص المناهج</span>
+                  <span class="chip">تحسين تجربة</span>
+                </div>
+                <div class="holo-content" style="text-align:center;">
+                  <h3>التعلم العميق</h3>
+                  <p>مدمج في أنظمة التعليم الذكي داخل الشقق والمدرسة.</p>
+                </div>
+              </div>
+
+              <div class="tech-holo-card">
+                <div class="holo-badge"><i class="fas fa-wifi"></i></div>
+                <div class="holo-widgets" style="justify-content:center;">
+                  <span class="chip">شبكة موحدة</span>
+                  <span class="chip">مراقبة لحظية</span>
+                </div>
+                <div class="holo-content" style="text-align:center;">
+                  <h3>إنترنت الأشياء IoT</h3>
+                  <p>يربط جميع الأجهزة والأنظمة داخل المجمع لبيئة متكاملة.</p>
+                </div>
+              </div>
+
+              <div class="tech-holo-card">
+                <div class="holo-badge"><i class="fas fa-atom"></i></div>
+                <div class="holo-widgets" style="justify-content:center;">
+                  <span class="chip">مواد ذكية</span>
+                  <span class="chip">تعديل سطحي</span>
+                </div>
+                <div class="holo-content" style="text-align:center;">
+                  <h3>النانو والجرافين</h3>
+                  <p>تسمح بتغيير لون المنزل ومقاومة العوامل البيئية.</p>
+                </div>
+              </div>
+
+              <div class="tech-holo-card">
+                <div class="holo-badge"><i class="fas fa-border-all"></i></div>
+                <div class="holo-widgets" style="justify-content:center;">
+                  <span class="chip">عازل فعال</span>
+                  <span class="chip">مقاومة الصدمات</span>
+                </div>
+                <div class="holo-content" style="text-align:center;">
+                  <h3>ألواح PE الأكريليكية</h3>
+                  <p>بديل زجاجي مقاوم للصدمات، عازل حراريًا وصوتيًا، يقلل تكاليف الكهرباء بنسبة 30%.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+        
+        <div class="container" style="margin:2rem auto;"><div class="hologram-card"><div style="text-align:center"><h1 class="section-title">الشقة الذكية المتطورة</h1><p class="section-subtitle">استمتع بتجربة سكنية متكاملة تعتمد على الذكاء الاصطناعي، الأمان الذكي، وترشيد الطاقة.</p>
+  <!-- Mobile Smart Home video inserted for الشقة الذكية المتطورة -->
+  <div style="max-width:900px; margin:20px auto;">
+    <video class="about-video" muted loop playsinline autoplay preload="none" controls style="border-radius:16px;">
+      <source src="https://robothousefzllc.com/mobile-smart-home-video.mp4" type="video/mp4">
+      متصفحك لا يدعم عرض الفيديو.
+    </video>
+  </div>
+  <div class="hologram-icons"><div class="hologram-icon"><div class="icon-circle"><i class="fas fa-robot"></i></div><div class="icon-text">الذكاء الاصطناعي</div></div><div class="hologram-icon"><div class="icon-circle"><i class="fas fa-lightbulb"></i></div><div class="icon-text">الإضاءة الذكية</div></div><div class="hologram-icon"><div class="icon-circle"><i class="fas fa-shield-alt"></i></div><div class="icon-text">الأمان المتكامل</div></div><div class="hologram-icon"><div class="icon-circle"><i class="fas fa-leaf"></i></div><div class="icon-text">ترشيد الطاقة</div></div></div></div></div></div>
+        
+        <div class="container"><div class="feature-card"><div class="card-header"><i class="fas fa-leaf" style="color:var(--accent); font-size:1.5rem;"></i><h3 style="display:inline; margin-right:10px;">الطاقة والبيئة</h3></div><div class="energy-grid"><div class="energy-item"><div class="energy-icon">⚡</div><span>إسمنت مولّد كهرباء</span></div><div class="energy-item"><div class="energy-icon">☀️</div><span>ألواح شفافة</span></div><div class="energy-item"><div class="energy-icon">♻️</div><span>تدوير مخلفات متقدم</span></div><div class="energy-item"><div class="energy-icon">💧</div><span>فلترة مياه متقدمة</span></div></div></div></div>
+        
+        <section id="market"><div class="container"><h2 class="section-title">السوق والتوقعات</h2><div class="stats-grid"><div class="stat"><i class="fas fa-chart-line fa-2x" style="color:var(--accent);"></i><h3>$1.6 تريليون</h3><p>حجم السوق المتوقع بحلول 2030</p></div><div class="stat"><i class="fas fa-globe fa-2x" style="color:var(--accent);"></i><h3>نمو سنوي 28%</h3><p>للمنازل الذكية عالمياً</p></div><div class="stat"><i class="fas fa-trophy fa-2x" style="color:var(--accent);"></i><h3>لا منافس مباشر</h3><p>بتكاملنا الفريد</p></div></div><div class="info-card" style="margin-top:2rem;"><h3>المنتجات الرئيسية</h3><div class="card-grid"><div class="card"><video class="about-video" muted loop playsinline preload="none"><source src="https://robothousefzllc.com/Smart%20Apartment.mp4" type="video/mp4"></video><h4>المنزل الذكي المتنقل</h4><ul><li>مضاد للرصاص، مقاوم للماء والحريق</li><li>مكونات ذكية داخل الجدران</li><li>جدران قابلة لتغيير اللون</li><li>تحكم كامل بالهاتف والذكاء الاصطناعي</li></ul></div><div class="card"><video class="about-video" muted loop playsinline preload="none"><source src="https://robothousefzllc.com/Innovative%20Vehicles%20Video.mp4" type="video/mp4"></video><h4>سيارة الروبوت البرمائية</h4><ul><li>بدون وقود - محرك هيدروليكي</li><li>عجلات كروية ذكية</li><li>قيادة ذاتية، قابلة للغمر</li><li>حمولة > 3000 كجم</li></ul></div><div class="card"><video class="about-video" muted loop playsinline preload="none"><source src="https://robothousefzllc.com/Transparent Electric Aircraft Video.mp4" type="video/mp4"></video><h4>طائرة كهربائية شفافة</h4><ul><li>هيكل خفيف الوزن وعالي المتانة</li><li>جناح متحرك لمدى طيران طويل</li><li>طيران آمن وبدون طيار</li><li>قادرة على الزلاق</li></ul></div><div class="card">
+    <h4>القطار الذكي</h4>
+    <video id="smartTrainVideo" class="about-video" muted loop playsinline autoplay preload="none">
+        <source src="https://robothousefzllc.com/Smart%20Train%20Video.mp4" type="video/mp4">
+        متصفحك لا يدعم عرض الفيديو.
+    </video>
+    <ul style="margin-top:12px;">
+        <li>عربات متصلة ذاتية القيادة بالليزر</li>
+        <li>نظام تعليق وعجلات مرن</li>
+        <li>تحكم ذكي بالمسار والإضاءة</li>
+        <li>سرعة عالية مع استهلاك منخفض للطاقة</li>
+    </ul>
+</div></div></div></div></section>
+        
+        <section id="financials">
+          <div class="container">
+            <h2 class="section-title">الجوانب المالية</h2>
+            <p class="financial-intro" style="text-align:center; margin-bottom:2rem;">الجوانب المالية للمستثمرين في مشروع ROBOT HOUSE</p>
+
+            <!-- New rectangular, evenly spaced layout with indicator widgets -->
+            <div class="financial-grid" style="margin-bottom:1.5rem;">
+              <div class="financial-rect">
+                <div class="financial-head">
+                  <div class="indicator"><i class="fas fa-chart-line"></i></div>
+                  <h3>1. عوائد استثنائية</h3>
+                </div>
+                <p>تحقق مشاريعنا عائدًا على الاستثمار (ROI) يتراوح بين 43% و72% في سيناريوهات مختلفة، مع الوصول إلى النسبة الأعلى عند تحقيق أقصى أسعار المبيعات. حتى في أكثر السيناريوهات تحفظًا، يظل العائد فوق 40%، مما يجعل ROBOT HOUSE من أكثر الفرص جاذبية في قطاع العقارات الذكية.</p>
+              </div>
+
+              <div class="financial-rect">
+                <div class="financial-head">
+                  <div class="indicator"><i class="fas fa-stream"></i></div>
+                  <h3>2. نموذج إيرادات متنوع ومتكامل</h3>
+                </div>
+                <p>بيع الوحدات السكنية الذكية (480 شقة فاخرة بمساحة 400 متر مربع لكل منها). خدمات اشتراك مستمرة (إنترنت مجاني 5 سنوات، صيانة ذكية، تعليم ذكي للأطفال)، فرص تجارية في المولات والمطاعم وقاعات الفعاليات، ومنتجات داعمة تزيد من مصادر الدخل.</p>
+              </div>
+
+              <div class="financial-rect">
+                <div class="financial-head">
+                  <div class="indicator"><i class="fas fa-balance-scale"></i></div>
+                  <h3>3. نقطة تعادل سريعة</h3>
+                </div>
+                <p>من المتوقع تحقيق نقطة التعادل خلال السنة الأولى من التشغيل بفضل تزامن تدفقات الشراء الأولية مع تشغيل المرافق المدرة للدخل.</p>
+              </div>
+
+              <div class="financial-rect">
+                <div class="financial-head">
+                  <div class="indicator"><i class="fas fa-wallet"></i></div>
+                  <h3>4. تدفقات نقدية مستدامة</h3>
+                </div>
+                <p>يوفر نموذج الاشتراك والخدمات التكميلية إيرادات متكررة بعد مرحلة البيع الأولية، ودعم التوسع عبر شراكات البناء والتشغيل والتحويل (BOT) يؤمن سيولة إضافية دون إرهاق ميزانيات المستثمرين.</p>
+              </div>
+
+              <div class="financial-rect">
+                <div class="financial-head">
+                  <div class="indicator"><i class="fas fa-leaf"></i></div>
+                  <h3>5. الاستدامة والتميز المالي</h3>
+                </div>
+                <p>الاعتماد على الطاقة الشمسية المجانية يقلل تكاليف التشغيل ويزيد صافي الأرباح على المدى الطويل، بينما يحقق تنويع المنتجات (منازل، سيارات، طائرات، قطارات) وفورات حجم وهوامش ربح أعلى.</p>
+              </div>
+            </div>
+
+            <h3 style="text-align:center; margin-bottom:1rem;">ملخص سيناريوهات العائد على الاستثمار (ROI)</h3>
+            <div class="financial-table-container">
+                <table class="financial-table">
+                    <thead>
+                        <tr><th>السيناريو</th><th>العائد على الاستثمار</th><th>تقييم الجاذبية</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>سيناريو البناء منخفض التكلفة</td><td><strong>Up to 70%</strong></td><td>Very Good</td></tr>
+                        <tr><td>متوسط سعر البناء</td><td><strong>Up to 53%</strong></td><td>Excellent</td></tr>
+                        <tr><td>سيناريو متحفظ</td><td><strong>40%</strong></td><td>Very Good</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Futuristic pulsating ROI chart -->
+            <div class="roi-chart-wrap" aria-hidden="false">
+              <div class="roi-chart-card glass-card">
+                <h4 style="margin-bottom:12px; text-align:center;">مخطط العائد المستقبلي (ROI)</h4>
+                <canvas id="roiChart" width="900" height="260" aria-label="مخطط العائد على الاستثمار"></canvas>
+                <div class="roi-legend">
+                  <span class="legend-item"><i style="background:linear-gradient(90deg,#ff8c42,#00a8c5);" class="legend-dot"></i> سيناريو بناء منخفض التكلفة</span>
+                  <span class="legend-item"><i style="background:linear-gradient(90deg,#ffd38a,#7be3ff);" class="legend-dot"></i> متوسط سعر البناء</span>
+                  <span class="legend-item"><i style="background:linear-gradient(90deg,#9eff9e,#00a8c5);" class="legend-dot"></i> سيناريو متحفظ</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="financial-note-grid" style="margin-top:1.5rem;">
+              <div class="note-left">
+                <div class="info-card note-card">
+                  <div class="note-header">
+                    <h3>ملاحظة:</h3>
+                    <div class="note-badge">مهم</div>
+                  </div>
+                  <p>الأرقام المذكورة أعلاه مستمدة من دراسات تفصيلية شاملة مع الحفاظ على سرية تفاصيل التكلفة الحساسة، وتضمن جميع السيناريوهات عوائد قوية تفوق ما يقدمه سوق العقارات التقليدي.</p>
+
+                  <div class="note-widgets">
+                    <div class="note-widget"><i class="fas fa-check-circle"></i><span>مصادر بيانات موثوقة</span></div>
+                    <div class="note-widget"><i class="fas fa-lock"></i><span>سرية التكاليف</span></div>
+                    <div class="note-widget"><i class="fas fa-sync-alt"></i><span>تحديثات ربع سنوية</span></div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <!-- Recovery panel moved below the notes (full-width) -->
+              <div style="grid-column: 1 / -1; margin-top: 12px;">
+                <div class="recovery-center" role="region" aria-label="مقاييس سرعة الاسترداد المرئية">
+                  <div class="info-card hologram-card recovery-panel">
+                    <div class="holo-layers" aria-hidden="true">
+                      <span class="holo-ring ring-1"></span>
+                      <span class="holo-ring ring-2"></span>
+                      <span class="holo-grid"></span>
+                    </div>
+
+                    <div class="geom-content">
+                      <h4 style="margin-bottom:10px;">مقاييس سرعة الاسترداد</h4>
+
+                      <div class="holo-metrics" aria-hidden="false">
+                        <div class="holo-metric metric-box">
+                          <strong class="metric-counter" data-target="1">سنة</strong>
+                          <small>نقطة تعادل</small>
+                          <canvas class="mini-chart" width="160" height="48" aria-hidden="true"></canvas>
+                        </div>
+
+                        <div class="holo-metric metric-box">
+                          <strong class="metric-counter" data-target="62">43–72%</strong>
+                          <small>نطاق العائد</small>
+                          <canvas class="mini-chart" width="160" height="48" aria-hidden="true"></canvas>
+                        </div>
+
+                        <div class="holo-metric metric-box">
+                          <strong class="metric-counter" data-target="3">متكرر</strong>
+                          <small>إيرادات اشتراكات</small>
+                          <canvas class="mini-chart" width="160" height="48" aria-hidden="true"></canvas>
+                        </div>
+                      </div>
+
+                      <div class="holo-chart-wrap" style="margin-top:10px;">
+                        <canvas id="recoveryMetricsChart" width="220" height="220" aria-label="مقياس سرعة الاسترداد"></canvas>
+                        <div class="holo-center-label" aria-hidden="true">62%</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- moved conclusion box: placed below recovery metrics as a full-width conclusion card -->
+              <div style="grid-column: 1 / -1; margin-top: 12px;">
+                <div class="info-card conclusion-card" style="max-width:920px; margin: 0 auto;">
+                  <div class="conclusion-header">
+                    <h3>الخلاصة:</h3>
+                    <div class="conclusion-pill">قابل للمشاركة</div>
+                  </div>
+                  <p>مشروع ROBOT HOUSE ليس مجرد تطوير عقاري، بل منصة متكاملة للعيش والعمل والاستثمار ضمن بيئة ذكية ومستدامة. عوائده المرتفعة ونموذج إيراداته المتنوع يجعلانه الخيار الأمثل لصناديق الاستثمار والمستثمرين الباحثين عن فرص رائدة في مستقبل العقارات.</p>
+
+                  <div class="conclusion-grid">
+                    <div class="conclusion-item">
+                      <i class="fas fa-chart-pie"></i>
+                      <div>
+                        <strong>تنوع الإيرادات</strong>
+                        <small>مبيعات، اشتراكات، خدمات</small>
+                      </div>
+                    </div>
+                    <div class="conclusion-item">
+                      <i class="fas fa-user-shield"></i>
+                      <div>
+                        <strong>حماية المستثمر</strong>
+                        <small>عقود واضحة وضمانات</small>
+                      </div>
+                    </div>
+                    <div class="conclusion-item">
+                      <i class="fas fa-seedling"></i>
+                      <div>
+                        <strong>استدامة</strong>
+                        <small>توفير تشغيل طويل الأمد</small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="conclusion-cta" style="margin-top:14px; display:flex; gap:10px;">
+                    <a class="btn-primary" href="#contact" style="flex:1;">اطلب العرض التفصيلي</a>
+                    <button class="btn-outline" id="downloadSummaryBtnAlt" style="flex:1;">تحميل الملخص المالي (PDF)</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <section id="investors">
+  <div class="container">
+    <h2 class="section-title">فرص الاستثمار</h2>
+
+    <!-- New content layout: left column with centered rectangular info boxes, right column with widgets + video -->
+    <div class="content-block investors-block">
+      <div class="invest-left">
+        <div class="invest-box">
+          <h3 class="invest-title">استثمر في مستقبل العقارات الذكية</h3>
+          <p class="invest-text">استثمر في مستقبل العقارات الذكية والمستدامة مع ROBOT HOUSE. فرص نمو عالية ومخاطر محسوبة ضمن نموذج عمل مبتكر.</p>
+        </div>
+
+        <div class="invest-box">
+          <h4 class="invest-subtitle"><i class="fas fa-chart-line"></i> عوائد جذابة</h4>
+          <p class="invest-text">عوائد استثمارية متوقعة بين 43% و72% حسب السيناريو، مع فرص لتعظيم الربح عبر خدمات الاشتراك والنمو التجاري.</p>
+        </div>
+
+        <div class="invest-box">
+          <h4 class="invest-subtitle"><i class="fas fa-globe"></i> سوق عالمي</h4>
+          <p class="invest-text">سوق المنازل الذكية ينمو بسرعة؛ ROBOT HOUSE موضوعة لتلبية الطلب الإقليمي والعالمي.</p>
+        </div>
+
+        <div class="invest-actions">
+          <a href="#contact" class="btn-primary">تواصل مع فريق المستثمرين</a>
+          <button class="btn-outline" id="downloadSummaryBtn">تحميل الملخص المالي (PDF)</button>
+        </div>
+      </div>
+
+      <div class="invest-right">
+        <!-- futuristic widgets above the video -->
+        <div class="invest-widgets" aria-hidden="true">
+          <div class="widget"><i class="fas fa-magic"></i><span>ابتكار</span></div>
+          <div class="widget"><i class="fas fa-shield-alt"></i><span>أمان</span></div>
+          <div class="widget"><i class="fas fa-bolt"></i><span>طاقة مجانية</span></div>
+          <div class="widget"><i class="fas fa-robot"></i><span>AI مدمج</span></div>
+        </div>
+
+        <div class="invest-video-wrap">
+          <video class="investor-video" muted loop playsinline autoplay preload="none">
+            <source src="https://robothousefzllc.com/Investment%20Invitation%20Video.mp4" type="video/mp4">
+            متصفحك لا يدعم عرض الفيديو.
+          </video>
+          <div class="video-overlay">
+            <div class="overlay-cta">فرصة محدودة - تواصل الآن</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="password-box" id="passwordBox">
+      <h3><i class="fas fa-lock"></i> دراسات الجدوى (محمي بكلمة سر)</h3>
+      <p class="password-desc">يمكنكم طلب كلمة المرور لتحميل ملفات دراسات الجدوى بالتواصل معنا. بعد حصولك على كلمة المرور أدخلها أدناه لتحميل الملفات.</p>
+
+      <div class="input-widget">
+        <label for="docPassword">أدخل كلمة المرور</label>
+        <div class="input-with-arrow">
+          <input type="password" id="docPassword" placeholder="أدخل كلمة المرور">
+          <button class="arrow-btn" id="unlockBtn" title="فتح"><i class="fas fa-arrow-left"></i></button>
+        </div>
+      </div>
+
+      <p id="passMsg" class="pass-msg" aria-live="polite"></p>
+
+      <div id="protectedFilesList" style="display:none; margin-top:15px;">
+        <a id="file1" href="https://www.robothousefzllc.com/Feasibility%20Study%201x.pdf" download style="color:var(--accent); display:block; margin-bottom:6px;">📄 تحميل دراسة الجدوى 1 (PDF)</a>
+        <a id="file2" href="https://www.robothousefzllc.com/x%D8%AF%D8%B1%D8%A7%D8%B3%D8%A9%20%D8%A7%D9%84%D8%AC%D8%AF%D9%88%D9%89%201.pdf" download style="color:var(--accent); display:block; margin-bottom:6px;">📄 تحميل دراسة الجدوى 2 (PDF)</a>
+        <a id="file3" href="https://www.robothousefzllc.com/E-License.pdf" download style="color:var(--accent); display:block;">📄 تحميل الترخيص (PDF)</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+        
+        <section id="photo-album"><div class="container"><h2 class="section-title">ألبوم الصور</h2><div class="swiper mySwiper"><div class="swiper-wrapper" id="albumSwiperWrapper"></div><div class="swiper-pagination"></div><div class="swiper-button-next"></div><div class="swiper-button-prev"></div></div></div></section>
+
+<!-- Lightbox modal for album images -->
+<div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;z-index:2000;">
+  <button id="lightboxClose" aria-label="إغلاق" style="position:absolute;top:18px;right:20px;background:transparent;border:none;color:#fff;font-size:28px;cursor:pointer;">✕</button>
+  <img id="lightboxImg" src="" alt="عرض الصورة" style="max-width:92%;max-height:84%;border-radius:12px;box-shadow:0 20px 40px rgba(0,0,0,0.6);">
+</div>
+        
+        <section id="testimonials">
+            <div class="container">
+                <h2 class="section-title">آراء العملاء</h2>
+
+                <!-- Testimonials Swiper -->
+                <div class="swiper testimonial-swiper">
+                    <div class="swiper-wrapper">
+                        <!-- Slide 1 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <i class="fas fa-quote-right"></i>
+                                <p>ROBOT HOUSE هو حقاً مستقبل العيش. التكنولوجيا مذهلة والراحة لا تضاهى. أنا سعيد جداً بكوني جزءاً من هذا المشروع الرائد.</p>
+                                <div class="meta">
+                                    <div class="stars">★★★★★</div>
+                                    <button class="heart-btn" aria-label="like"><i class="fas fa-heart"></i></button>
+                                </div>
+                                <h4>أحمد العمري</h4>
+                            </div>
+                        </div>
+                        <!-- Slide 2 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <i class="fas fa-quote-right"></i>
+                                <p>تجربة فريدة من نوعها! كل شيء ذكي ومريح. أحب بشكل خاص نظام الطاقة المجانية والمرافق المتكاملة.</p>
+                                <div class="meta">
+                                    <div class="stars">★★★★★</div>
+                                    <button class="heart-btn" aria-label="like"><i class="fas fa-heart"></i></button>
+                                </div>
+                                <h4>فاطمة الزهراني</h4>
+                            </div>
+                        </div>
+                        <!-- Slide 3 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <i class="fas fa-quote-right"></i>
+                                <p>المنازل فائقة الجودة والابتكار في كل زاوية. الدعم ممتاز والفريق متعاون جداً. أوصي به بشدة.</p>
+                                <div class="meta">
+                                    <div class="stars">★★★★★</div>
+                                    <button class="heart-btn" aria-label="like"><i class="fas fa-heart"></i></button>
+                                </div>
+                                <h4>خالد سعيد</h4>
+                            </div>
+                        </div>
+                        <!-- Slide 4 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <i class="fas fa-quote-right"></i>
+                                <p>لم أتخيل أبداً أن يكون العيش بهذا الرفاهية والذكاء. الأمان ممتاز والبيئة مثالية للعائلات.</p>
+                                <div class="meta">
+                                    <div class="stars">★★★★★</div>
+                                    <button class="heart-btn" aria-label="like"><i class="fas fa-heart"></i></button>
+                                </div>
+                                <h4>ليلى محمود</h4>
+                            </div>
+                        </div>
+                        <!-- Slide 5 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <i class="fas fa-quote-right"></i>
+                                <p>مشروع طموح ومستقبل واعد. أرى أن ROBOT HOUSE سيغير مفهوم الحياة العصرية في المنطقة والعالم.</p>
+                                <div class="meta">
+                                    <div class="stars">★★★★★</div>
+                                    <button class="heart-btn" aria-label="like"><i class="fas fa-heart"></i></button>
+                                </div>
+                                <h4>يوسف العلي</h4>
+                            </div>
+                        </div>
+
+                        <!-- Extra new testimonials -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <i class="fas fa-quote-right"></i>
+                                <p>الخدمات الذكية في المجمع تعطي شعوراً حقيقيًا بالراحة وتقليل العبء اليومي. انصح الجميع بالتجربة.</p>
+                                <div class="meta">
+                                    <div class="stars">★★★★☆</div>
+                                    <button class="heart-btn" aria-label="like"><i class="fas fa-heart"></i></button>
+                                </div>
+                                <h4>سلمى النجار</h4>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <i class="fas fa-quote-right"></i>
+                                <p>التصميم والبيئة المستدامة يجعلان الاستثمار هنا قراراً ذكياً.</p>
+                                <div class="meta">
+                                    <div class="stars">★★★★★</div>
+                                    <button class="heart-btn" aria-label="like"><i class="fas fa-heart"></i></button>
+                                </div>
+                                <h4>مروان الخطيب</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="swiper-button-prev testimonial-prev"></div>
+                    <div class="swiper-button-next testimonial-next"></div>
+                    <div class="swiper-pagination"></div>
+                </div>
+
+                <!-- Floating pulse widgets -->
+                <div class="testimonial-widgets">
+                    <div class="pulse-widget"><i class="fas fa-star"></i><span>Top Rated</span></div>
+                    <div class="pulse-widget"><i class="fas fa-heart"></i><span>محبوب</span></div>
+                    <div class="pulse-widget"><i class="fas fa-bolt"></i><span>سريع الاستجابة</span></div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="faq"><div class="container"><h2 class="section-title">الأسئلة الشائعة</h2><div class="faq-search-bar"><input type="text" id="faqSearch" placeholder="ابحث عن سؤالك هنا..."><i class="fas fa-search search-icon"></i></div><div id="faqContainer"></div></div></section>
+        
+        <section id="contact"><div class="container"><h2 class="section-title">تواصل معنا</h2><p style="text-align:center; margin-bottom:2rem;">يسعدنا تواصلكم معنا للاستفسار عن المشروع، فرص الاستثمار، أو الشراكات المحتملة.</p><div class="contact-hologram-grid"><div class="glass-card"><i class="fas fa-envelope icon" style="font-size:2rem;"></i><h4>البريد الإلكتروني العام</h4><a href="/cdn-cgi/l/email-protection#036a6d656c43716c616c776b6c76706665796f6f602d606c6e" style="color:var(--accent);"><span class="__cf_email__" data-cfemail="fe97909891be8c919c918a96918b8d9b988492929dd09d9193">[email&#160;protected]</span></a></div><div class="glass-card"><i class="fas fa-envelope icon" style="font-size:2rem;"></i><h4>البريد المباشر</h4><a href="/cdn-cgi/l/email-protection#85e8abe4e9e4e8e8ecf7ecc5f7eae7eaf1edeaf0f6e0e3ffe9e9e6abe6eae8" style="color:var(--accent);"><span class="__cf_email__" data-cfemail="731e5d121f121e1e1a011a33011c111c071b1c06001615091f1f105d101c1e">[email&#160;protected]</span></a></div><div class="glass-card"><i class="fas fa-phone icon" style="font-size:2rem;"></i><h4>الهاتف (الأردن)</h4><a href="tel:+962785353408" style="color:var(--accent);">+962 7853 53408</a></div><div class="glass-card"><i class="fas fa-phone icon" style="font-size:2rem;"></i><h4>الهاتف (الإمارات)</h4><a href="tel:+971567952199" style="color:var(--accent);">+971 567952199</a></div><div class="glass-card"><i class="fas fa-map-marker-alt icon" style="font-size:2rem;"></i><h4>الموقع</h4><a href="https://www.google.com/maps/search/?api=1&query=Ras+Al+Khaimah+UAE" target="_blank" style="color:var(--accent);">عرض الخريطة</a></div></div><!-- Collapsible contact panel -->
+<div class="contact-panel">
+  <button id="toggleContactBtn" aria-expanded="false" class="btn" style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+    <i id="toggleContactIcon" class="fas fa-chevron-down"></i>
+    <strong>اتصل بفريق ROBOT HOUSE</strong>
+  </button>
+
+  <div id="contactContent" style="overflow:hidden; transition: max-height 0.28s ease, opacity 0.28s ease;">
+    <form class="contact-form" id="contactForm">
+      <!-- name group -->
+      <div class="form-group" id="nameGroup">
+        <label>الاسم الكامل</label>
+        <input type="text" id="contactName" required placeholder="ادخل اسمك">
+      </div>
+
+      <div class="form-group">
+        <label>البريد الإلكتروني</label>
+        <input type="email" required placeholder="ادخل بريدك">
+      </div>
+
+      <div class="form-group">
+        <label>رقم الهاتف</label>
+        <input type="tel" placeholder="ادخل رقم هاتفك">
+      </div>
+
+      <div class="form-group">
+        <label>نوع الطلب</label>
+        <select>
+          <option>استفسار عام</option>
+          <option>شراكة</option>
+          <option>استثمار</option>
+          <option>طلب عرض سعر</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>رسالتك</label>
+        <textarea rows="4" required placeholder="اكتب رسالتك هنا..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-button"><i class="fas fa-paper-plane"></i> إرسال الرسالة</button>
+      <p id="formMsg" style="margin-top:10px;"></p>
+    </form>
+  </div>
+</div>
+
+<!-- map and contact image -->
+<div class="map-container" style="margin-top:2rem;">
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14482.294637291362!2x55.950149!3x25.789691!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ef6714b2f2f2f2f%3A0x9f9f9f9f9f9f9f!2sRas%20Al%20Khaimah!5e0!3m2!1sen!2sae!4v1650000000000!5m2!1sen!2sae" width="100%" height="300" style="border:0; border-radius:24px;" allowfullscreen></iframe>
+</div>
+
+<!-- Floating contact GIF placed under the map (moved from top bar). Clicking scrolls to contact section. -->
+<div id="contactFloat" style="display:flex;justify-content:center;margin-top:12px;gap:8px;align-items:center;" title="تواصل معنا" aria-label="تواصل معنا">
+  <a href="#contact" style="display:inline-flex;align-items:center;text-decoration:none;" aria-label="تواصل معنا"></a>
+</div>
+
+<img src="Animation 6.gif" alt="ROBOT HOUSE - تواصل معنا" class="map-related-image small-thumb" />
+
+</div></section>
+    </main>
+    
+    <!-- BEGIN: Embedded template window inserted above footer (moved to external file 'alamri.html') -->
+    <div id="embedded-template-window" style="width:100%;display:flex;justify-content:center;margin-top:18px;">
+      <!-- wrapper used by iframe auto-resize logic -->
+      <div id="templateWindowContent" style="width:100%; display:flex; justify-content:center; align-items:flex-start;">
+        <iframe id="templateInnerFrame" src="alamri.html" title="Embedded Template - Alamri" style="width:98%; border:0; display:block; max-width:980px; min-height:calc(110vh + 3in); height:calc(110vh + 3in);" data-auto-resize="0" loading="lazy" allow="fullscreen"></iframe>
+      </div>
+    </div>
+    <!-- END: Embedded template window -->
+    <footer id="mainFooter">
+  <div class="container" style="text-align:center;">
+    <!-- Embedded compact Weather Widget (uses weather-widget.html) -->
+    <div style="display:flex;justify-content:center;margin-bottom:12px;">
+      <div class="mini-weather-iframe-wrap" role="region" aria-label="حالة الطقس المصغرة" style="width:100%; display:flex; justify-content:center;">
+        <!-- make iframe larger but keep it inside the viewport: reserve space for sticky header/top bars and footer -->
+
+        </div>
+      </div>
+
+    <div class="social-icons" style="margin-bottom:1rem; display:flex; justify-content:center; gap:15px;">
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fab fa-linkedin-in"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-youtube"></i>
+    </div>
+
+    <!-- Footer action buttons: Privacy & Terms (inline, responsive) -->
+    <div class="footer-actions" style="display:flex;gap:10px;justify-content:center;align-items:center;margin-bottom:10px;flex-wrap:wrap;">
+      <button id="rh-privacy-btn" class="btn-outline" style="padding:10px 14px;border-radius:12px;cursor:pointer;">Privacy Policy</button>
+      <button id="rh-terms-btn" class="btn-outline" style="padding:10px 14px;border-radius:12px;cursor:pointer;">Terms of Service</button>
+    </div>
+
+    <!-- Modal templates (Privacy / Terms) -->
+    <div id="rh-modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,0.74);backdrop-filter:blur(6px);z-index:2147483646;align-items:center;justify-content:center;padding:18px;">
+      <div id="rh-modal" role="dialog" aria-modal="true" aria-labelledby="rh-modal-title" style="max-width:960px;width:100%;max-height:88vh;overflow:auto;border-radius:14px;background:linear-gradient(180deg,#0b1118,#07101a);border:1px solid rgba(255,255,255,0.04);box-shadow:0 30px 80px rgba(0,0,0,0.8);position:relative;padding:20px;">
+        <button id="rh-modal-close" aria-label="Close" style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:#cfe7ff;width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:18px;">&times;</button>
+        <h3 id="rh-modal-title" style="margin:0 0 10px;color:#00c8ff;font-weight:900;"></h3>
+        <div id="rh-modal-body" style="color:#cfeff4;line-height:1.7;font-size:0.98rem;"></div>
+      </div>
+    </div>
+
+    <style>
+      /* Footer modal quick styles (kept scoped and light) */
+      .footer-actions .btn-outline { background:transparent;border:2px solid rgba(0,168,197,0.12);color:var(--secondary);font-weight:800;min-width:140px; }
+      @media (max-width:600px) {
+        .footer-actions { gap:8px; }
+        .footer-actions .btn-outline { width:100%;max-width:220px;text-align:center; padding:10px 12px; }
+      }
+      /* Ensure modal content is readable on white theme as well */
+      body.theme-white .btn-outline { border-color: rgba(0,0,0,0.08); color:#111; }
+      body.theme-white .footer-actions .btn-outline:hover { filter:brightness(0.96); }
+
+      /* small helper to make modal content scrollable and accessible */
+      #rh-modal-body { max-height: calc(88vh - 120px); overflow:auto; padding-right:6px; }
+      #rh-modal-body p { margin-bottom:0.9rem; color:inherit; }
+      #rh-modal-body h4 { margin-top:1rem; color:var(--accent); }
+    </style>
+
+    <script>
+      (function(){
+        const overlay = document.getElementById('rh-modal-overlay');
+        const modal = document.getElementById('rh-modal');
+        const titleEl = document.getElementById('rh-modal-title');
+        const bodyEl = document.getElementById('rh-modal-body');
+        const closeBtn = document.getElementById('rh-modal-close');
+        const privacyBtn = document.getElementById('rh-privacy-btn');
+        const termsBtn = document.getElementById('rh-terms-btn');
+
+        // Sample placeholder texts (editable later)
+        const PRIVACY_TEXT = `
+          <h4>Privacy Policy</h4>
+          <p>This is the Privacy Policy placeholder for ROBOT HOUSE FZ LLC. Replace this content with the full privacy text as needed.</p>
+          <p>Your privacy is important to us. We collect only necessary data to provide and improve our services. You may request data deletion through our contact channels.</p>
+        `;
+        const TERMS_TEXT = `
+          <h4>Terms of Service</h4>
+          <p>This is the Terms of Service placeholder for ROBOT HOUSE FZ LLC. Replace this content with your official terms and conditions.</p>
+          <p>By using our site and services you agree to comply with our policies. For detailed legal terms, please refer to the full document.</p>
+        `;
+
+        function openModal(kind){
+          if(!overlay || !modal) return;
+          if(kind === 'privacy') {
+            titleEl.textContent = 'Privacy Policy';
+            bodyEl.innerHTML = PRIVACY_TEXT;
+          } else {
+            titleEl.textContent = 'Terms of Service';
+            bodyEl.innerHTML = TERMS_TEXT;
+          }
+          overlay.style.display = 'flex';
+          // trap focus (basic)
+          try {
+            modal.setAttribute('tabindex', '-1');
+            modal.focus();
+          } catch(e){}
+        }
+
+        function closeModal(){
+          if(!overlay) return;
+          overlay.style.display = 'none';
+          bodyEl.innerHTML = '';
+        }
+
+        privacyBtn && privacyBtn.addEventListener('click', function(e){
+          e.preventDefault();
+          // Navigate to the full Privacy Policy page (same site). Uses same styling/layout since it's an internal page.
+          // Open in the same tab to preserve consistent navigation (change to '_blank' to open new tab).
+          window.location.href = 'privacy-policy.html';
+        });
+        termsBtn && termsBtn.addEventListener('click', function(e){
+          e.preventDefault();
+          // Navigate to the full Terms of Service page (same site).
+          window.location.href = 'terms-of-service.html';
+        });
+
+        closeBtn && closeBtn.addEventListener('click', function(){ closeModal(); });
+
+        // Outside click closes
+        overlay && overlay.addEventListener('click', function(e){
+          if(e.target === overlay) closeModal();
+        });
+
+        // ESC key closes
+        document.addEventListener('keydown', function(e){
+          if(e.key === 'Escape') closeModal();
+        });
+
+        // Make modals accessible on small screens: already scrollable if content long.
+        // Prevent interfering with other scripts: use no globals and minimal DOM ops.
+      })();
+    </script>
+
+
+
+    <!-- Required copyright and vision lines -->
+    <p style="font-weight:800; margin:6px 0;">© 2025 ROBOT HOUSE ALL RIGHTS RESERVED</p>
+
+
+    <!-- optional location line kept minimal -->
+    <p style="margin-top:12px; font-size:0.95rem; color:#cbd5e1;">رأس الخيمة، الإمارات | ROBOT HOUSE FZ LLC</p>
+  </div>
+</footer>
+    
+    <!-- Legacy chat UI removed to enforce single-popup voice agent (managed by voice-nav.js) -->
+
+    <!-- wheel widget container (interactive mouse wheel) -->
+    <div id="interactive-mouse-wheel" aria-hidden="false" title="Wheel Widget"></div>
+    
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+    <script src="script.js" type="module"></script>
+    <script src="/js/testimonials_ext.js" defer></script>
+    <script src="/js/investors_lang.js" defer></script>
+    <script src="site_layout_lang_fix.js" defer></script>
+    <script src="complete_bilingual_translation.js" defer></script>
+    <script src="video_toggle.js" defer></script>
+    <script src="wheel-widget.js" defer></script>
+    <script src="hologram_themes.js" defer></script>
+    <!-- removed inline scripts moved to script.js -->
+    <script src="media_loader.js" defer></script>
+
+    <!-- Template iframe auto-resize listener: receives {type:'content-height', height: number} from same-origin iframe -->
+    <script>
+      (function(){
+        // Robust auto-resize for the template iframe: accept postMessage heights,
+        // try same-origin ResizeObserver when possible, and fall back to conservative sizing.
+        function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+        const frame = document.getElementById('templateInnerFrame');
+        const contentWrap = document.getElementById('templateWindowContent');
+
+        function setFrameHeight(h) {
+          if (!frame) return;
+          // determine a sane minimum based on device width
+          const minPreferred = window.innerWidth <= 640 ? 320 : 420;
+          // start with explicit numeric value if provided
+          let target = Number(h) || 0;
+
+          // If no explicit height, and iframe asks for auto-resize, try same-origin document measurement first
+          if ((!target || target <= 0) && frame.dataset.autoResize === '1') {
+            try {
+              const cw = frame.contentWindow;
+              if (cw && cw.document) {
+                const doc = cw.document.documentElement || cw.document.body;
+                target = Math.max(doc.scrollHeight || 0, doc.offsetHeight || 0);
+              }
+            } catch (e) {
+              // cross-origin access will fail silently
+            }
+          }
+
+          // Secondary fallback: measure the parent content wrapper inside the host page
+          if ((!target || target <= 0) && contentWrap) {
+            try {
+              // prefer the scrollHeight (actual content) but use offsetHeight if needed
+              const measured = Math.max(contentWrap.scrollHeight || 0, contentWrap.offsetHeight || 0);
+              // if measured is non-zero, use it
+              if (measured > 0) target = measured;
+            } catch (e) {
+              target = 0;
+            }
+          }
+
+          // final safety: ensure target is at least minPreferred
+          if (!target || target <= 0) target = minPreferred;
+
+          // clamp to viewport-friendly bounds to avoid leaving large blank areas beneath the iframe
+          const viewportLimit = Math.max(Math.round(window.innerHeight * 0.88), minPreferred);
+          // prefer the measured target but never exceed viewportLimit
+          const finalH = clamp(Math.round(target), minPreferred, viewportLimit);
+
+          // Apply the height and keep overflow management predictable
+          frame.style.height = finalH + 'px';
+          frame.style.maxHeight = finalH + 'px';
+          frame.style.minHeight = minPreferred + 'px';
+          frame.style.display = 'block';
+
+          if (contentWrap) {
+            // If content fits within finalH, allow visible overflow; otherwise hide scroll
+            try {
+              const contentHeight = contentWrap.scrollHeight || contentWrap.offsetHeight || 0;
+              if (contentHeight <= finalH) {
+                contentWrap.style.maxHeight = finalH + 'px';
+                contentWrap.style.height = finalH + 'px';
+                contentWrap.style.overflow = 'visible';
+              } else {
+                contentWrap.style.maxHeight = finalH + 'px';
+                contentWrap.style.height = finalH + 'px';
+                contentWrap.style.overflow = 'hidden';
+              }
+              contentWrap.style.alignItems = 'stretch';
+            } catch (e) {
+              // fallback conservative settings
+              contentWrap.style.maxHeight = finalH + 'px';
+              contentWrap.style.height = finalH + 'px';
+              contentWrap.style.overflow = 'hidden';
+              contentWrap.style.alignItems = 'stretch';
+            }
+          }
+        }
+
+        // Message listener from same-origin iframe content
+        window.addEventListener('message', (ev) => {
+          try {
+            if (!ev.data || ev.data.type !== 'content-height') return;
+            // defensive: only accept if origin looks trusted or the src matches
+            if (!frame) return;
+            try {
+              const frameUrl = new URL(frame.src, window.location.href);
+              if (ev.origin !== window.origin && !frame.src.includes(ev.origin) && frameUrl.origin !== ev.origin) {
+                // cross-origin message not trusted
+                return;
+              }
+            } catch (e) {
+              // proceed conservatively
+            }
+            setFrameHeight(ev.data.height);
+          } catch (e) {
+            console.warn('template iframe resize handler error', e);
+          }
+        }, false);
+
+        // Try to use ResizeObserver on the iframe's document when same-origin
+        function tryAttachSameOriginObserver() {
+          if (!frame) return;
+          try {
+            // if same-origin we can access contentWindow.document
+            const cw = frame.contentWindow;
+            if (!cw) return false;
+            const doc = cw.document;
+            // create an observer inside parent that watches an element's size via polling (since ResizeObserver isn't available cross-window)
+            // We will poll the scrollHeight periodically if same-origin
+            let last = 0;
+            const poll = () => {
+              try {
+                const h = doc.documentElement.scrollHeight || doc.body.scrollHeight || 0;
+                if (h && h !== last) {
+                  last = h;
+                  setFrameHeight(h);
+                }
+              } catch (e) {
+                // access may fail if navigation occurs
+              }
+            };
+            // run a few quick polls then a MutationObserver for changes
+            poll(); poll();
+            const mo = new cw.MutationObserver ? new cw.MutationObserver(() => { setTimeout(poll, 40); }) : null;
+            if (mo) mo.observe(doc.body, { childList: true, subtree: true, characterData: true });
+            // periodic poll backup
+            const int = setInterval(poll, 400);
+            // cleanup if iframe navigates away or is removed
+            frame.addEventListener('load', () => {
+              // reset last and poll again after load
+              last = 0;
+              setTimeout(poll, 60);
+            });
+            // stop when frame removed
+            const parentObs = new MutationObserver(() => { if (!document.body.contains(frame)) { try { mo && mo.disconnect(); } catch(e){} clearInterval(int); parentObs.disconnect(); } });
+            parentObs.observe(document.body, { childList: true, subtree: true });
+            return true;
+          } catch (err) {
+            return false;
+          }
+        }
+
+        // initial sizing attempt after load
+        if (frame) {
+          frame.addEventListener('load', () => {
+            try {
+              // first try same-origin observer/poller
+              const attached = tryAttachSameOriginObserver();
+              if (!attached) {
+                // fallback: attempt to read once (may throw cross-origin)
+                let h = 0;
+                try { h = frame.contentWindow.document.documentElement.scrollHeight || frame.contentWindow.document.body.scrollHeight || 0; } catch(e){ h = 0; }
+                if (h) setFrameHeight(h);
+                else {
+                  // responsive fallback that still keeps the embedded design readable
+                  const conservative = Math.max(window.innerWidth <= 640 ? 360 : 520, Math.round(window.innerHeight * (window.innerWidth <= 640 ? 0.52 : 0.72)));
+                  setFrameHeight(conservative);
+                }
+              }
+            } catch (e) {
+              console.warn('template iframe load sizing error', e);
+            }
+          }, { passive: true });
+          // also attempt sizing immediately if iframe already loaded
+          if (frame.contentWindow && frame.contentWindow.document && frame.contentWindow.document.readyState === 'complete') {
+            try { const h = frame.contentWindow.document.documentElement.scrollHeight || frame.contentWindow.document.body.scrollHeight || 0; if (h) setFrameHeight(h); } catch(e){}
+          }
+        }
+
+        // On viewport resize request child to repost height (best-effort) and recompute wrapper max
+        let resizeTimer = null;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => {
+            try {
+              if (frame && frame.contentWindow && frame.contentWindow.postMessage) {
+                frame.contentWindow.postMessage({ type: 'request-height' }, '*');
+              }
+            } catch (e) {}
+            if (contentWrap) {
+              contentWrap.style.maxHeight = 'none';
+              contentWrap.style.height = 'auto';
+              contentWrap.style.overflow = 'visible';
+              contentWrap.style.alignItems = 'stretch';
+            }
+            // also try to read same-origin size again
+            try {
+              if (frame && frame.contentWindow && frame.contentWindow.document) {
+                const h = frame.contentWindow.document.documentElement.scrollHeight || frame.contentWindow.document.body.scrollHeight || 0;
+                if (h) setFrameHeight(h);
+              }
+            } catch (e) {}
+          }, 180);
+        });
+
+        // Provide a public helper for other scripts to force a re-evaluation
+        window.__templateWindowResize = function() {
+          try {
+            if (frame) {
+              if (frame.contentWindow && frame.contentWindow.postMessage) frame.contentWindow.postMessage({ type: 'request-height' }, '*');
+              try {
+                const h = frame.contentWindow.document && (frame.contentWindow.document.documentElement.scrollHeight || frame.contentWindow.document.body.scrollHeight);
+                if (h) setFrameHeight(h);
+              } catch(e){}
+            }
+          } catch(e){}
+        };
+      })();
+    </script>
+    <!-- Jarvis boot sound: play once per session on initial page open; do not play on clicks/gestures -->
+    <audio id="jarvisBootAudio" src="/jarvis_boot_sound.mp3" preload="auto" aria-hidden="true"></audio>
+    <script>
+      (function(){
+        try {
+          const audio = document.getElementById('jarvisBootAudio');
+          if (!audio) return;
+
+          // Ensure we only attempt this once per browser session
+          try { if (sessionStorage.getItem('rh_boot_played') === '1') return; } catch (e) {}
+
+          async function tryPlayOnce() {
+            try {
+              audio.currentTime = 0;
+              audio.volume = 0.9;
+              audio.muted = false;
+              await audio.play();
+              try { sessionStorage.setItem('rh_boot_played', '1'); } catch (e) {}
+              return true;
+            } catch (err) {
+              return false;
+            }
+          }
+
+          (async () => {
+            // Primary attempt on load
+            const played = await tryPlayOnce();
+            if (played) return;
+
+            // If blocked, allow one retry when page becomes visible again (single retry only)
+            const onVisible = async () => {
+              if (document.visibilityState === 'visible') {
+                const ok = await tryPlayOnce();
+                // remove listener regardless of success to prevent further attempts
+                window.removeEventListener('visibilitychange', onVisible, true);
+              }
+            };
+            window.addEventListener('visibilitychange', onVisible, { passive: true });
+
+            // Do NOT attach gesture-based retries to avoid playing on clicks/keypresses.
+            // This ensures playback will not trigger on user interactions.
+          })();
+        } catch (e) {
+          console.warn('Jarvis boot audio init failed', e);
+        }
+      })();
+    </script>
+    <script src="enhanced_video.js" defer></script>
+    <script src="modal_password_protect.js" defer></script>
+    <script src="theme-controller.js" defer></script>
+    <script src="js/performance-boost.js" defer></script>
+    <!-- ROBOT HOUSE Voice Navigator — load heavy AI/voice modules lazily to avoid blocking and jank -->
+    <script>
+      (function(){
+        // Provide a tiny safe shim for showToast/speak used by lazy modules so early calls won't block
+        window.showToast = window.showToast || function(msg, dur){ try { console.info('toast:', msg); } catch(e){} return { close:function(){} }; };
+        window.speak = window.speak || function(){};
+
+        // Reduce non-essential visual animation pressure during initial load
+        try {
+          var css = document.createElement('style');
+          css.id = 'rh-performance-tweaks';
+          css.textContent = [
+            // limit heavy repeating animations until idle
+            '.holo-wheel, #ai-voice-bar, .tb-logo-3d { will-change: transform, opacity; }',
+            '.holo-wheel[data-state] { animation-play-state: paused !important; }',
+            // avoid expensive paint on first 2s
+            'html.load-fast * { transition: none !important; animation: none !important; }'
+          ].join('\\n');
+          document.head.appendChild(css);
+          // remove the "load-fast" class after 2s of parsed idle to re-enable subtle transitions
+          document.documentElement.classList.add('load-fast');
+          setTimeout(function(){ document.documentElement.classList.remove('load-fast'); }, 2000);
+        } catch (e){}
+
+        // Helper to append script with safe attributes
+        function appendScript(src, attrs) {
+          return new Promise(function(resolve, reject){
+            try {
+              var s = document.createElement('script');
+              s.src = src;
+              s.async = !!(attrs && attrs.async);
+              if (attrs && attrs.defer) s.defer = true;
+              if (attrs && attrs.type) s.type = attrs.type;
+              s.crossOrigin = attrs && attrs.crossOrigin ? attrs.crossOrigin : undefined;
+              s.onload = function(){ resolve(s); };
+              s.onerror = function(){ resolve(s); }; // don't reject to avoid stopping other loads
+              document.body.appendChild(s);
+            } catch (err) { resolve(); }
+          });
+        }
+
+        // Schedule heavy modules to load during idle or after user first interaction.
+        function scheduleHeavyModules() {
+          var toLoad = [
+            { src: 'voice-nav.js', defer: true },
+            { src: 'image-gen-voice.js', defer: true },
+            { src: 'rh-self-learning.js', defer: true },
+            { src: 'rh-visitor-notify.js', defer: true }
+          ];
+          // Use requestIdleCallback when available, fallback to setTimeout
+          var idle = window.requestIdleCallback || function(cb){ return setTimeout(cb, 600); };
+
+          // If user interacts early, load sooner but still non-blocking
+          var userTriggered = false;
+          function onFirstInteraction() {
+            if (userTriggered) return;
+            userTriggered = true;
+            try { window.removeEventListener('keydown', onFirstInteraction); window.removeEventListener('pointerdown', onFirstInteraction); } catch(e){}
+            idle(function(){
+              toLoad.forEach(function(m){ appendScript(m.src, { defer: !!m.defer }); });
+            });
+          }
+          ['keydown','pointerdown','touchstart','click'].forEach(function(e){
+            window.addEventListener(e, onFirstInteraction, { once: true, passive: true, capture: true });
+          });
+
+          // Load progressively during idle if no early interaction
+          idle(function(){
+            // Slight stagger to reduce concurrent work
+            toLoad.reduce(function(p, m, i){
+              return p.then(function(){
+                return new Promise(function(res){
+                  setTimeout(function(){
+                    appendScript(m.src, { defer: !!m.defer }).then(res);
+                  }, i * 220);
+                });
+              });
+            }, Promise.resolve());
+          });
+        }
+
+        // Defer initialization that attempted to auto-play audio immediately (can block)
+        // Move the jarvis boot audio play attempt to idle and keep it tolerant to autoplay block
+        try {
+          var jarvis = document.getElementById('jarvisBootAudio');
+          if (jarvis) {
+            var bootTry = function(){
+              try {
+                jarvis.currentTime = 0;
+                jarvis.volume = 0.9;
+                jarvis.muted = false;
+                jarvis.play().then(function(){ try{ sessionStorage.setItem('rh_boot_played','1'); }catch(e){} }).catch(function(){});
+              } catch(e){}
+            };
+            var idle2 = window.requestIdleCallback || function(cb){ return setTimeout(cb, 900); };
+            idle2(bootTry);
+          }
+        } catch (e){}
+
+        // Start scheduling heavy modules after DOM ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', function(){ scheduleHeavyModules(); }, { passive: true });
+        } else {
+          scheduleHeavyModules();
+        }
+      })();
+    </script>
+
+
+    <style>
+      /* Voice agent visuals removed: neutralize all legacy voice-related classes and IDs */
+      .holo-wheel,
+      #ai-voice-bar,
+      #rh-mic,
+      #rh-single-voice,
+      .holo-wheel::before,
+      .holo-wheel::after,
+      #ai-voice-bar::before,
+      #ai-voice-bar::after {
+        all: unset !important;
+        display: inline-block !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+        width: auto !important;
+        height: auto !important;
+        pointer-events: none !important;
+        opacity: 1 !important;
+      }
+      /* keep layout unaffected: ensure wrapper spacing remains */
+      #rh-voice-wrapper { pointer-events: none !important; }
+    </style>
+
+    <script>
+      // Remove legacy RH voice UI nodes to prevent conflicts, then add the assistantBar if missing.
+      (function(){
+        var legacyIds = ['ai-agent-unique-popup','rh-dialog-modal','rh-chat-shell','rh-v3-toast-layer','rh-typewriter','ai-popup-video-view','ai-popup-results-view','rh-voice-bar','ai-voice-bar','rh-mic'];
+        legacyIds.forEach(function(id){ try{ var n=document.getElementById(id); if(n && n.parentNode) n.parentNode.removeChild(n); }catch(e){} });
+
+        // Ensure assistantBar exists and is placed under .tb-row-brand
+        function placeBar(){
+          var bar = document.getElementById('assistantBar');
+          if (!bar) {
+            bar = document.createElement('div');
+            bar.id = 'assistantBar';
+            bar.className = 'holo-wheel';
+            bar.setAttribute('data-state','sleep');
+          }
+          try {
+            var brandRow = document.querySelector('.tb-row-brand');
+            if (brandRow) {
+              var wrapper = document.getElementById('rh-voice-wrapper');
+              if (!wrapper) {
+                wrapper = document.createElement('div');
+                wrapper.id = 'rh-voice-wrapper';
+                wrapper.style.display = 'flex';
+                wrapper.style.justifyContent = 'center';
+                wrapper.style.alignItems = 'center';
+                wrapper.style.width = '100%';
+                wrapper.style.marginTop = '8px';
+                wrapper.style.pointerEvents = 'auto';
+              }
+              if (!wrapper.parentNode) brandRow.parentNode.insertBefore(wrapper, brandRow.nextSibling);
+              if (bar.parentNode !== wrapper) wrapper.appendChild(bar);
+              return;
+            }
+          } catch (e) {}
+          if (!bar.parentNode) document.body.appendChild(bar);
+        }
+
+        placeBar();
+
+        function setAssistantState(state){
+          const el = document.getElementById("assistantBar");
+          el.setAttribute("data-state", state);
+        }
+
+        /* اختبار */
+        setAssistantState("sleep");
+
+        setTimeout(()=> setAssistantState("listen"), 2000);
+        setTimeout(()=> setAssistantState("talk"), 4000);
+
+        // Small helper: toggle through states for debugging
+        window.__rh_toggle_assistant = function(){
+          var el=document.getElementById('assistantBar'); if(!el) return;
+          var s=el.getAttribute('data-state')||'sleep';
+          if(s==='sleep') s='listen'; else if(s==='listen') s='talk'; else s='sleep';
+          el.setAttribute('data-state',s);
+        };
+
+        // prevent other scripts from re-creating conflicting voice elements by observing DOM
+        var obs = new MutationObserver(function(mutations){
+          // coarse-batched check to avoid heavy per-mutation work
+          var hasAssistant = !!document.getElementById('assistantBar');
+          if (!hasAssistant) placeBar();
+        });
+        obs.observe(document.body, { childList:true, subtree:true });
+
+        // Performance: enable passive scroll listeners and smooth scroll hint
+        try {
+          // Prefer passive scroll listeners across the app to reduce scroll jank
+          var originalAdd = EventTarget.prototype.addEventListener;
+          EventTarget.prototype.addEventListener = function(type, listener, options) {
+            if (type === 'scroll' || type === 'touchstart' || type === 'touchmove' || type === 'wheel') {
+              // Ensure passive true unless explicitly set
+              if (typeof options === 'boolean' || options === undefined) {
+                return originalAdd.call(this, type, listener, { passive: true, capture: false });
+              } else if (typeof options === 'object' && options.passive === undefined) {
+                options.passive = true;
+              }
+            }
+            return originalAdd.call(this, type, listener, options);
+          };
+        } catch (e) {}
+
+        // Add a small scroll handler to toggle compact class on the holo-wheel for mobile (reduce repaint)
+        (function(){
+          var lastY = window.scrollY || 0;
+          var ticking = false;
+          var wheel = function(){ return document.getElementById('assistantBar'); };
+          window.addEventListener('scroll', function(){
+            if (ticking) return;
+            ticking = true;
+            window.requestAnimationFrame(function(){
+              try {
+                var y = window.scrollY || 0;
+                var bar = wheel();
+                if (!bar) { ticking = false; return; }
+                // If user scrolls quickly (delta > 6) set compact to reduce paint area
+                if (Math.abs(y - lastY) > 6 && window.innerWidth <= 600) {
+                  bar.classList.add('compact');
+                } else {
+                  bar.classList.remove('compact');
+                }
+                lastY = y;
+              } catch (e) {}
+              ticking = false;
+            });
+          }, { passive: true });
+        })();
+
+      })();
+
+      // Example usage:
+      // setAssistantState("sleep");
+      // setAssistantState("talk");
+      // setAssistantState("listen");
+    </script>
+
+    <!-- RH override: force voice-only mode — disable all popup/modal rendering but keep voice bar -->
+    <script>
+      (function(){
+        function noop(){ return null; }
+        function speakFallback(msg){ try{ if(window.speak) window.speak(msg); else console.log('RH speak:', msg); }catch(e){console.log(e);} }
+
+        // Run after voice-nav initializes
+        function applyVoiceOnlyMode(){
+          try {
+            // Prevent popup creation and rendering
+            window.createPopupOnce = noop;
+            window.createMicBtn = window.createMicBtn || noop;
+            window.createPopupOnce = noop;
+            window.ensureSinglePopupStyles = noop;
+            window.ensureTypewriterEl = function(){ return null; };
+            window.ensureToastLayer = function(){ return null; };
+
+            // Replace UI actions with voice-only equivalents
+            window.openVideo = function(url, title){
+              speakFallback((document.documentElement.lang === 'en' ? 'Playing video: ' : 'تشغيل الفيديو: ') + (title || url));
+              // attempt to play inline if there's a matching <video> element on page (best-effort)
+              try {
+                var vids = Array.from(document.querySelectorAll('video'));
+                var found = vids.find(function(v){ return (v.querySelector('source') && v.querySelector('source').src === url) || (v.currentSrc && v.currentSrc === url); });
+                if(found){
+                  try{ found.scrollIntoView({behavior:'smooth', block:'center'}); found.play().catch(()=>{}); }catch(e){}
+                }
+              }catch(e){}
+              return null;
+            };
+
+            window.showVideoList = function(){
+              speakFallback(document.documentElement.lang === 'en' ? 'Video list shown in voice only.' : 'قائمة الفيديوهات (صوتياً فقط).');
+              return null;
+            };
+
+            window.openImg = function(num){
+              speakFallback((document.documentElement.lang === 'en' ? 'Showing image ' : 'عرض الصورة ') + num + (document.documentElement.lang === 'en' ? '' : ' (صوتياً فقط)'));
+              // do not open modal; scroll to image source if present
+              try {
+                var sel = document.querySelector('img[src$="'+num+'.jpg"], img[src*="'+num+'.jpg"]');
+                if(sel) sel.scrollIntoView({behavior:'smooth', block:'center'});
+              }catch(e){}
+              return null;
+            };
+
+            // Prevent any attempt to open new managed windows via RH single-window policy
+            try {
+              var _open = window.open;
+              window.open = function(url, target, features){
+                // If it's RH-managed, prefer navigating in-place to avoid new windows
+                if(target === 'rh_single_window' || /rh_single_window/.test(String(target || ''))) {
+                  try { window.location.href = url; } catch(e){ console.warn('nav blocked', e); }
+                  return null;
+                }
+                return _open.apply(window, arguments);
+              };
+            }catch(e){}
+
+            // Replace dialog/toast functions to avoid visual overlays
+            window.showToast = function(msg, dur){
+              speakFallback(msg);
+              return { close:function(){ /*noop*/ } };
+            };
+            window.showAdvancedToast = function(msg, opts){
+              speakFallback(msg);
+              return { close:function(){/*noop*/}, element:null };
+            };
+            window.typewriter = function(text){
+              // send short spoken summary and console log the full text
+              try { speakFallback((document.documentElement.lang === 'en' ? 'Assistant says: ' : 'المساعد يقول: ') + (String(text).slice(0,200))); } catch(e){}
+              console.log('Typewriter (suppressed UI):', text);
+            };
+
+            // Ensure single-popup state stays hidden
+            if (window.RH_SINGLE_UI && window.RH_SINGLE_UI.appState && window.RH_SINGLE_UI.appState.popup) {
+              window.RH_SINGLE_UI.appState.popup.isVisible = false;
+              if (window.updateUI) window.updateUI();
+            }
+
+            // Close any existing RH-created modals if present
+            ['rh-dialog-modal','rh-v3-toast-layer','rh-typewriter','ai-popup-video-view','ai-popup-results-view','ai-popup-content-area','ai-popup-status','rh-chat-shell','rh-dialog-modal','rh-toast'].forEach(function(id){
+              try { var n = document.getElementById(id); if(n && n.parentNode) n.parentNode.removeChild(n); } catch(e){}
+            });
+
+            // Keep voice bar visible and accessible: if function exists, recreate it
+            try { if (typeof window.createVoiceBarOnce === 'function') window.createVoiceBarOnce(); } catch(e){}
+
+            console.log('ROBOT HOUSE — voice-only mode applied');
+          } catch (err) {
+            console.warn('applyVoiceOnlyMode error', err);
+          }
+        }
+
+        // Wait until voice-nav script has run
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', function(){ setTimeout(applyVoiceOnlyMode, 180); });
+        } else {
+          setTimeout(applyVoiceOnlyMode, 180);
+        }
+      })();
+    </script>
+  <!-- Holographic assistant popup removed per user request; voice bar retained as-is. -->
+
+    <style>
+      /* Voice agent visual overrides removed: ensure no styling applies to voice UI elements */
+      .holo-wheel,
+      #ai-voice-bar,
+      #rh-mic,
+      #rh-single-voice,
+      .holo-wheel::before,
+      .holo-wheel::after,
+      #ai-voice-bar::before,
+      #ai-voice-bar::after {
+        all: unset !important;
+        display: inline-block !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+        width: auto !important;
+        height: auto !important;
+        pointer-events: none !important;
+        opacity: 1 !important;
+      }
+      /* make sure any JS toggles won't produce visual effects */
+      .holo-wheel[data-state],
+      #ai-voice-bar[data-state] {
+        animation: none !important;
+        transition: none !important;
+      }
+    </style>
+</body>
+</html>
