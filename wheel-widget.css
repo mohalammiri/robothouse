@@ -1,0 +1,276 @@
+/* Realistic interactive mouse wheel (fixed edge) */
+#interactive-mouse-wheel {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 12px;
+  z-index: 120000;
+  width: 44px; /* widget matches wheel-frame size */
+  height: 78px; /* widget matches wheel-frame size */
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none; /* منع تمرير الصفحة عند التفاعل باللمس */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* --- Emphasize 3D look for wheel frame --- */
+#wheel-frame {
+  width: 44px; /* reduced */
+  height: 78px; /* reduced */
+  border-radius: 14px;
+  transition: box-shadow 260ms ease, transform 200ms ease;
+  /* stronger 3D pop */
+  background: linear-gradient(180deg, #06121a, #071822);
+  box-shadow:
+    0 3px 0 rgba(0,0,0,0.9) inset,
+    0 10px 22px rgba(2,12,35,0.6),
+    0 26px 48px rgba(0,0,0,0.65);
+  transform: translateZ(0);
+}
+
+/* subtle holographic halo when active */
+#wheel-frame.halo {
+  box-shadow: 0 12px 30px rgba(0,212,255,0.12), 0 6px 20px rgba(0,120,255,0.06), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+/* wheel (SVG container) */
+#wheel-svg { width: 28px; height: 48px; }
+#wheel-svg {
+  display:block;
+  transform-origin: 50% 50%;
+  transition: transform 220ms cubic-bezier(.2,.9,.2,1);
+  will-change: transform;
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* pressed state */
+#wheel-svg.dragging { cursor: grabbing; }
+
+/* glow ring that appears around wheel when in motion */
+#wheel-glow {
+  position:absolute;
+  inset: -6px;
+  border-radius: 20px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 360ms ease, transform 360ms ease;
+  mix-blend-mode: screen;
+  filter: blur(8px) saturate(1.2);
+  background: radial-gradient(closest-side, rgba(0,212,255,0.12), rgba(0,160,255,0.06), transparent 60%);
+}
+
+/* visible while active */
+#wheel-frame.active #wheel-glow { opacity: 1; transform: scale(1.03); }
+
+/* small vertical numeric counter (rotates with page direction) */
+#wheel-counter {
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(180deg, rgba(10,14,20,0.96), rgba(16,22,34,0.92));
+  border: 1px solid rgba(255,255,255,0.04);
+  color: #bfefff;
+  font-weight: 700;
+  font-family: 'Space Mono', monospace;
+  padding: 6px 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 700ms ease, transform 420ms cubic-bezier(.2,.9,.2,1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  min-width: 44px;
+  text-align: center;
+  line-height: 1;
+}
+
+/* horizontal counterpart for LTR */
+#wheel-counter.horiz {
+  right: auto;
+  left: 50%;
+  top: calc(100% + 8px);
+  transform: translateX(-50%);
+}
+
+/* show counter when active */
+#wheel-frame.active #wheel-counter { opacity: 1; transform: translateY(-50%) scale(1); }
+
+/* small fade when idle */
+#wheel-counter.idle { opacity: 0; transition: opacity 1200ms ease; }
+
+/* Laser beam — now a smaller, centered oval around the wheel only */
+#wheel-laser {
+  position: absolute;
+  /* reduced centered oval so laser is subtler around the wheel */
+  width: 110%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 999px; /* strong oval shape */
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 180ms ease, transform 180ms ease;
+  /* default background is transparent; color states below override */
+  background: transparent;
+  /* place the laser behind the wheel SVG */
+  z-index: 0;
+}
+
+/* laser color states (small centered oval only) */
+#wheel-frame.laser-up #wheel-laser {
+  background: linear-gradient(180deg, rgba(0,100,220,0.94) 10%, rgba(0,70,200,0.88) 90%);
+  opacity: 0.92;
+  transform: translate(-50%,-50%) scale(1);
+}
+#wheel-frame.laser-down #wheel-laser {
+  background: linear-gradient(180deg, rgba(180,24,24,0.92) 10%, rgba(140,8,8,0.86) 90%);
+  opacity: 0.88;
+  transform: translate(-50%,-50%) scale(1);
+}
+#wheel-frame.laser-mid #wheel-laser {
+  background: linear-gradient(180deg, rgba(220,200,18,0.9) 10%, rgba(200,170,8,0.84) 90%);
+  opacity: 0.70;
+  transform: translate(-50%,-50%) scale(0.96);
+}
+#wheel-frame.laser-reader #wheel-laser {
+  background: linear-gradient(180deg, rgba(245,245,245,0.94) 10%, rgba(225,225,225,0.90) 90%);
+  opacity: 0.96;
+  transform: translate(-50%,-50%) scale(1.02);
+}
+
+/* Compass ring around wheel (fixed, precise tick marks) */
+/* removed per user request: hide compass ring */
+#wheel-compass {
+  display: none;
+}
+
+/* precise tick marks (using radial gradient to keep lightweight) */
+#wheel-compass::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 6%, rgba(255,255,255,0.06) 2px, transparent 3px),
+    conic-gradient(rgba(255,255,255,0.06) 0.5deg, transparent 0.5deg);
+  opacity: 0.8;
+  mix-blend-mode: overlay;
+}
+
+/* reader mode subtle visual reduction for surrounding effects */
+#wheel-frame.reader-mode { transform: scale(1.02); border-color: rgba(255,255,255,0.06); }
+
+/* NEW: make the widget window oval and slightly larger than the button */
+#interactive-mouse-wheel::before {
+  display: none !important;
+  content: none !important;
+}
+
+/* NEW: reader-direction selector (appears when reader mode active) */
+#wheel-frame .reader-selector {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 44px;
+  height: 78px;
+  border-radius: 28px;
+  display: none;
+  z-index: 120001;
+  pointer-events: auto;
+  background: transparent;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+}
+#wheel-frame.reader-mode .reader-selector { display: flex; }
+
+/* arrow buttons inside selector */
+#wheel-frame .reader-selector .rs-btn {
+  width: 40px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #02121c;
+  background: rgba(255,255,255,0.95);
+  border: 1px solid rgba(0,0,0,0.06);
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+#wheel-frame .reader-selector .rs-btn.active {
+  box-shadow: 0 10px 26px rgba(0,160,220,0.22);
+  transform: translateY(-2px);
+}
+/* small label between arrows */
+#wheel-frame .reader-selector .rs-label {
+  color: #b0dff0;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* enhance hover to accentuate 3D */
+#wheel-frame:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow:
+    0 5px 0 rgba(0,0,0,0.95) inset,
+    0 18px 42px rgba(0,18,40,0.78),
+    0 36px 80px rgba(0,0,0,0.7);
+}
+
+/* ensure the wheel SVG renders above the enlarged laser */
+#wheel-svg { z-index: 2; position: relative; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #wheel-svg { transition: none; }
+  #wheel-glow { transition: none; }
+  #wheel-counter { transition: none; }
+  #interactive-mouse-wheel::before { transition: none; }
+}
+
+/* Responsive: reduce size on very small screens */
+@media (max-width:520px){
+  /* position the widget at the right edge (vertical center) on small screens and reduce footprint */
+  #interactive-mouse-wheel {
+    left: auto;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width:36px;
+    height:64px;
+  }
+  /* significantly smaller wheel frame and SVG for compact mobile */
+  #wheel-frame { width:30px; height:56px; border-radius:10px; background: linear-gradient(180deg, #041018, #03121a); box-shadow: 0 8px 18px rgba(2,12,35,0.6); }
+  #wheel-svg { width:20px; height:34px; }
+  #wheel-compass { display: none; }
+  /* reduced glow on mobile for less visual weight */
+  #wheel-glow { filter: blur(6px) saturate(1.05); }
+  /* darker, lower-opacity laser colors tuned for small displays */
+  #wheel-frame.laser-up #wheel-laser { background: linear-gradient(180deg, rgba(0,80,200,0.88) 10%, rgba(0,58,160,0.80) 90%); opacity: 0.84; }
+  #wheel-frame.laser-down #wheel-laser { background: linear-gradient(180deg, rgba(150,24,24,0.88) 10%, rgba(110,12,12,0.80) 90%); opacity: 0.78; }
+  /* subtle but clear yellow mid state on tap */
+  #wheel-frame.laser-mid #wheel-laser { background: linear-gradient(180deg, rgba(230,200,40,0.92) 6%, rgba(200,170,20,0.88) 90%); opacity: 0.86; box-shadow: 0 8px 20px rgba(220,180,40,0.10); }
+  /* keep reader selector compact */
+  #wheel-frame .reader-selector { width: 34px; height: 56px; gap: 4px; }
+  #wheel-frame .reader-selector .rs-btn { width: 32px; height: 24px; font-size: 12px; }
+  #wheel-frame .reader-selector .rs-label { font-size: 10px; color: #cbeef9; }
+  /* counter repositioned below widget for small screens and smaller */
+  #wheel-counter { right: auto; left: 50%; top: calc(100% + 8px); transform: translateX(-50%); min-width: 40px; padding: 6px 8px; font-size: 12px; border-radius: 8px; }
+  #wheel-counter.horiz { left: 50%; top: calc(100% + 8px); transform: translateX(-50%); }
+}
